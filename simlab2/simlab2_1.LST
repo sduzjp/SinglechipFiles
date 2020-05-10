@@ -1,0 +1,85 @@
+A51 MACRO ASSEMBLER  SIMLAB2_1                                                            05/01/2020 21:36:04 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN simlab2_1.OBJ
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE simlab2_1.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0000H   
+0000 0160              3     AJMP MAIN   
+0060                   4     ORG 0060H   
+                       5     
+0060                   6     MAIN:                      
+0060 7F20              7             MOV R7,#20H        
+0062 7830              8             MOV R0,#30H        
+0064 7400              9             MOV A,#0           
+0066 90008E           10             MOV DPTR,#TABLE  
+0069                  11      LOOP:
+0069 93               12             MOVC A,@A+DPTR   
+006A F6               13             MOV @R0,A   
+006B 08               14             INC R0      
+006C E4               15             CLR A       
+006D A3               16             INC DPTR            
+006E DFF9             17             DJNZ R7,LOOP  
+                      18     
+                      19     
+0070 7830             20             MOV R0,#30H      
+0072 7F1F             21             MOV R7,#31       
+0074                  22      LOOP1:
+0074 7930             23             MOV R1,#30H   
+0076 7E1F             24             MOV R6,#31   
+0078 7830             25             MOV R0,#30H      
+                      26     
+007A                  27      LOOP2:             
+007A E6               28             MOV A,@R0   
+007B F5F0             29             MOV B,A     
+007D 08               30             INC R0      
+007E E6               31             MOV A,@R0   
+007F B5F000           32             CJNE A,B,L1       
+0082 5004             33      L1:JNC UNEX  
+0084 18               34             DEC R0  
+0085 C6               35             XCH A,@R0  
+0086 08               36             INC R0
+0087 F6               37             MOV @R0,A  
+0088                  38      UNEX:
+0088 DEF0             39             DJNZ R6,LOOP2  
+008A DFE8             40             DJNZ R7,LOOP1  
+                      41     
+008C 80FE             42             SJMP $  
+                      43     
+                      44     
+008E                  45     TABLE:
+008E 01030902         46             db 1,3,9,2,17,4,11,6
+0092 11040B06                
+0096 05146440         47             db 5,20,100,64,21,14,79,35
+009A 150E4F23                
+009E 5C075B17         48             db 92,7,91,23,65,16,13,18
+00A2 41100D12                
+00A6 12494165         49             db 18,73,65,101,27,19,62,69
+00AA 1B133E45                
+                      50     END     
+A51 MACRO ASSEMBLER  SIMLAB2_1                                                            05/01/2020 21:36:04 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+L1 . . . . . . . .  C ADDR   0082H   A   
+LOOP . . . . . . .  C ADDR   0069H   A   
+LOOP1. . . . . . .  C ADDR   0074H   A   
+LOOP2. . . . . . .  C ADDR   007AH   A   
+MAIN . . . . . . .  C ADDR   0060H   A   
+TABLE. . . . . . .  C ADDR   008EH   A   
+UNEX . . . . . . .  C ADDR   0088H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,44 @@
+A51 MACRO ASSEMBLER  ESIMLAB2                                                             05/01/2020 20:54:53 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN esimlab2.OBJ
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE esimlab2.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0000H   
+0000 0130              3     AJMP MAIN   
+0030                   4     ORG 0030H   
+                       5     
+0030                   6     MAIN:
+0030 753045            7             MOV 30H,#45H   
+0033 E530              8             MOV A,30H        
+0035 540F              9             ANL A,#0FH       
+0037 F531             10             MOV 31H,A        
+0039 E530             11             MOV A,30H        
+003B 54F0             12             ANL A,#0F0H      
+003D C4               13             SWAP A   
+003E 75F00A           14             MOV B,#10   
+0041 A4               15             MUL AB    
+0042 2531             16             ADD A,31H   
+0044 F531             17             MOV 31H,A   
+0046 80FE             18             SJMP $   
+                      19     END       
+A51 MACRO ASSEMBLER  ESIMLAB2                                                             05/01/2020 20:54:53 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

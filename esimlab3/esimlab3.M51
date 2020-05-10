@@ -1,0 +1,191 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/01/2020  22:13:45  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE STARTUP.obj, esimlab3.obj TO esimlab3
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  esimlab3.obj (ESIMLAB3)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (PRINTF)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C?CSTPTR)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C?CCASE)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (PUTCHAR)
+
+
+LINK MAP OF MODULE:  esimlab3 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0014H     UNIT         _DATA_GROUP_
+                    001CH     0004H                  *** GAP ***
+            BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0021H.1   000EH.7                *** GAP ***
+            DATA    0030H     0020H     ABSOLUTE     
+                    0050H     0005H                  *** GAP ***
+            DATA    0055H     0002H     ABSOLUTE     
+            IDATA   0057H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    035FH     008EH     UNIT         ?C?LIB_CODE
+            CODE    03EDH     0043H     UNIT         ?PR?MAIN?ESIMLAB3
+            CODE    0430H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    0457H     0016H     UNIT         ?PR?_DELAYMS?ESIMLAB3
+            CODE    046DH     0011H     UNIT         ?CO?ESIMLAB3
+            CODE    047EH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   esimlab3 (?C_STARTUP)
+
+
+SEGMENT                           BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH     START    LENGTH
+------------------------------------------------------------------
+?C_C51STARTUP                  -----    -----      -----    -----
+  +--> ?PR?MAIN?ESIMLAB3
+
+?PR?MAIN?ESIMLAB3              -----    -----      -----    -----
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2020  22:13:45  PAGE 2
+
+
+  +--> ?CO?ESIMLAB3
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_DELAYMS?ESIMLAB3
+
+?PR?PRINTF?PRINTF              0020H.0  0001H.1    0008H    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
+
+
+
+SYMBOL TABLE OF MODULE:  esimlab3 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:047EH         SEGMENT       ?C_C51STARTUP
+  I:0057H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0481H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:047EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:047EH         LINE#         133
+  C:0480H         LINE#         134
+  C:0481H         LINE#         135
+  C:0482H         LINE#         136
+  C:0484H         LINE#         185
+  C:0487H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ESIMLAB3
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0457H         PUBLIC        _DelayMS
+  D:0081H         PUBLIC        SP
+  C:03EDH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:008DH         PUBLIC        TH1
+  B:0088H.6       PUBLIC        TR1
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2020  22:13:45  PAGE 3
+
+
+  D:0030H         PUBLIC        a
+  D:0055H         PUBLIC        i
+  -------         PROC          _DELAYMS
+  D:0006H         SYMBOL        ms
+  -------         DO            
+  D:0005H         SYMBOL        t
+  -------         ENDDO         
+  C:0457H         LINE#         11
+  C:0457H         LINE#         13
+  C:046CH         LINE#         14
+  -------         ENDPROC       _DELAYMS
+  -------         PROC          MAIN
+  C:03EDH         LINE#         17
+  C:03EDH         LINE#         18
+  C:03F0H         LINE#         19
+  C:03F3H         LINE#         20
+  C:03F6H         LINE#         21
+  C:03F9H         LINE#         22
+  C:03FBH         LINE#         23
+  C:0400H         LINE#         24
+  C:0407H         LINE#         25
+  C:0416H         LINE#         26
+  C:041DH         LINE#         27
+  C:042EH         LINE#         28
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        ESIMLAB3
+
+  -------         MODULE        PRINTF
+  D:0008H         PUBLIC        ?_PRINTF517?BYTE
+  D:0008H         PUBLIC        ?_PRINTF?BYTE
+  D:0008H         PUBLIC        ?_SPRINTF517?BYTE
+  D:0008H         PUBLIC        ?_SPRINTF?BYTE
+  C:0065H         PUBLIC        _PRINTF
+  C:0065H         PUBLIC        _PRINTF517
+  C:005FH         PUBLIC        _SPRINTF
+  C:005FH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
+
+  -------         MODULE        ?C?CLDPTR
+  C:035FH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0378H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:03A5H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:03B7H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:03C7H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2020  22:13:45  PAGE 4
+
+
+
+  -------         MODULE        PUTCHAR
+  C:0430H         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+
+Program Size: data=64.1 xdata=0 code=1162
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

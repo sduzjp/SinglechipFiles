@@ -1,0 +1,44 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/03/2020  15:07:04  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE expandIO.obj TO expandIO
+
+
+INPUT MODULES INCLUDED:
+  expandIO.obj (EXPANDIO)
+
+
+LINK MAP OF MODULE:  expandIO (EXPANDIO)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     003AH     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  expandIO (EXPANDIO)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        EXPANDIO
+  C:0036H         SYMBOL        LOOP
+  C:0030H         SYMBOL        MAIN
+  D:0081H         SYMBOL        SP
+  C:0000H         LINE#         2
+  C:0030H         LINE#         6
+  C:0033H         LINE#         7
+  C:0036H         LINE#         9
+  C:0037H         LINE#         10
+  C:0038H         LINE#         11
+  -------         ENDMOD        EXPANDIO
+
+Program Size: data=8.0 xdata=0 code=58
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

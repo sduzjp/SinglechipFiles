@@ -1,0 +1,96 @@
+C51 COMPILER V9.01   SIMLAB3                                                               04/16/2020 09:00:47 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE SIMLAB3
+OBJECT MODULE PLACED IN simlab3.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE simlab3.c BROWSE DEBUG OBJECTEXTEND CODE
+
+line level    source
+
+   1          #include <reg51.h>
+   2          unsigned char code LED_CODES[]= //0-FµÄÏÔÊ¾Âë
+   3          {0xc0,0xf9,0xa4,0xb0,0x99,      //0-4
+   4          0x92,0x82,0xf8,0x80,0x90,       //5-9
+   5          0x88,0x83,0xc6,0xa1,0x86,0x8e}; //A-F
+   6          
+   7          void main(){
+   8   1              unsigned char i=0;                              
+   9   1              unsigned char j=0;
+  10   1              P1=255;
+  11   1              P0=255;   
+  12   1              while(1){
+  13   2                      do{
+  14   3                              i=P1&1;
+  15   3                      }while(i==1);
+  16   2                      P0=LED_CODES[j];
+  17   2                      do{
+  18   3                              i=P1&1;
+  19   3                      }while(i==0);
+  20   2                      j++;
+  21   2                      if(j==16) j=0;
+  22   2              }
+  23   1      }
+C51 COMPILER V9.01   SIMLAB3                                                               04/16/2020 09:00:47 PAGE 2   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 7
+                                           ; SOURCE LINE # 8
+;---- Variable 'i' assigned to Register 'R7' ----
+0000 E4                CLR     A
+                                           ; SOURCE LINE # 9
+;---- Variable 'j' assigned to Register 'R6' ----
+0001 FE                MOV     R6,A
+                                           ; SOURCE LINE # 10
+0002 7590FF            MOV     P1,#0FFH
+                                           ; SOURCE LINE # 11
+0005 7580FF            MOV     P0,#0FFH
+                                           ; SOURCE LINE # 12
+0008         ?C0005:
+                                           ; SOURCE LINE # 13
+                                           ; SOURCE LINE # 14
+0008 E590              MOV     A,P1
+000A 5401              ANL     A,#01H
+000C FF                MOV     R7,A
+                                           ; SOURCE LINE # 15
+000D 6401              XRL     A,#01H
+000F 60F7              JZ      ?C0005
+                                           ; SOURCE LINE # 16
+0011 EE                MOV     A,R6
+0012 900000      R     MOV     DPTR,#LED_CODES
+0015 93                MOVC    A,@A+DPTR
+0016 F580              MOV     P0,A
+0018         ?C0008:
+                                           ; SOURCE LINE # 17
+                                           ; SOURCE LINE # 18
+0018 E590              MOV     A,P1
+001A 5401              ANL     A,#01H
+001C FF                MOV     R7,A
+                                           ; SOURCE LINE # 19
+001D 60F9              JZ      ?C0008
+                                           ; SOURCE LINE # 20
+001F 0E                INC     R6
+                                           ; SOURCE LINE # 21
+0020 BE10E5            CJNE    R6,#010H,?C0005
+0023 E4                CLR     A
+0024 FE                MOV     R6,A
+                                           ; SOURCE LINE # 22
+0025 80E1              SJMP    ?C0005
+             ; FUNCTION main (END)
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     39    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

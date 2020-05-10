@@ -1,0 +1,50 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/01/2020  20:54:53  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE esimlab2.obj TO esimlab2
+
+
+INPUT MODULES INCLUDED:
+  esimlab2.obj (ESIMLAB2)
+
+
+LINK MAP OF MODULE:  esimlab2 (ESIMLAB2)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0048H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  esimlab2 (ESIMLAB2)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ESIMLAB2
+  D:00F0H         SYMBOL        B
+  C:0030H         SYMBOL        MAIN
+  C:0000H         LINE#         3
+  C:0030H         LINE#         7
+  C:0033H         LINE#         8
+  C:0035H         LINE#         9
+  C:0037H         LINE#         10
+  C:0039H         LINE#         11
+  C:003BH         LINE#         12
+  C:003DH         LINE#         13
+  C:003EH         LINE#         14
+  C:0041H         LINE#         15
+  C:0042H         LINE#         16
+  C:0044H         LINE#         17
+  C:0046H         LINE#         18
+  -------         ENDMOD        ESIMLAB2
+
+Program Size: data=8.0 xdata=0 code=72
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

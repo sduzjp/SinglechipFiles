@@ -1,0 +1,132 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/04/2020  13:01:22  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE keyscan.obj TO keyscan
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  keyscan.obj (KEYSCAN)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  keyscan (KEYSCAN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0044H     UNIT         ?PR?MAIN?KEYSCAN
+            CODE    0047H     0020H     UNIT         ?CO?KEYSCAN
+            CODE    0067H     000FH     UNIT         ?PR?DELAYL?KEYSCAN
+            CODE    0076H     000FH     UNIT         ?PR?DELAYS?KEYSCAN
+            CODE    0085H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   keyscan (KEYSCAN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?KEYSCAN
+
+?PR?MAIN?KEYSCAN
+  +--> ?PR?DELAYS?KEYSCAN
+  +--> ?CO?KEYSCAN
+  +--> ?PR?DELAYL?KEYSCAN
+
+
+
+SYMBOL TABLE OF MODULE:  keyscan (KEYSCAN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        KEYSCAN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0067H         PUBLIC        delayl
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/04/2020  13:01:22  PAGE 2
+
+
+  C:0076H         PUBLIC        delays
+  C:0003H         PUBLIC        main
+  C:0047H         PUBLIC        KEY_TABLE
+  C:0057H         PUBLIC        TABLE
+  -------         PROC          DELAYL
+  -------         DO            
+  D:0006H         SYMBOL        n
+  -------         ENDDO         
+  C:0067H         LINE#         15
+  C:0067H         LINE#         16
+  C:0067H         LINE#         17
+  C:006BH         LINE#         18
+  C:0075H         LINE#         19
+  -------         ENDPROC       DELAYL
+  -------         PROC          DELAYS
+  -------         DO            
+  D:0006H         SYMBOL        n
+  -------         ENDDO         
+  C:0076H         LINE#         21
+  C:0076H         LINE#         22
+  C:0076H         LINE#         23
+  C:007AH         LINE#         24
+  C:0084H         LINE#         25
+  -------         ENDPROC       DELAYS
+  -------         PROC          MAIN
+  -------         DO            
+  D:0007H         SYMBOL        temp
+  D:0007H         SYMBOL        key
+  D:0005H         SYMBOL        num
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0003H         LINE#         28
+  C:0003H         LINE#         29
+  C:0003H         LINE#         31
+  C:0006H         LINE#         32
+  C:0006H         LINE#         33
+  C:0006H         LINE#         34
+  C:0009H         LINE#         35
+  C:000FH         LINE#         36
+  C:000FH         LINE#         37
+  C:0012H         LINE#         38
+  C:0015H         LINE#         39
+  C:001BH         LINE#         40
+  C:001BH         LINE#         41
+  C:001DH         LINE#         42
+  C:0020H         LINE#         43
+  C:0024H         LINE#         44
+  C:0029H         LINE#         45
+  C:002BH         LINE#         46
+  C:002BH         LINE#         47
+  C:0033H         LINE#         48
+  C:0033H         LINE#         49
+  C:0035H         LINE#         50
+  C:0037H         LINE#         51
+  C:0037H         LINE#         52
+  C:003BH         LINE#         53
+  C:0042H         LINE#         54
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/04/2020  13:01:22  PAGE 3
+
+
+  C:0045H         LINE#         55
+  C:0045H         LINE#         56
+  C:0045H         LINE#         57
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        KEYSCAN
+
+Program Size: data=9.0 xdata=0 code=145
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

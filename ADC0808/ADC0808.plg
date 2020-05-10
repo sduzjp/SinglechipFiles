@@ -1,0 +1,41 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+E:\Singlechip_files\ADC0808\ADC0808.uvproj
+Project File Date:  05/04/2020
+
+<h2>Output:</h2>
+Build target '目标 1'
+assembling STARTUP.A51...
+linking...
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  ?C_START
+    MODULE:  STARTUP.obj (?C_STARTUP)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  ?C_START
+    MODULE:  STARTUP.obj (?C_STARTUP)
+    ADDRESS: 000DH
+Program Size: data=9.0 xdata=0 code=15
+creating hex file from "ADC0808"...
+"ADC0808" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling ADC0809.c...
+ADC0809.C(221): error C141: syntax error near 'ET1'
+ADC0809.C(222): error C141: syntax error near 'TR1'
+目标未创建
+Build target '目标 1'
+assembling STARTUP.A51...
+compiling ADC0809.c...
+linking...
+Program Size: data=38.2 xdata=0 code=1198
+creating hex file from "ADC0808"...
+"ADC0808" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+assembling STARTUP.A51...
+compiling ADC0809.c...
+linking...
+Program Size: data=38.2 xdata=0 code=1198
+creating hex file from "ADC0808"...
+"ADC0808" - 0 Error(s), 0 Warning(s).

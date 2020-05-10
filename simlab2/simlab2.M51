@@ -1,0 +1,77 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/01/2020  21:45:11  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE simlab2.obj TO simlab2
+
+
+INPUT MODULES INCLUDED:
+  simlab2.obj (SIMLAB2)
+
+
+LINK MAP OF MODULE:  simlab2 (SIMLAB2)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     00AFH     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  simlab2 (SIMLAB2)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SIMLAB2
+  D:00F0H         SYMBOL        B
+  C:0082H         SYMBOL        L1
+  C:0069H         SYMBOL        LOOP
+  C:0076H         SYMBOL        LOOP1
+  C:007AH         SYMBOL        LOOP2
+  C:0060H         SYMBOL        MAIN
+  C:008FH         SYMBOL        TABLE
+  C:0088H         SYMBOL        UNEX
+  C:0000H         LINE#         3
+  C:0060H         LINE#         7
+  C:0062H         LINE#         8
+  C:0064H         LINE#         9
+  C:0066H         LINE#         10
+  C:0069H         LINE#         12
+  C:006AH         LINE#         13
+  C:006BH         LINE#         14
+  C:006CH         LINE#         15
+  C:006DH         LINE#         16
+  C:006EH         LINE#         17
+  C:0070H         LINE#         20
+  C:0072H         LINE#         21
+  C:0074H         LINE#         22
+  C:0076H         LINE#         25
+  C:0078H         LINE#         26
+  C:0079H         LINE#         27
+  C:007AH         LINE#         30
+  C:007BH         LINE#         31
+  C:007DH         LINE#         32
+  C:007EH         LINE#         33
+  C:007FH         LINE#         34
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2020  21:45:11  PAGE 2
+
+
+  C:0082H         LINE#         35
+  C:0084H         LINE#         36
+  C:0085H         LINE#         37
+  C:0086H         LINE#         38
+  C:0087H         LINE#         39
+  C:0088H         LINE#         41
+  C:008AH         LINE#         42
+  C:008BH         LINE#         43
+  C:008DH         LINE#         45
+  -------         ENDMOD        SIMLAB2
+
+Program Size: data=8.0 xdata=0 code=175
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

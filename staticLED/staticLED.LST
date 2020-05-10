@@ -1,0 +1,158 @@
+A51 MACRO ASSEMBLER  STATICLED                                                            05/03/2020 17:28:54 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN staticLED.OBJ
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE staticLED.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H
+0000 0130              2     AJMP MAIN
+0030                   3     ORG 0030H
+                       4     
+0030                   5     MAIN:
+0030 758160            6             MOV SP,#60H       
+0033 C2D5              7             CLR F0
+0035 D292              8             SETB P1.2
+0037 12009C            9             LCALL DISCLR
+003A                  10     LOOP:
+003A D291             11             SETB P1.1
+003C 20910A           12             JB P1.1,GOON
+003F                  13     WAITO:
+003F D291             14             SETB P1.1
+0041 3091FB           15             JNB P1.1,WAITO   
+0044 12009C           16             LCALL DISCLR
+0047 C2D5             17             CLR F0
+0049                  18     GOON:
+0049 D290             19             SETB P1.0
+004B 209007           20             JB P1.0,NEXT1
+004E                  21     WAIT1:
+004E D290             22             SETB P1.0           
+0050 3090FB           23             JNB P1.0,WAIT1
+0053 B2D5             24             CPL F0
+0055                  25     NEXT1:
+0055 30D50D           26             JNB F0,NEXT
+0058 C292             27             CLR P1.2           
+005A 1200C0           28             LCALL DISPLAY
+005D 120069           29             LCALL DELAY10ms
+0060 120073           30             LCALL ADJUST
+0063 80D5             31             SJMP LOOP
+0065                  32     NEXT:
+0065 D292             33             SETB P1.2
+0067 80D1             34             SJMP LOOP
+0069                  35     DELAY10ms:               
+0069 7A64             36             DL0:MOV R2,#100
+006B 7930             37             DL1:MOV R1,#48
+006D D9FE             38             DL2:DJNZ R1,DL2    
+006F 00               39                     NOP
+0070 DAF9             40                     DJNZ R2,DL1        
+0072 22               41                     RET
+0073                  42     ADJUST:                     
+0073 0530             43             INC 30H
+0075 E530             44             MOV A,30H
+0077 B40A21           45             CJNE A,#10,GOTORET
+007A 753000           46             MOV 30H,#0
+007D 0531             47             INC 31H
+007F E531             48             MOV A,31H
+0081 B40A17           49             CJNE A,#10,GOTORET
+0084 753100           50             MOV 31H,#0
+0087 0532             51             INC 32H
+0089 E532             52             MOV A,32H
+008B B40A0D           53             CJNE A,#10,GOTORET
+008E 753200           54             MOV 32H,#0
+0091 0533             55             INC 33H
+0093 E533             56             MOV A,33H
+0095 B40A03           57             CJNE A,#10,GOTORET
+0098 753300           58             MOV 33H,#0
+A51 MACRO ASSEMBLER  STATICLED                                                            05/03/2020 17:28:54 PAGE     2
+
+009B 22               59     GOTORET:RET
+009C                  60     DISCLR:                  
+009C 753000           61             MOV 30H,#0
+009F 753100           62             MOV 31H,#0
+00A2 753200           63             MOV 32H,#0
+00A5 753300           64             MOV 33H,#0
+00A8 E4               65             CLR A
+00A9 9000E9           66             MOV DPTR,#TABLE
+00AC 93               67             MOVC A,@A+DPTR
+00AD 90FE00           68             MOV DPTR,#D10msADD
+00B0 F0               69             MOVX @DPTR,A
+00B1 90FD00           70             MOV DPTR,#D100msADD
+00B4 F0               71             MOVX @DPTR,A
+00B5 90FB00           72             MOV DPTR,#D1sADD
+00B8 F0               73             MOVX @DPTR,A
+00B9 90F700           74             MOV DPTR,#D10sADD
+00BC F0               75             MOVX @DPTR,A
+00BD D292             76             SETB P1.2
+00BF 22               77             RET
+00C0                  78     DISPLAY:            
+00C0 E530             79             MOV A,30H
+00C2 9000E9           80             MOV DPTR,#TABLE
+00C5 93               81             MOVC A,@A+DPTR
+00C6 90FE00           82             MOV DPTR,#D10msADD
+00C9 F0               83             MOVX @DPTR,A
+00CA E531             84             MOV A,31H
+00CC 9000E9           85             MOV DPTR,#TABLE
+00CF 93               86             MOVC A,@A+DPTR
+00D0 90FD00           87             MOV DPTR,#D100msADD
+00D3 F0               88             MOVX @DPTR,A
+00D4 E532             89             MOV A,32H
+00D6 9000E9           90             MOV DPTR,#TABLE
+00D9 93               91             MOVC A,@A+DPTR
+00DA 90FB00           92             MOV DPTR,#D1sADD
+00DD F0               93             MOVX @DPTR,A
+00DE E533             94             MOV A,33H
+00E0 9000E9           95             MOV DPTR,#TABLE
+00E3 93               96             MOVC A,@A+DPTR
+00E4 90F700           97             MOV DPTR,#D10sADD
+00E7 F0               98             MOVX @DPTR,A
+00E8 22               99             RET
+                     100     
+00E9                 101     TABLE:
+00E9 C0F9A4B0        102             DB 0C0H,0F9H,0A4H,0B0H,99H,92H,82H,0F8H,80H,90H  
+00ED 999282F8                
+00F1 8090                    
+  FE00               103             D10msADD EQU 0FE00H        
+  FD00               104             D100msADD EQU 0FD00H   
+  FB00               105             D1sADD EQU 0FB00H          
+  F700               106             D10sADD EQU 0F700H         
+                     107     END
+                             
+A51 MACRO ASSEMBLER  STATICLED                                                            05/03/2020 17:28:54 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ADJUST . . . . . .  C ADDR   0073H   A   
+D100MSADD. . . . .  N NUMB   FD00H   A   
+D10MSADD . . . . .  N NUMB   FE00H   A   
+D10SADD. . . . . .  N NUMB   F700H   A   
+D1SADD . . . . . .  N NUMB   FB00H   A   
+DELAY10MS. . . . .  C ADDR   0069H   A   
+DISCLR . . . . . .  C ADDR   009CH   A   
+DISPLAY. . . . . .  C ADDR   00C0H   A   
+DL0. . . . . . . .  C ADDR   0069H   A   
+DL1. . . . . . . .  C ADDR   006BH   A   
+DL2. . . . . . . .  C ADDR   006DH   A   
+F0 . . . . . . . .  B ADDR   00D0H.5 A   
+GOON . . . . . . .  C ADDR   0049H   A   
+GOTORET. . . . . .  C ADDR   009BH   A   
+LOOP . . . . . . .  C ADDR   003AH   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+NEXT . . . . . . .  C ADDR   0065H   A   
+NEXT1. . . . . . .  C ADDR   0055H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+TABLE. . . . . . .  C ADDR   00E9H   A   
+WAIT1. . . . . . .  C ADDR   004EH   A   
+WAITO. . . . . . .  C ADDR   003FH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

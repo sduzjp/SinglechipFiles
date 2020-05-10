@@ -1,0 +1,79 @@
+A51 MACRO ASSEMBLER  TEST1                                                                05/03/2020 17:37:55 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN .\Test1.obj
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE E:\proteus_files\test1\Test1.asm SET(SMALL) DEBUG PRINT(.\Test1.lst) OB
+                      JECT(.\Test1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H
+0000 0130              2     AJMP START
+0030                   3     ORG 0030H
+                       4     
+0030                   5     START:
+0030 758160            6             MOV SP,#60H
+0033 7580FF            7             MOV P0,#0FFH
+0036 7590FF            8             MOV P1,#0FFH
+0039 7900              9             MOV R1,#0
+003B 900064           10             MOV DPTR,#TABLE
+                      11             
+003E                  12     LOOP1:
+003E A290             13             MOV C,P1.0
+0040 40FC             14             JC LOOP1
+0042 115B             15             ACALL D10MS             ;È¥¶¶¶¯ 
+0044 A290             16             MOV C,P1.0      
+0046 40F6             17             JC LOOP1
+0048                  18     LOOP2:
+0048 A290             19             MOV C,P1.0              ;µÈ´°´¼üÊÍ·Å
+004A 50FC             20             JNC LOOP2
+004C 115B             21             ACALL D10MS
+004E A290             22             MOV C,P1.0
+0050 50F6             23             JNC LOOP2
+0052 E9               24             MOV A,R1
+0053 540F             25             ANL A,#0FH
+0055 93               26             MOVC A,@A+DPTR
+0056 F580             27             MOV P0,A
+0058 09               28             INC R1
+0059 013E             29             AJMP LOOP1
+                      30     
+005B                  31     D10MS:
+005B 7F10             32             MOV R7,#10H             ;ÑÓÊ±10ms×Ó³ÌÐò
+005D 7EFF             33     DE1:MOV R6,#0FFH
+005F DEFE             34     DE2:DJNZ R6,DE2
+0061 DFFA             35             DJNZ R7,DE1
+0063 22               36             RET
+                      37     
+0064                  38     TABLE:
+0064 C0F9A4B0         39             DB 0C0H,0F9H,0A4H,0B0H,99H,92H,82H,0F8H,80H,90H,88H,83H,0C6H,0A1H
+0068 999282F8                
+006C 80908883                
+0070 C6A1                    
+0072 868E             40             DB 86H,8EH
+                      41     END
+                                     
+A51 MACRO ASSEMBLER  TEST1                                                                05/03/2020 17:37:55 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+D10MS. . . . . . .  C ADDR   005BH   A   
+DE1. . . . . . . .  C ADDR   005DH   A   
+DE2. . . . . . . .  C ADDR   005FH   A   
+LOOP1. . . . . . .  C ADDR   003EH   A   
+LOOP2. . . . . . .  C ADDR   0048H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+START. . . . . . .  C ADDR   0030H   A   
+TABLE. . . . . . .  C ADDR   0064H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

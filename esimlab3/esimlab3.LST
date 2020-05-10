@@ -1,0 +1,54 @@
+C51 COMPILER V9.01   ESIMLAB3                                                              05/01/2020 22:13:45 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE ESIMLAB3
+OBJECT MODULE PLACED IN esimlab3.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE esimlab3.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          //程序功能：实现打印输出
+   2          #include<reg51.h>
+   3          #include<stdio.h>
+   4          #define uchar unsigned char      //对无符号字符型数据类型进行重新定义
+   5          #define uint unsigned int        //对无符号整形数据类型进行重新定义
+   6          
+   7          uchar data a[32] _at_ 0x30;//定义存放32个无符号字符型数据数组，并设定数组a的起始地址为30H
+   8          uint i _at_ 0x55;  //将变量i放在地址55H
+   9                                                                  
+  10          //延时子程序
+  11          void DelayMS(uint ms){
+  12   1              uchar t;
+  13   1              while (ms--) for (t=0;t<120;t++);//循环次数ms*120             
+  14   1      }
+  15          
+  16          //主程序
+  17          void main(){
+  18   1              SP=0x60;   //设置堆栈指针位置
+  19   1              SCON=0x52; //
+  20   1              TMOD=0x20; //非门控T1选择方式2定时
+  21   1              TH1=0xf3;  //设置初始值
+  22   1              TR1=1;  //启动定时，此行及以上3行为PRINTF函数所必须
+  23   1              for(i=0;i<32;i++){
+  24   2                      a[i]=1;  //依次给数组元素置1
+  25   2                      printf("It is : %d now.\n",i);  //打印程序执行的信息
+  26   2                      DelayMS(20000);  //调用延时子程序             
+  27   2              }
+  28   1              while(1);
+  29   1      }
+  30          
+  31          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     89    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

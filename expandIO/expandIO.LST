@@ -1,0 +1,38 @@
+A51 MACRO ASSEMBLER  EXPANDIO                                                             05/03/2020 15:07:04 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN expandIO.OBJ
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE expandIO.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H
+0000 0130              2     AJMP MAIN
+0030                   3     ORG 0030H
+                       4     
+0030                   5     MAIN:
+0030 758160            6             MOV SP,#60H
+0033 90FE00            7             MOV DPTR,#0FE00H
+0036                   8     LOOP:
+0036 E0                9             MOVX A,@DPTR
+0037 F0               10             MOVX @DPTR,A
+0038 80FC             11             SJMP LOOP
+                      12     END
+A51 MACRO ASSEMBLER  EXPANDIO                                                             05/03/2020 15:07:04 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+LOOP . . . . . . .  C ADDR   0036H   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
