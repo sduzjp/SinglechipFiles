@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   LCD1602                                                               05/04/2020 15:48:38 PAGE 1   
+C51 COMPILER V9.01   LCD1602                                                               05/16/2020 09:31:28 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE LCD1602
@@ -7,192 +7,206 @@ COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE LCD1602.c BROWSE DEBUG OBJECTEXT
 
 line level    source
 
-   1          //变量定义
-   2          #include "reg51.h"
-   3          #include "intrins.h"//包含_nop_()函数
-   4          #define uint unsigned int
-   5          #define uchar unsigned char
-   6          uchar code line1_data[]="Hello Everyone";//要显示的第一行字符
-   7          uchar code line2_data[]="Welcome to SDU!";//要显示的第二行字符
-   8          sbit LCD_RS=P1^7;         //定义控制引脚
-   9          sbit LCD_RW=P1^6;
-  10          sbit LCD_EN=P1^5;
-  11          uchar flag=0;
-  12          
-  13          //延时子程序
-  14          void delay_ms(uint xms)
-  15          {
-  16   1              uint i,j;
-  17   1              for(i=xms;i>0;i--)
-  18   1              {
-  19   2                      for(j=110;j>0;j--);
-  20   2              }
-  21   1      }
-  22          
-  23          //LCD忙检查子程序
-  24          bit lcd_busy()
-  25          {
-  26   1              bit result;
-  27   1              LCD_RS=0;
-  28   1              LCD_RW=1;
-  29   1              LCD_EN=1;
-  30   1              _nop_();
-  31   1              _nop_();
-  32   1              _nop_();
-  33   1              _nop_();
-  34   1              result=(bit)(P2&0X80);
-  35   1              LCD_EN=0;
-  36   1              return result;
-  37   1      }
-  38          
-  39          //写命令子程序
-  40          void lcd_wcmd(uchar cmd)
-  41          {
-  42   1              while(lcd_busy());
-  43   1              LCD_RS=0;
-  44   1              LCD_RW=0;
-  45   1              LCD_EN=0;
-  46   1              _nop_();
-  47   1              _nop_();
-  48   1              P2=cmd;
-  49   1              _nop_();
-  50   1              _nop_();
+   1          //LCD1602显示实验：点击按键KEY1在LCD1602第一行显示“Hello Everyone”,
+   2          //第二行显示“Welcome to SDU”,并闪烁3次。点击按键KEY2将LCD1602清屏
+   3          //变量定义
+   4          #include "reg51.h"
+   5          #include "intrins.h"//包含_nop_()函数
+   6          #define uint unsigned int               //重新命名数据类型定义
+   7          #define uchar unsigned char
+   8          uchar code line1_data[]="Hello Everyone";//要显示的第一行字符
+   9          uchar code line2_data[]="Welcome to SDU!";//要显示的第二行字符
+  10          //定义控制引脚
+  11          sbit LCD_RS=P1^7;       //定义数据/命令选择位为P1.7引脚  
+  12          sbit LCD_RW=P1^6;       //定义读/写选择位为P1.6引脚  
+  13          sbit LCD_EN=P1^5;       //定义使能信号位为P1.5引脚 
+  14          sbit int0=P3^2;
+  15          sbit int1=P3^3;
+  16          uchar flag=0;    //定义显示标志位
+  17          
+  18          //延时子程序
+  19          void delay_ms(uint xms)
+  20          {
+  21   1              uint i,j;
+  22   1              for(i=xms;i>0;i--)
+  23   1              {
+  24   2                      for(j=110;j>0;j--);
+  25   2              }
+  26   1      }
+  27          
+  28          //LCD忙检查子程序
+  29          bit lcd_busy()
+  30          {
+  31   1              bit result;        //定义位变量result
+  32   1              LCD_RS=0;          //选择指令寄存器
+  33   1              LCD_RW=1;          //读/写选择位置高电平，读忙信号
+  34   1              LCD_EN=1;          //使能信号端置高电平
+  35   1              _nop_();
+  36   1              _nop_();
+  37   1              _nop_();
+  38   1              _nop_();          //相当于四条nop空指令
+  39   1              result=(bit)(P2&0X80);   //返回数据最高位代表是否忙，result为1代表忙，为0代表空闲
+  40   1              LCD_EN=0;         //使能信号端置低电平
+  41   1              return result;   
+  42   1      }
+  43          
+  44          //写命令子程序
+  45          void lcd_wcmd(uchar cmd)
+  46          {
+  47   1              while(lcd_busy());      //读忙信号，不忙则向下执行
+  48   1              LCD_RS=0;        //选择指令寄存器
+  49   1              LCD_RW=0;        //读写选择位置低电平，写入指令
+  50   1              LCD_EN=0;        //初始化使能端置低电平
   51   1              _nop_();
-  52   1              _nop_();
-  53   1              LCD_EN=1;
+  52   1              _nop_();         //两条空指令
+  53   1              P2=cmd;          //向P2口写入指令
   54   1              _nop_();
   55   1              _nop_();
-C51 COMPILER V9.01   LCD1602                                                               05/04/2020 15:48:38 PAGE 2   
+C51 COMPILER V9.01   LCD1602                                                               05/16/2020 09:31:28 PAGE 2   
 
   56   1              _nop_();
-  57   1              _nop_();
-  58   1              LCD_EN=0;
-  59   1      }
-  60          
-  61          //LCD清屏子程序
-  62          void lcd_clr()
-  63          {
-  64   1              lcd_wcmd(0x01);
-  65   1              delay_ms(2);
-  66   1      }
-  67          
-  68          //写数据子程序
-  69          void lcd_wdat(uchar dat)
-  70          {
-  71   1              while(lcd_busy());
-  72   1              LCD_RS=1;
-  73   1              LCD_RW=0;
-  74   1              LCD_EN=0;
-  75   1              _nop_();
-  76   1              _nop_();
-  77   1              P2=dat;
-  78   1              _nop_();
-  79   1              _nop_();
+  57   1              _nop_();         //四条空指令
+  58   1              LCD_EN=1;        //使能端置高电平
+  59   1              _nop_();
+  60   1              _nop_();
+  61   1              _nop_();
+  62   1              _nop_();         //四条空指令
+  63   1              LCD_EN=0;        //使能端置低电平，产生下降沿，则液晶模块执行命令
+  64   1      }
+  65          
+  66          //LCD清屏子程序
+  67          void lcd_clr()
+  68          {
+  69   1              lcd_wcmd(0x01);   //调用LCD写命令写入清零指令，D7-D0部分为01H
+  70   1              delay_ms(2);      //延时2ms，清屏指令延时1.64ms以上
+  71   1      }
+  72          
+  73          //写数据子程序
+  74          void lcd_wdat(uchar dat)
+  75          {
+  76   1              while(lcd_busy());       //读忙信号，不忙则向下执行
+  77   1              LCD_RS=1;         //选择数据寄存器
+  78   1              LCD_RW=0;         //读写选择位置低电平进行写操作
+  79   1              LCD_EN=0;         //初始化使能端置低电平
   80   1              _nop_();
-  81   1              _nop_();
-  82   1              LCD_EN=1;
+  81   1              _nop_();          //两条空指令
+  82   1              P2=dat;           //向P2口写入数据
   83   1              _nop_();
   84   1              _nop_();
   85   1              _nop_();
-  86   1              _nop_();
-  87   1              LCD_EN=0;
-  88   1      }
-  89          
-  90          //初始化子程序
-  91          void lcd_init()
-  92          {
-  93   1              delay_ms(15);//等待LCD电源稳定
-  94   1              lcd_wcmd(0x38);//功能设定指令中DL=1,N=1,F=0，8位数据宽度，16*2显示，5*7点阵字符
-  95   1              delay_ms(5);
-  96   1              lcd_wcmd(0x0c);//显示开关控制指令中D=1,C=0,B=0，显示开，关光标，不闪烁
-  97   1              delay_ms(5);
-  98   1              lcd_wcmd(0x06);//进入模式设置指令中I/D=1,S=0,地址自动增加
-  99   1              delay_ms(5);
- 100   1              lcd_wcmd(0x01);//清除LCD显示内容，清屏指令DB7-DB0部分为01H
- 101   1              delay_ms(5);
- 102   1      }
- 103          
- 104          //闪烁子程序
- 105          void flash()
- 106          {
- 107   1              delay_ms(1000);
- 108   1              lcd_wcmd(0x08);//显示开关控制指令中D=0,C=0,B=0,显示关，关光标，不闪烁
- 109   1              delay_ms(500);
- 110   1              lcd_wcmd(0x0c);//显示开，关光标，不闪烁
- 111   1              delay_ms(500);
- 112   1              lcd_wcmd(0x08);
- 113   1              delay_ms(500);
- 114   1              lcd_wcmd(0x0c);
- 115   1              delay_ms(500);
- 116   1              lcd_wcmd(0x08);
- 117   1              delay_ms(500);
-C51 COMPILER V9.01   LCD1602                                                               05/04/2020 15:48:38 PAGE 3   
+  86   1              _nop_();          //四条空指令
+  87   1              LCD_EN=1;         //使能端置高电平
+  88   1              _nop_();
+  89   1              _nop_();
+  90   1              _nop_();
+  91   1              _nop_();         //四条空指令
+  92   1              LCD_EN=0;        //使能端置低电平，产生下降沿，液晶模块执行命令
+  93   1      }
+  94          
+  95          //初始化子程序
+  96          void lcd_init()
+  97          {
+  98   1              delay_ms(15);//延时15ms，等待LCD电源稳定
+  99   1              lcd_wcmd(0x38);//功能设定指令中DL=1,N=1,F=0，8位数据宽度，16*2显示2行，5*7点阵字符
+ 100   1              delay_ms(5);   //延时5ms
+ 101   1              lcd_wcmd(0x0c);//显示开关控制指令中D=1,C=0,B=0，显示开，关光标，不闪烁
+ 102   1              delay_ms(5);   //延时5ms
+ 103   1              lcd_wcmd(0x06);//进入模式设置指令中I/D=1,S=0,写入新数据后地址自动增加且显示屏不移动
+ 104   1              delay_ms(5);   //延时5ms
+ 105   1              lcd_wcmd(0x01);//清除LCD显示内容，清屏指令D7-D0部分为01H
+ 106   1              delay_ms(5);   //延时5ms
+ 107   1      }
+ 108          
+ 109          //闪烁子程序
+ 110          void flash()
+ 111          {
+ 112   1              delay_ms(1000); //延时1s
+ 113   1              lcd_wcmd(0x08);//显示开关控制指令中D=0,C=0,B=0,显示关，关光标，不闪烁
+ 114   1              delay_ms(500);  //延时0.5s
+ 115   1              lcd_wcmd(0x0c);//D=1,C=0,B=0，显示开，关光标，不闪烁，之后依次开显示关显示
+ 116   1              delay_ms(500);  //延时0.5s
+ 117   1              lcd_wcmd(0x08); 
+C51 COMPILER V9.01   LCD1602                                                               05/16/2020 09:31:28 PAGE 3   
 
- 118   1              lcd_wcmd(0x0c);
- 119   1              delay_ms(500);
- 120   1      }
- 121          
- 122          //主程序
- 123          void main()
- 124          {
- 125   1              uchar i;
- 126   1              EA=1;   //打开中断总开关
- 127   1              EX0=1;  //打开外部中断0
- 128   1              IT0=1;  //设置中断触发方式为下降沿触发方式
- 129   1              EX1=1;
- 130   1              IT1=1;
- 131   1              delay_ms(10);
- 132   1              lcd_init();             //初始化
- 133   1              lcd_clr();              //清屏
- 134   1              delay_ms(5);
- 135   1              while(1)
- 136   1              {
- 137   2                      if(flag==1)
- 138   2                      {
- 139   3                              lcd_wcmd(0x00|0x80);    //DDRAM地址设置指令，显示位置为第1行第0列
- 140   3                              i=0;
- 141   3                              while(line1_data[i]!='\0')
- 142   3                              {
- 143   4                                      lcd_wdat(line1_data[i]);        //加载第1行字符
- 144   4                                      delay_ms(100);
- 145   4                                      i++;
- 146   4                              }
- 147   3                              lcd_wcmd(0x40|0x80);    //设置显示位置为第2行第0列
- 148   3                              i=0;
- 149   3                              while(line2_data[i]!='\0')
- 150   3                              {
- 151   4                                       lcd_wdat(line2_data[i]);       //加载第2行字符
- 152   4                                      delay_ms(100);
- 153   4                                      i++;
- 154   4                              }
- 155   3                              flash();
- 156   3                              flag=0;
- 157   3                      }
- 158   2                      if(flag==2)
- 159   2                      {
- 160   3                              lcd_clr();              //清屏
- 161   3                              delay_ms(5);
- 162   3                              flag=0;
- 163   3                      }
- 164   2              }
- 165   1      }                               
- 166          
- 167          //外部中断0子程序
- 168          void INT_0() interrupt 0
- 169          {
- 170   1              flag=1;
- 171   1      }
- 172          //外部中断1子程序
- 173          void INT_1() interrupt 1
- 174          {
- 175   1              flag=2;
- 176   1      }
+ 118   1              delay_ms(500); //延时0.5s
+ 119   1              lcd_wcmd(0x0c);
+ 120   1              delay_ms(500);  //延时0.5s
+ 121   1              lcd_wcmd(0x08);
+ 122   1              delay_ms(500);  //延时0.5s
+ 123   1              lcd_wcmd(0x0c);
+ 124   1              delay_ms(500);  //延时0.5s
+ 125   1      }
+ 126          
+ 127          //主程序
+ 128          void main()
+ 129          {
+ 130   1              uchar i;
+ 131   1              EA=1;   //打开中断总开关
+ 132   1              EX0=1;  //打开外部中断0
+ 133   1              IT0=1;  //设置外部中断0触发方式为下降沿触发方式
+ 134   1              EX1=1;  //打开外部中断1
+ 135   1              IT1=1;  //设置外部中断1触发方式为下降沿触发方式
+ 136   1              delay_ms(10);   //延时10ms
+ 137   1              lcd_init();             //初始化
+ 138   1              lcd_clr();              //清屏
+ 139   1              delay_ms(5);    //延时5ms
+ 140   1              while(1)
+ 141   1              {
+ 142   2                      if(flag==1)
+ 143   2                      {
+ 144   3                              lcd_clr();              //清屏
+ 145   3                              delay_ms(5);    //延时5ms
+ 146   3                              lcd_wcmd(0x00|0x80);    //DDRAM地址设置指令，显示位置为第1行第0列
+ 147   3                              i=0;
+ 148   3                              while(line1_data[i]!='\0')
+ 149   3                              {
+ 150   4                                      lcd_wdat(line1_data[i]);        //加载第1行字符
+ 151   4                                      delay_ms(100);           //延时100ms
+ 152   4                                      i++;
+ 153   4                              }
+ 154   3                              lcd_wcmd(0x40|0x80);    //设置显示位置为第2行第0列
+ 155   3                              i=0;
+ 156   3                              while(line2_data[i]!='\0')
+ 157   3                              {
+ 158   4                                      lcd_wdat(line2_data[i]);        //加载第2行字符
+ 159   4                                      delay_ms(100);     //延时100ms
+ 160   4                                      i++;
+ 161   4                              }
+ 162   3                              flash();         //调用闪烁子程序
+ 163   3                              flag=0;          //显示完后flag置0保持当前显示状态等待下一次中断
+ 164   3                      }
+ 165   2                      if(flag==2)
+ 166   2                      {
+ 167   3                              lcd_clr();              //清屏
+ 168   3                              delay_ms(5);    //延时5ms
+ 169   3                              flag=0;           //清屏完后flag置0保持当前显示状态等待下一次中断
+ 170   3                      }
+ 171   2              }
+ 172   1      }                               
+ 173          
+ 174          //外部中断0子程序
+ 175          void INT_0() interrupt 0   //点击KEY1调用外部中断0服务子程序，进行液晶显示
+ 176          {
+ 177   1              flag=1;
+ 178   1      }
+ 179          //外部中断1子程序                //点击KEY2调用外部中断1服务子程序，进行清屏
+C51 COMPILER V9.01   LCD1602                                                               05/16/2020 09:31:28 PAGE 4   
+
+ 180          void INT_1() interrupt 2
+ 181          {
+ 182   1              flag=2;
+ 183   1      }
+ 184          
+ 185          //中断                          中断号          入口地址
+ 186          //外部中断0                     0                       0003H
+ 187          //定时/计数器0          1                       000BH
+ 188          //外部中断1                     2                       0013H
+ 189          //定时/计数器1          3                       001BH
+ 190          //串行口                        4                       0023H
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V9.01   LCD1602                                                               05/04/2020 15:48:38 PAGE 4   
-
-   CODE SIZE        =    345    ----
+   CODE SIZE        =    351    ----
    CONSTANT SIZE    =     31    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

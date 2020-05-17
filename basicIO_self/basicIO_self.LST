@@ -1,0 +1,91 @@
+A51 MACRO ASSEMBLER  BASICIO_SELF                                                         05/13/2020 11:46:51 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN basicIO_self.OBJ
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE basicIO_self.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+                       2     
+0000                   3     ORG 0000H
+0000 0130              4     AJMP MAIN
+0030                   5     ORG 0030H
+                       6     
+0030                   7     MAIN:                    
+0030 758160            8             MOV SP,#60H      
+0033 75A0FF            9             MOV P2,#0FFH ;P2口所有位置高电平，复位时P2口所有位自动为高电平
+0036 74FE             10             MOV A,#0FEH
+0038 F520             11             MOV 20H,A        
+003A                  12     LOOP:
+003A 309002           13             JNB P1.0,LOOP1    
+003D 80FB             14             SJMP LOOP                 
+003F                  15     LOOP1:
+003F E520             16             MOV A,20H                 
+0041 F5A0             17             MOV P2,A
+0043 120059           18             LCALL DELAY100MS   
+                      19             
+                      20             
+0046 23               21             RL A                       
+0047 F520             22             MOV 20H,A
+0049 2090EE           23             JB P1.0,LOOP       
+004C 02003F           24             LJMP LOOP1                 
+                      25     
+004F                  26     DELAY10MS:                               
+004F 7A64             27             DL0:MOV R2,#100
+0051 7930             28             DL1:MOV R1,#48
+0053 D9FE             29             DL2:DJNZ R1,DL2     
+0055 00               30                     NOP
+0056 DAF9             31                     DJNZ R2,DL1         
+0058 22               32             RET
+0059                  33     DELAY100MS:                              
+0059 7AC8             34             DL_0:MOV R2,#200
+005B 79F8             35             DL_1:MOV R1,#248
+005D D9FE             36             DL_2:DJNZ R1,DL_2           
+005F 00               37                     NOP
+0060 DAF9             38                     DJNZ R2,DL_1        
+0062 22               39             RET                                 
+0063                  40     DELAY1S:                                 
+0063 7F0A             41             DL1_0:MOV R7,#10
+0065 7EC8             42             DL1_1:MOV R6,#200
+0067 7DF8             43             DL1_2:MOV R5,#248
+0069 DDFE             44             DL1_3:DJNZ R5,DL1_3       
+006B 00               45                     NOP
+006C DEF9             46                     DJNZ R6,DL1_2     
+006E DFF5             47                     DJNZ R7,DL1_1     
+0070 22               48             RET
+                      49     END
+A51 MACRO ASSEMBLER  BASICIO_SELF                                                         05/13/2020 11:46:51 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY100MS . . . .  C ADDR   0059H   A   
+DELAY10MS. . . . .  C ADDR   004FH   A   
+DELAY1S. . . . . .  C ADDR   0063H   A   
+DL0. . . . . . . .  C ADDR   004FH   A   
+DL1. . . . . . . .  C ADDR   0051H   A   
+DL1_0. . . . . . .  C ADDR   0063H   A   
+DL1_1. . . . . . .  C ADDR   0065H   A   
+DL1_2. . . . . . .  C ADDR   0067H   A   
+DL1_3. . . . . . .  C ADDR   0069H   A   
+DL2. . . . . . . .  C ADDR   0053H   A   
+DL_0 . . . . . . .  C ADDR   0059H   A   
+DL_1 . . . . . . .  C ADDR   005BH   A   
+DL_2 . . . . . . .  C ADDR   005DH   A   
+LOOP . . . . . . .  C ADDR   003AH   A   
+LOOP1. . . . . . .  C ADDR   003FH   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

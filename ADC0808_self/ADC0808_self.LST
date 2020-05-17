@@ -1,0 +1,250 @@
+C51 COMPILER V9.01   ADC0808_SELF                                                          05/17/2020 10:10:16 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE ADC0808_SELF
+OBJECT MODULE PLACED IN ADC0808_self.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE ADC0808_self.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          //ADC0808信号采集自我完成实验：利用LCD1602和ADC0808实现简单的交流信号过零检测与频率分析
+   2          //要求信号幅度变化时(满量程的5%-95%)，不影响检测的结果。频率检测的结果通过LCD1602
+   3          //的第一行显示出来，信号过零时，能够通过P2.6输出一个脉冲宽度为5us的脉冲信号。
+   4          #include "reg51.h"
+   5          #include "intrins.h"
+   6          #define uint unsigned int
+   7          #define uchar unsigned char
+   8          
+   9          sbit LCD_RS=P2^0;  //定义数据/命令选择位为P2.0引脚
+  10          sbit LCD_RW=P2^1;  //定义读/写选择位为P2.1引脚
+  11          sbit LCD_EN=P2^2;  //定义使能信号端为P2.2引脚
+  12          sbit CLK=P2^3;  //定义方波产生位为P2.3引脚
+  13          sbit Start=P2^4;  //定义开始标志位为P2.4引脚
+  14          sbit OE=P2^5;   //定义允许AD读写位为P2.5引脚
+  15          sbit Out_pulse=P2^6;  //定义脉冲输出位为P2.6引脚
+  16          sbit EOC=P2^7;  
+  17          
+  18          uchar n=0;
+  19          uchar flag=0;   //1s标志位
+  20          
+  21          //延时子程序
+  22          void delay_ms(uint xms)
+  23          {
+  24   1              uint i,j;
+  25   1              for(i=xms;i>0;i--)
+  26   1              {
+  27   2                      for(j=110;j>0;j--);
+  28   2              }
+  29   1      }
+  30          
+  31          //LCD忙检查子程序
+  32          bit lcd_busy()
+  33          {
+  34   1              bit result;     //忙标志位
+  35   1              LCD_RS=0;       //数据/命令选择位置低电平
+  36   1              LCD_RW=1;       //读/写选择位置高电平
+  37   1              LCD_EN=1;       //使能信号端置高电平
+  38   1              _nop_();
+  39   1              _nop_();
+  40   1              _nop_();
+  41   1              _nop_();        //相当于四条nop空指令
+  42   1              result=(bit)(P1&0x80);
+  43   1              LCD_EN=0;       //使能信号端置低电平，产生下降沿
+  44   1              return result;
+  45   1      }
+  46          
+  47          //写命令子程序
+  48          void lcd_wcmd(uchar cmd)
+  49          {
+  50   1              while(lcd_busy());      //判断LCD1604是否忙
+  51   1              LCD_RS=0;       //数据/命令选择位置低电平
+  52   1              LCD_RW=0;       //读/写选择位置低电平
+  53   1              LCD_EN=0;       //使能信号端置低电平
+  54   1              _nop_();
+  55   1              _nop_();
+C51 COMPILER V9.01   ADC0808_SELF                                                          05/17/2020 10:10:16 PAGE 2   
+
+  56   1              P1=cmd;         //将数据送入P1口
+  57   1              _nop_();
+  58   1              _nop_();
+  59   1              _nop_();
+  60   1              _nop_();        //相当于四条nop空指令
+  61   1              LCD_EN=1;       //使能信号端置高电平
+  62   1              _nop_();
+  63   1              _nop_();
+  64   1              _nop_();
+  65   1              _nop_();        //相当于四条nop空指令
+  66   1              LCD_EN=0;       //使能信号端置低电平，产生下降沿
+  67   1      }
+  68          
+  69          //写数据子程序
+  70          void lcd_wdat(uchar dat)
+  71          {
+  72   1              while(lcd_busy());      //读忙信号，不忙则向下执行
+  73   1              LCD_RS=1;       //选择数据寄存器
+  74   1              LCD_RW=0;       //读写位置低电平，写入数据
+  75   1              LCD_EN=0;       //使能信号端置低电平
+  76   1              _nop_();
+  77   1              _nop_();
+  78   1              P1=dat;         //将数据送入P1口
+  79   1              _nop_();
+  80   1              _nop_();
+  81   1              _nop_();
+  82   1              _nop_();
+  83   1              LCD_EN=1;       //使能信号端置高电平
+  84   1              _nop_();
+  85   1              _nop_();
+  86   1              _nop_();
+  87   1              _nop_();
+  88   1              LCD_EN=0;       //使能信号端置低电平，产生下降沿
+  89   1      }
+  90          
+  91          //LCD初始化子程序
+  92          void lcd_init()
+  93          {
+  94   1              delay_ms(5);
+  95   1              lcd_wcmd(0x01);//清除LCD显示内容
+  96   1              delay_ms(5);
+  97   1              lcd_wcmd(0x06);//移动光标,写入新数据后地址寄存器的内容减1
+  98   1              delay_ms(5);
+  99   1              lcd_wcmd(0x0c);//显示开，关光标
+ 100   1              delay_ms(5);             
+ 101   1              lcd_wcmd(0x38);//16*4显示，5*7点阵
+ 102   1              delay_ms(15);//等待LCD电源稳定
+ 103   1      }
+ 104          
+ 105          //系统初始化子程序
+ 106          void systeminit()
+ 107          {
+ 108   1              TMOD=0x21;      //设定定时器T1工作在方式2，定时器T0工作在方式1
+ 109   1              TH1=0xfd;  //50KHZ，设置计数初值，利用T1中断产生CLK信号
+ 110   1              TL1=0xfd;
+ 111   1              EA=1;   //开总中断
+ 112   1              ET1=1;  //开定时器T1中断
+ 113   1              TR1=1;  //启动中断
+ 114   1              TH0=0x45;       //50ms定时
+ 115   1              TL0=0x00;
+ 116   1              ET0=1;   //开定时器T0中断
+ 117   1              TR0=1;   //启动中断
+C51 COMPILER V9.01   ADC0808_SELF                                                          05/17/2020 10:10:16 PAGE 3   
+
+ 118   1              Start=0;  //A/D转换启动信号，输入高电平有效
+ 119   1              OE=0;  //数据输出允许信号，输入高电平有效
+ 120   1      }
+ 121          
+ 122          //计数器0中断服务子程序
+ 123          void time0() interrupt 1
+ 124          {
+ 125   1              ET0=0;  //关中断
+ 126   1              TH0=0X45;//46 
+ 127   1              TL0=0X00;//50MS定时 
+ 128   1              n++; 
+ 129   1              if(n==20) 
+ 130   1              {
+ 131   2                      flag=1;
+ 132   2                      n=0;
+ 133   2              } 
+ 134   1              ET0=1;  //开中断
+ 135   1      }
+ 136          
+ 137          //定时/计数器1中断服务子程序
+ 138          void time1() interrupt 3 
+ 139          { 
+ 140   1              ET1=0;   //关中断
+ 141   1              CLK=~CLK;  //CLK信号取反
+ 142   1              ET1=1;   //开中断
+ 143   1      } 
+ 144          
+ 145          //ADC0808数据采集
+ 146          uchar ADC_sample()
+ 147          {
+ 148   1              uchar Temp; 
+ 149   1              Start=1;        //启动A/D转换
+ 150   1              delay_ms(1);
+ 151   1              Start=0; //启动信号
+ 152   1              while(!EOC);// A／D转换结束信号 
+ 153   1              P0=0xff; //P0口全置1 
+ 154   1              delay_ms(1); 
+ 155   1              OE=1;   //允许数据输出
+ 156   1              Temp=P0;//读取采集数据 
+ 157   1              OE=0;   //关闭数据输出
+ 158   1              delay_ms(4);
+ 159   1              return Temp;//返回采集数据 
+ 160   1      } 
+ 161          
+ 162          //字符显示子程序
+ 163          void display(uint ch)
+ 164          {
+ 165   1              uint num;         //定义暂存字符各位变量
+ 166   1              lcd_wcmd(0x82);   //设置显示位置为第1行第3列
+ 167   1              num=ch/100;
+ 168   1              lcd_wdat(0x30+num);      //显示百位
+ 169   1      
+ 170   1              num=ch-num*100;
+ 171   1              num=num/10;
+ 172   1              lcd_wdat(0x30+num);      //显示十位
+ 173   1      
+ 174   1              num=ch%10;
+ 175   1              lcd_wdat(0x30+num);      //显示个位
+ 176   1      }
+ 177          
+ 178          //主程序
+ 179          void main()
+C51 COMPILER V9.01   ADC0808_SELF                                                          05/17/2020 10:10:16 PAGE 4   
+
+ 180          {
+ 181   1              uint temp1,temp2;
+ 182   1              uchar f=0;      //f存频率
+ 183   1              lcd_init();     //LCD初始化
+ 184   1              delay_ms(5);
+ 185   1              systeminit();           //系统初始化
+ 186   1              CLK=0;
+ 187   1              lcd_wcmd(0x80);  //设置显示位置为第1行第0列
+ 188   1              lcd_wdat('f');   //输出显示f:
+ 189   1              lcd_wdat(':');
+ 190   1              lcd_wdat('5');   //设置显示位置为第1行第6列
+ 191   1              lcd_wdat('0');
+ 192   1              lcd_wdat('H');   //输出显示HZ
+ 193   1              lcd_wdat('z');
+ 194   1              while(1)
+ 195   1              {
+ 196   2                      temp2=temp1;
+ 197   2                      temp1=ADC_sample();      //调用ADC0808数据采样子程序
+ 198   2                      if(((temp1>=128)&&(temp2<=128))||((temp1<=128)&&(temp2>=128)))//判断采样数据是正数还是负数
+ 199   2                      {
+ 200   3                              f++;
+ 201   3                              Out_pulse=1;
+ 202   3                              _nop_();
+ 203   3                              _nop_();
+ 204   3                              _nop_();
+ 205   3                              _nop_();
+ 206   3                              _nop_();   //产生5us的脉冲信号
+ 207   3                      }
+ 208   2                      if(flag==1)        //1s后计算频率
+ 209   2                      {
+ 210   3                              flag=0;
+ 211   3                              f=f/2;
+ 212   3                              display(f);      //显示频率
+ 213   3                              f=0;
+ 214   3                      }
+ 215   2              }
+ 216   1      }
+ 217          
+ 218          
+ 219          
+ 220          
+ 221                    
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    486    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

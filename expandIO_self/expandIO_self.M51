@@ -1,0 +1,106 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/13/2020  14:36:31  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE expandIO_self.obj TO expandIO_self
+
+
+INPUT MODULES INCLUDED:
+  expandIO_self.obj (EXPANDIO_SELF)
+
+
+LINK MAP OF MODULE:  expandIO_self (EXPANDIO_SELF)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0098H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  expandIO_self (EXPANDIO_SELF)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        EXPANDIO_SELF
+  C:008AH         SYMBOL        DELAY10S
+  C:007CH         SYMBOL        DELAY2S
+  C:008AH         SYMBOL        DL0
+  C:008CH         SYMBOL        DL1
+  C:007CH         SYMBOL        DL1_0
+  C:007EH         SYMBOL        DL1_1
+  C:0080H         SYMBOL        DL1_2
+  C:0082H         SYMBOL        DL1_3
+  C:008EH         SYMBOL        DL2
+  C:0090H         SYMBOL        DL3
+  C:0030H         SYMBOL        MAIN
+  D:0081H         SYMBOL        SP
+  C:003DH         SYMBOL        STAT1
+  C:004CH         SYMBOL        STAT2
+  C:005BH         SYMBOL        STAT3
+  C:006AH         SYMBOL        STAT4
+  C:0000H         LINE#         9
+  C:0030H         LINE#         13
+  C:0033H         LINE#         14
+  C:0035H         LINE#         15
+  C:0038H         LINE#         16
+  C:0039H         LINE#         17
+  C:003CH         LINE#         18
+  C:003DH         LINE#         20
+  C:003FH         LINE#         21
+  C:0042H         LINE#         22
+  C:0043H         LINE#         23
+  C:0045H         LINE#         24
+  C:0048H         LINE#         25
+  C:0049H         LINE#         26
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/13/2020  14:36:31  PAGE 2
+
+
+  C:004CH         LINE#         28
+  C:004EH         LINE#         29
+  C:0051H         LINE#         30
+  C:0052H         LINE#         31
+  C:0054H         LINE#         32
+  C:0057H         LINE#         33
+  C:0058H         LINE#         34
+  C:005BH         LINE#         36
+  C:005DH         LINE#         37
+  C:0060H         LINE#         38
+  C:0061H         LINE#         39
+  C:0063H         LINE#         40
+  C:0066H         LINE#         41
+  C:0067H         LINE#         42
+  C:006AH         LINE#         44
+  C:006CH         LINE#         45
+  C:006FH         LINE#         46
+  C:0070H         LINE#         47
+  C:0072H         LINE#         48
+  C:0075H         LINE#         49
+  C:0076H         LINE#         50
+  C:0079H         LINE#         51
+  C:007CH         LINE#         54
+  C:007EH         LINE#         55
+  C:0080H         LINE#         56
+  C:0082H         LINE#         57
+  C:0084H         LINE#         58
+  C:0085H         LINE#         59
+  C:0087H         LINE#         60
+  C:0089H         LINE#         61
+  C:008AH         LINE#         64
+  C:008CH         LINE#         65
+  C:008EH         LINE#         66
+  C:0090H         LINE#         67
+  C:0092H         LINE#         68
+  C:0093H         LINE#         69
+  C:0095H         LINE#         70
+  C:0097H         LINE#         71
+  -------         ENDMOD        EXPANDIO_SELF
+
+Program Size: data=8.0 xdata=0 code=152
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

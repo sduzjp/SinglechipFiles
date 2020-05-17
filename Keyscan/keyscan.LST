@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  KEYSCAN                                                              05/04/2020 14:39:49 PAGE     1
+A51 MACRO ASSEMBLER  KEYSCAN                                                              05/15/2020 17:13:27 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02
@@ -7,129 +7,136 @@ ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE keyscan.asm SET(SMALL) DEBUG EP
 
 LOC  OBJ            LINE     SOURCE
 
-0000                   1     ORG 0000H
-0000 0130              2     AJMP MAIN
-0030                   3     ORG 0030H
-                       4     
-0030                   5     MAIN:
-0030 758160            6             MOV SP,#60H
-0033 759000            7             MOV P1,#00H
-0036                   8     LOOP:
-0036 753000            9             MOV 30H,#0                
-0039 753100           10             MOV 31H,#0                
-003C 12005B           11             LCALL KEYSCAN
-003F E530             12             MOV A,30H
-0041 60F3             13             JZ LOOP
-0043 753200           14             MOV 32H,#0                
-0046 753300           15             MOV 33H,#0                
-0049 1200D4           16             LCALL SEARCHKEYNUM
-004C E532             17             MOV A,32H
-004E 70E6             18             JNZ LOOP
-0050 900109           19             MOV DPTR,#TABLE2
-0053 E533             20             MOV A,33H
-0055 93               21             MOVC A,@A+DPTR
-0056 F590             22             MOV P1,A
-0058 020036           23             LJMP LOOP
-005B                  24     KEYSCAN:
-005B 75B0F0           25             MOV P3,#0F0H
-005E E5B0             26             MOV A,P3
-0060 54F0             27             ANL A,#0F0H
-0062 B4F002           28             CJNE A,#0F0H,ASKEY
-0065 80F4             29             SJMP KEYSCAN
-0067                  30     ASKEY:
-0067 1200EF           31             LCALL DELAY10ms
-006A 75B0F0           32             MOV P3,#0F0H
-006D E5B0             33             MOV A,P3
-006F 54F0             34             ANL A,#0F0H
-0071 B4F009           35             CJNE A,#0F0H,ISKEY
-0074 753100           36             MOV 31H,#0
-0077 753000           37             MOV 30H,#0
-007A 0200D3           38             LJMP TORET1
-007D                  39     ISKEY:
-007D F531             40             MOV 31H,A
-007F                  41     SEARCHLINE0:
-007F 75B0FE           42             MOV P3,#0FEH
-0082 E5B0             43             MOV A,P3
-0084 54F0             44             ANL A,#0F0H
-0086 C3               45             CLR C
-0087 94F0             46             SUBB A,#0F0H
-0089 6005             47             JZ SEARCHLINE1
-008B 740E             48             MOV A,#0EH
-008D 0200CB           49             LJMP TOSTORE
-0090                  50     SEARCHLINE1:
-0090 75B0FD           51             MOV P3,#0FDH
-0093 E5B0             52             MOV A,P3
-0095 54F0             53             ANL A,#0F0H
-0097 C3               54             CLR C
-0098 94F0             55             SUBB A,#0F0H
-009A 6005             56             JZ SEARCHLINE2
-009C 740D             57             MOV A,#0DH
-009E 0200CB           58             LJMP TOSTORE
-A51 MACRO ASSEMBLER  KEYSCAN                                                              05/04/2020 14:39:49 PAGE     2
+                       1     
+                       2     
+0000                   3     ORG 0000H
+0000 0130              4     AJMP MAIN  
+0030                   5     ORG 0030H
+                       6     
+0030                   7     MAIN:                             
+0030 758160            8             MOV SP,#60H               
+0033 759000            9             MOV P1,#00H               
+0036                  10     LOOP:
+0036 753000           11             MOV 30H,#0                
+0039 753100           12             MOV 31H,#0                
+003C 12005B           13             LCALL KEYSCAN     
+003F E530             14             MOV A,30H                
+0041 60F3             15             JZ LOOP                   
+0043 753200           16             MOV 32H,#0                
+0046 753300           17             MOV 33H,#0                
+0049 1200D4           18             LCALL SEARCHKEYNUM        
+004C E532             19             MOV A,32H                
+004E 70E6             20             JNZ LOOP                  
+0050 900109           21             MOV DPTR,#TABLE2
+0053 E533             22             MOV A,33H
+0055 93               23             MOVC A,@A+DPTR     
+0056 F590             24             MOV P1,A                   
+0058 020036           25             LJMP LOOP                
+                      26     
+005B                  27     KEYSCAN:                   
+005B 75B0F0           28             MOV P3,#0F0H     
+005E E5B0             29             MOV A,P3
+0060 54F0             30             ANL A,#0F0H             
+0062 B4F002           31             CJNE A,#0F0H,ASKEY        
+0065 80F4             32             SJMP KEYSCAN             
+0067                  33     ASKEY:
+0067 1200EF           34             LCALL DELAY10MS     
+006A 75B0F0           35             MOV P3,#0F0H
+006D E5B0             36             MOV A,P3
+006F 54F0             37             ANL A,#0F0H
+0071 B4F009           38             CJNE A,#0F0H,ISKEY        
+0074 753100           39             MOV 31H,#0                       
+0077 753000           40             MOV 30H,#0                       
+007A 0200D3           41             LJMP TORET1
+007D                  42     ISKEY:
+007D F531             43             MOV 31H,A           
+007F                  44     SEARCHLINE0:              
+007F 75B0FE           45             MOV P3,#0FEH      
+0082 E5B0             46             MOV A,P3
+0084 54F0             47             ANL A,#0F0H
+0086 C3               48             CLR C              
+0087 94F0             49             SUBB A,#0F0H    
+0089 6005             50             JZ SEARCHLINE1   
+008B 740E             51             MOV A,#0EH               
+008D 0200CB           52             LJMP TOSTORE     
+0090                  53     SEARCHLINE1:        
+0090 75B0FD           54             MOV P3,#0FDH
+0093 E5B0             55             MOV A,P3
+0095 54F0             56             ANL A,#0F0H
+0097 C3               57             CLR C
+0098 94F0             58             SUBB A,#0F0H
+A51 MACRO ASSEMBLER  KEYSCAN                                                              05/15/2020 17:13:27 PAGE     2
 
-00A1                  59     SEARCHLINE2:
-00A1 75B0FB           60             MOV P3,#0FBH
-00A4 E5B0             61             MOV A,P3
-00A6 54F0             62             ANL A,#0F0H
-00A8 C3               63             CLR C
-00A9 94F0             64             SUBB A,#0F0H
-00AB 6005             65             JZ SEARCHLINE3
-00AD 740B             66             MOV A,#0BH
-00AF 0200CB           67             LJMP TOSTORE
-00B2                  68     SEARCHLINE3:
-00B2 75B0F7           69             MOV P3,#0F7H
-00B5 E5B0             70             MOV A,P3
-00B7 54F0             71             ANL A,#0F0H
-00B9 C3               72             CLR C
-00BA 94F0             73             SUBB A,#0F0H
-00BC 6005             74             JZ WRONGKEY
-00BE 7407             75             MOV A,#07H
-00C0 0200CB           76             LJMP TOSTORE
-00C3                  77     WRONGKEY:
-00C3 753100           78             MOV 31H,#0
-00C6 753000           79             MOV 30H,#0
-00C9 8008             80             SJMP TORET1
-00CB                  81     TOSTORE:
-00CB 4531             82             ORL A,31H
-00CD F4               83             CPL A
-00CE F531             84             MOV 31H,A
-00D0 753001           85             MOV 30H,#1
-00D3                  86     TORET1:
-00D3 22               87             RET
-00D4                  88     SEARCHKEYNUM:
-00D4 9000F9           89             MOV DPTR,#TABLE1
-00D7 E533             90             MOV A,33H
-00D9 93               91             MOVC A,@A+DPTR
-00DA C3               92             CLR C
-00DB 9531             93             SUBB A,31H
-00DD 600C             94             JZ ENDSEARCH
-00DF 0533             95             INC 33H
-00E1 E533             96             MOV A,33H
-00E3 B410EE           97             CJNE A,#10H,SEARCHKEYNUM
-00E6 753201           98             MOV 32H,#1                
-00E9 8003             99             SJMP TORET2
-00EB                 100     ENDSEARCH:
-00EB 753200          101             MOV 32H,#0
-00EE                 102     TORET2:
-00EE 22              103             RET
-00EF                 104     DELAY10ms:
-00EF 7A64            105             DL0:MOV R2,#100
-00F1 7930            106             DL1:MOV R1,#48
-00F3 D9FE            107             DL2:DJNZ R1,DL2
-00F5 00              108                     NOP 
-00F6 DAF9            109                     DJNZ R2,DL1
-00F8 22              110                     RET
-                     111     
-00F9 11214181        112     TABLE1:DB 11H,21H,41H,81H,12H,22H,42H,82H,14H,24H,44H,84H,18H,28H,48H,88H
+009A 6005             59             JZ SEARCHLINE2   
+009C 740D             60             MOV A,#0DH               
+009E 0200CB           61             LJMP TOSTORE    
+00A1                  62     SEARCHLINE2:        
+00A1 75B0FB           63             MOV P3,#0FBH
+00A4 E5B0             64             MOV A,P3
+00A6 54F0             65             ANL A,#0F0H
+00A8 C3               66             CLR C
+00A9 94F0             67             SUBB A,#0F0H
+00AB 6005             68             JZ SEARCHLINE3     
+00AD 740B             69             MOV A,#0BH                 
+00AF 0200CB           70             LJMP TOSTORE       
+00B2                  71     SEARCHLINE3:               
+00B2 75B0F7           72             MOV P3,#0F7H
+00B5 E5B0             73             MOV A,P3
+00B7 54F0             74             ANL A,#0F0H
+00B9 C3               75             CLR C
+00BA 94F0             76             SUBB A,#0F0H
+00BC 6005             77             JZ WRONGKEY         
+00BE 7407             78             MOV A,#07H           
+00C0 0200CB           79             LJMP TOSTORE     
+00C3                  80     WRONGKEY:                   
+00C3 753100           81             MOV 31H,#0          
+00C6 753000           82             MOV 30H,#0          
+00C9 8008             83             SJMP TORET1         
+00CB                  84     TOSTORE:                    
+00CB 4531             85             ORL A,31H           
+00CD F4               86             CPL A              
+00CE F531             87             MOV 31H,A          
+00D0 753001           88             MOV 30H,#1         
+00D3                  89     TORET1:
+00D3 22               90             RET                       
+                      91     
+00D4                  92     SEARCHKEYNUM:            
+00D4 9000F9           93             MOV DPTR,#TABLE1
+00D7 E533             94             MOV A,33H
+00D9 93               95             MOVC A,@A+DPTR    
+00DA C3               96             CLR C
+00DB 9531             97             SUBB A,31H
+00DD 600C             98             JZ ENDSEARCH    
+00DF 0533             99             INC 33H             
+00E1 E533            100             MOV A,33H
+00E3 B410EE          101             CJNE A,#10H,SEARCHKEYNUM  
+00E6 753201          102             MOV 32H,#1                
+00E9 8003            103             SJMP TORET2               
+00EB                 104     ENDSEARCH:
+00EB 753200          105             MOV 32H,#0        
+00EE                 106     TORET2:
+00EE 22              107             RET                
+                     108     
+00EF                 109     DELAY10MS:               
+00EF 7A64            110             DL0:MOV R2,#100
+00F1 7930            111             DL1:MOV R1,#48
+00F3 D9FE            112             DL2:DJNZ R1,DL2           
+00F5 00              113                     NOP 
+00F6 DAF9            114                     DJNZ R2,DL1               
+00F8 22              115                     RET
+                     116     
+00F9 11214181        117     TABLE1:DB 11H,21H,41H,81H,12H,22H,42H,82H,14H,24H,44H,84H,18H,28H,48H,88H   
 00FD 12224282                
 0101 14244484                
 0105 18284888                
-0109 3F065B4F        113     TABLE2:DB 3FH,06H,5BH,4FH,66H,6DH,7DH,07H,7FH,6FH,77H,7CH,39H,5EH,79H,71H
+0109 3F065B4F        118     TABLE2:DB 3FH,06H,5BH,4FH,66H,6DH,7DH,07H,7FH,6FH,77H,7CH,39H,5EH,79H,71H   
 010D 666D7D07                
 0111 7F6F777C                
 0115 395E7971                
-                     114     END
-A51 MACRO ASSEMBLER  KEYSCAN                                                              05/04/2020 14:39:49 PAGE     3
+A51 MACRO ASSEMBLER  KEYSCAN                                                              05/15/2020 17:13:27 PAGE     3
+
+                     119     END
+A51 MACRO ASSEMBLER  KEYSCAN                                                              05/15/2020 17:13:27 PAGE     4
 
 SYMBOL TABLE LISTING
 ------ ----- -------

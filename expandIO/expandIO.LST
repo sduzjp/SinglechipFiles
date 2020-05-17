@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  EXPANDIO                                                             05/03/2020 15:07:04 PAGE     1
+A51 MACRO ASSEMBLER  EXPANDIO                                                             05/13/2020 11:54:01 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02
@@ -7,19 +7,20 @@ ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE expandIO.asm SET(SMALL) DEBUG E
 
 LOC  OBJ            LINE     SOURCE
 
-0000                   1     ORG 0000H
-0000 0130              2     AJMP MAIN
-0030                   3     ORG 0030H
-                       4     
-0030                   5     MAIN:
-0030 758160            6             MOV SP,#60H
-0033 90FE00            7             MOV DPTR,#0FE00H
-0036                   8     LOOP:
-0036 E0                9             MOVX A,@DPTR
-0037 F0               10             MOVX @DPTR,A
-0038 80FC             11             SJMP LOOP
-                      12     END
-A51 MACRO ASSEMBLER  EXPANDIO                                                             05/03/2020 15:07:04 PAGE     2
+                       1     
+0000                   2     ORG 0000H
+0000 0130              3     AJMP MAIN         
+0030                   4     ORG 0030H
+                       5     
+0030                   6     MAIN:             
+0030 758160            7             MOV SP,#60H               
+0033 90FE00            8             MOV DPTR,#0FE00H   
+0036                   9     LOOP:
+0036 E0               10             MOVX A,@DPTR       
+0037 F0               11             MOVX @DPTR,A       
+0038 80FC             12             SJMP LOOP                  
+                      13     END
+A51 MACRO ASSEMBLER  EXPANDIO                                                             05/13/2020 11:54:01 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------

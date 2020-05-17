@@ -1,0 +1,220 @@
+A51 MACRO ASSEMBLER  KEYSCAN_SELF_ASM                                                     05/15/2020 17:56:51 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN Keyscan_self_asm.OBJ
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE Keyscan_self_asm.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;¾ØÕó¼üÅÌÉ¨Ãè×ÔÎÒÍê³ÉÊÔÑé£º¸ù¾Ýµã»÷²»Í¬°´¼üÍê³É²ÊÉ«Ð×ªµÆÒªÇó
+                       2     
+0000                   3     ORG 0000H
+0000 0130              4     AJMP MAIN       ;Ìø×ªµ½Ö÷³ÌÐò
+0030                   5     ORG 0030H
+                       6     
+0030                   7     MAIN:   
+0030 758160            8             MOV SP,#60H        ;Õ»Ö¸Õë³õÊ¼»¯
+0033 753001            9             MOV 30H,#1         ;30H´æ·ÅÐ×ª·½ÏòDIR
+0036 753100           10             MOV 31H,#0         ;31H´æ·ÅÐ×ªËÙ¶ÈSpeedÒÔ¼°¶ÔÓ¦ÖÜÆÚ
+0039 7532FE           11             MOV 32H,#0FEH   ;32Hµ¥Ôª´æ·ÅÐ×ª²ÊÉ«µÆÁÁÃðÂë
+003C E532             12             MOV A,32H
+003E F590             13             MOV P1,A         ;½«32Hµ¥ÔªÄÚÖµËÍP1¿Ú
+0040 753300           14             MOV 33H,#0      ;´æ·ÅÓÐÎÞ°´¼ü°´ÏÂµÄ±êÖ¾,ÈôÎª0±íÊ¾ÎÞ°´¼ü°´ÏÂ£¬1±íÊ¾ÓÐ°´¼ü°´ÏÂ
+0043 753400           15             MOV 34H,#0      ;´æ·Å°´ÏÂµÄ°´¼üµÄ¼üÂë
+0046                  16     LOOP:
+0046 753300           17             MOV 33H,#0
+0049 12009A           18             LCALL KEYSCAN     ;µ÷ÓÃ¼üÅÌÉ¨Ãè×Ó³ÌÐò
+004C E533             19             MOV A,33H                
+004E 6003             20             JZ LOOP1          ;ÅÐ¶ÏÓÐÎÞ°´¼ü°´ÏÂ£¬Èô(A)=0ËµÃ÷ÎÞ°´¼ü°´ÏÂÌø×ªµ½LOOP1´¦·ñÔòµ÷ÓÃÔËÐÐ
+                             ²ÎÊµ÷Õû×Ó³ÌÐò
+0050 1200F1           21             LCALL Changeref   ;µ÷ÓÃÔËÐÐ²ÎÊµ÷Õû×Ó³ÌÐò
+0053                  22     LOOP1:
+0053 853290           23             MOV P1,32H        ;½«Ð×ª²ÊÉ«µÆÁÁÃð¿ØÖÆÏÔÊ¾ÂëËÍÈëP1¿Ú
+0056 E531             24             MOV A,31H         ;½«Ð×ªËÙ¶ÈËÍÈëÀÛ¼ÓÆ÷A
+0058 90012B           25             MOV DPTR,#T_TABLE
+005B 93               26             MOVC A,@A+DPTR  ;²é±í»ñµÃÐ×ªÖÜÆÚ
+005C F9               27             MOV R1,A         ;½«Ð×ªÖÜÆÚ±£´æÖÃ¼Ä´æÆ÷R1ÖÐ
+005D E531             28             MOV A,31H        ;½«Ð×ªËÙ¶ÈÔÙ´ÎËÍÈëÀÛ¼ÓÆ÷A
+005F 900134           29             MOV DPTR,#Sout_TABLE
+0062 93               30             MOVC A,@A+DPTR   ;²é±í»ñµÃµµÎ»Êä³öÂë
+0063 F580             31             MOV P0,A          ;½«µµÎ»Êä³öÂëËÍÈëP0¿ÚÈÃ¶ÔÓ¦µµÎ»·¢¹â¶þ¼«¹ÜÁÁ
+0065 E530             32             MOV A,30H         ;¶ÁDIRÖµÅÐ¶ÏÐ×ª·½Ïò
+0067 7008             33             JNZ LOOP3         ;Èô(A)=1Õ×ª·ñÔò·´×ª
+0069                  34     LOOP2:                   ;Ñ­»·ÓÒÒÆÏÔÊ¾Âë½øÐÐÐ×ª²ÊÉ«µÆ·´×ª
+0069 E532             35             MOV A,32H
+006B 03               36             RR A
+006C F532             37             MOV 32H,A
+006E 020076           38             LJMP LOOP4
+0071                  39     LOOP3:             ;Ñ­»·×óÒÆÏÔÊ¾Âë½øÐÐÐ×ª²ÊÉ«µÆÕ×ª
+0071 E532             40             MOV A,32H
+0073 23               41             RL A
+0074 F532             42             MOV 32H,A
+0076                  43     LOOP4:                  ;½øÐÐÐ×ª²ÊÉ«µÆµÄÏÔÊ¾
+0076 F590             44             MOV P1,A        ;½«ÏÔÊ¾ÂëËÍÈëP1¿Ú
+0078 E9               45             MOV A,R1        ;½«Ð×ªÖÜÆÚËÍÈëÀÛ¼ÓÆ÷A
+0079 75F008           46             MOV B,#08H
+007C 84               47             DIV AB          ;½«ÖÜÆÚ¾ù·Ö³É8·Ý£¬Ã¿Ò»·Ý±íÊ¾Ò»¸öLEDµÆÏÔÊ¾µÄÊ±¼ä
+007D F9               48             MOV R1,A
+007E                  49     DELAY:             ;½øÐÐÃ¿¸öµÆµÄÏÔÊ¾
+007E 120090           50             LCALL DELAY5MS
+0081 D9FB             51             DJNZ R1,DELAY
+0083 020046           52             LJMP LOOP
+                      53     
+0086                  54     DELAY100MS:                                         
+0086 7EC8             55             DL_0:MOV R6,#200
+0088 7DF8             56             DL_1:MOV R5,#248
+008A DDFE             57             DL_2:DJNZ R5,DL_2         ;ÄÚÑ­»·
+A51 MACRO ASSEMBLER  KEYSCAN_SELF_ASM                                                     05/15/2020 17:56:51 PAGE     2
+
+008C 00               58                     NOP
+008D DEF9             59                     DJNZ R6,DL_1      ;ÖÐÑ­»·
+008F 22               60             RET
+                      61             
+0090                  62     DELAY5MS:               ;ÑÓÊ±5ms×Ó³ÌÐò          (23*2+1+1+2)*100+1~=5ms
+0090 7F64             63             DL0:MOV R7,#100
+0092 7E17             64             DL1:MOV R6,#23
+0094 DEFE             65             DL2:DJNZ R6,DL2   ;ÄÚÑ­»·
+0096 00               66                     NOP
+0097 DFF9             67                     DJNZ R7,DL1       ;ÍâÑ­»·
+0099 22               68             RET
+                      69     
+009A                  70     KEYSCAN:                   ;¼üÅÌÉ¨Ãè×Ó³ÌÐò
+009A 75B03C           71             MOV P3,#3CH             ;//ÐÐÖÃ0ÁÐÖÃ1£¬¶Á°´ÏÂµÄ°´¼üµÄÁÐÖµ
+009D E5B0             72             MOV A,P3
+009F 5430             73             ANL A,#30H              ;//±£ÁôÓÐÐ§Î»
+00A1 B43003           74             CJNE A,#30H,ASKEY       ;//Èô(A)!=30HËµÃ÷ÓÐ°´¼ü°´ÏÂÔòÌø×ªµ½ASKEY´¦¼ÌÐøÅÐ¶ÏÒ»´Î
+00A4 0200F0           75             LJMP TORET         ;//·ñÔòÌø×ªµ½TORET´¦·µ»Ø
+00A7                  76     ASKEY:                     ;//¼ÌÐøÅÐ¶ÏÊÇ·ñÓÐ°´¼ü°´ÏÂ
+00A7 120086           77             LCALL DELAY100MS ;//ÑÓÊ±15msÈ¥¶¶¶¯
+00AA 75B03C           78             MOV P3,#3CH
+00AD E5B0             79             MOV A,P3
+00AF 5430             80             ANL A,#30H
+00B1 B43009           81             CJNE A,#30H,ISKEY       ;//ÖØ¸´ÉÏÊöÅÐ¶Ï£¬Èô(A)!=30HËµÃ÷ÓÐ°´¼ü°´ÏÂÔòÌø×ªµ½ISKEY´¦½øÐ
+                             Ð¼üÂëÈ·¶¨
+00B4 753300           82             MOV 33H,#0         ;//·ñÔò33HÖÃ0ËµÃ÷ÎÞ°´¼ü°´ÏÂ
+00B7 753400           83             MOV 34H,#0         ;//34Hµ¥Ôª´æ·Å¼üÂëÖÃ0
+00BA 0200F0           84             LJMP TORET         ;//Ìø×ªµ½TORET´¦·µ»Ø
+00BD                  85     ISKEY:
+00BD 44C0             86             ORL A,#0C0H        ;//½«ÁÐµÄÆäËûÎ»ÖÃ1
+00BF F534             87             MOV 34H,A          ;//½«ÁÐÖµ±£´æµ½34Hµ¥Ôª´æ·Å¼üÂë
+00C1                  88     SEARCHLINE0:       ;//É¨Ãè¼üÅÌµÚ0ÐÐ
+00C1 75B03E           89             MOV P3,#3EH
+00C4 E5B0             90             MOV A,P3
+00C6 5430             91             ANL A,#30H
+00C8 C3               92             CLR C
+00C9 9430             93             SUBB A,#30H        
+00CB 7015             94             JNZ SAVELINE0   ;//Èô(A)!=30HËµÃ÷°´ÏÂµÄ°´¼üÔÚµÚ0ÐÐÔòÌø×ªµ½SAVELINE0±£´æÐÐÖµ
+00CD                  95     SEARCHLINE1:            ;//·ñÔò¼ÌÐøÉ¨ÃèµÚ1ÐÐ
+00CD 75B03D           96             MOV P3,#3DH
+00D0 E5B0             97             MOV A,P3
+00D2 5430             98             ANL A,#30H
+00D4 C3               99             CLR C
+00D5 9430            100             SUBB A,#30H
+00D7 700D            101             JNZ SAVELINE1   ;//Èô(A)!=30HËµÃ÷°´ÏÂµÄ°´¼üÔÚµÚ1ÐÐÔòÌø×ªµ½SAVELINE1±£´æÐÐÖµ
+00D9 753300          102             MOV 33H,#0              ;//·ñÔòÎªÎÞÐ§°´¼ü£¬33Hµ¥ÔªÖÃ0
+00DC 753400          103             MOV 34H,#0               
+00DF 0200F0          104             LJMP TORET               
+00E2                 105     SAVELINE0:                       
+00E2 740E            106             MOV A,#0EH
+00E4 8002            107             SJMP KEYNUM
+00E6                 108     SAVELINE1:                 
+00E6 740D            109             MOV A,#0DH
+00E8                 110     KEYNUM:
+00E8 4534            111             ORL A,34H         
+00EA F4              112             CPL A
+00EB F534            113             MOV 34H,A        
+00ED 753301          114             MOV 33H,#1       
+00F0 22              115     TORET:RET                
+                     116     
+00F1                 117     Changeref:               
+00F1 E534            118             MOV A,34H           
+00F3 B41106          119             CJNE A,#11H,KEYCODE1      
+00F6 753001          120             MOV 30H,#1          
+00F9 02012A          121             LJMP TORET1
+00FC                 122     KEYCODE1:
+A51 MACRO ASSEMBLER  KEYSCAN_SELF_ASM                                                     05/15/2020 17:56:51 PAGE     3
+
+00FC B42106          123             CJNE A,#21H,KEYCODE2    
+00FF 753000          124             MOV 30H,#0                
+0102 02012A          125             LJMP TORET1
+0105                 126     KEYCODE2:
+0105 B4120D          127             CJNE A,#12H,KEYCODE3   
+0108 0531            128             INC 31H           
+010A E531            129             MOV A,31H
+010C B4051B          130             CJNE A,#5,TORET1         
+010F 753104          131             MOV 31H,#4
+0112 02012A          132             LJMP TORET1
+0115                 133     KEYCODE3:
+0115 B4220C          134             CJNE A,#22H,WRONGKEY   
+0118 E531            135             MOV A,31H                  
+011A B40002          136             CJNE A,#0,NEXT1     
+011D 0531            137             INC 31H
+011F                 138     NEXT1:
+011F 1531            139             DEC 31H
+0121 02012A          140             LJMP TORET1
+0124                 141     WRONGKEY:                         
+0124 753300          142             MOV 33H,#0
+0127 753400          143             MOV 34H,#0
+012A                 144     TORET1:
+012A 22              145             RET
+                     146     
+012B C8A07850        147     T_TABLE:DB 0C8H,0A0H,78H,50H,28H ;//Ð×ªÖÜÆÚ¿ØÖÆ±í£¬·Ö±ð¶ÔÓ¦1µ²-5µ²
+012F 28                      
+0130 22122111        148     KEY_TABLE:DB 22H,12H,21H,11H     ;//°´¼ü¼üÂë±í£¬·Ö±ð¶ÔÓ¦Õ×ª¡¢·´×ª¡¢¼ÓËÙ¡¢¼õËÙ°´¼ü
+0134 0F171B1D        149     Sout_TABLE:DB 0FH,17H,1BH,1DH,1EH       ;//µµÎ»±í£¬·Ö±ðÊÇ1µ²-5µ²
+0138 1E                      
+                     150     END
+A51 MACRO ASSEMBLER  KEYSCAN_SELF_ASM                                                     05/15/2020 17:56:51 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ASKEY. . . . . . .  C ADDR   00A7H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+CHANGEREF. . . . .  C ADDR   00F1H   A   
+DELAY. . . . . . .  C ADDR   007EH   A   
+DELAY100MS . . . .  C ADDR   0086H   A   
+DELAY5MS . . . . .  C ADDR   0090H   A   
+DL0. . . . . . . .  C ADDR   0090H   A   
+DL1. . . . . . . .  C ADDR   0092H   A   
+DL2. . . . . . . .  C ADDR   0094H   A   
+DL_0 . . . . . . .  C ADDR   0086H   A   
+DL_1 . . . . . . .  C ADDR   0088H   A   
+DL_2 . . . . . . .  C ADDR   008AH   A   
+ISKEY. . . . . . .  C ADDR   00BDH   A   
+KEYCODE1 . . . . .  C ADDR   00FCH   A   
+KEYCODE2 . . . . .  C ADDR   0105H   A   
+KEYCODE3 . . . . .  C ADDR   0115H   A   
+KEYNUM . . . . . .  C ADDR   00E8H   A   
+KEYSCAN. . . . . .  C ADDR   009AH   A   
+KEY_TABLE. . . . .  C ADDR   0130H   A   
+LOOP . . . . . . .  C ADDR   0046H   A   
+LOOP1. . . . . . .  C ADDR   0053H   A   
+LOOP2. . . . . . .  C ADDR   0069H   A   
+LOOP3. . . . . . .  C ADDR   0071H   A   
+LOOP4. . . . . . .  C ADDR   0076H   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+NEXT1. . . . . . .  C ADDR   011FH   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+SAVELINE0. . . . .  C ADDR   00E2H   A   
+SAVELINE1. . . . .  C ADDR   00E6H   A   
+SEARCHLINE0. . . .  C ADDR   00C1H   A   
+SEARCHLINE1. . . .  C ADDR   00CDH   A   
+SOUT_TABLE . . . .  C ADDR   0134H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+TORET. . . . . . .  C ADDR   00F0H   A   
+TORET1 . . . . . .  C ADDR   012AH   A   
+T_TABLE. . . . . .  C ADDR   012BH   A   
+WRONGKEY . . . . .  C ADDR   0124H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

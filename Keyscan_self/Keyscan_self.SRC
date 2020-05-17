@@ -1,0 +1,510 @@
+; .\Keyscan_self.SRC generated from: Keyscan_self.c
+; COMPILER INVOKED BY:
+;        D:\keil_v4\C51\BIN\C51.EXE Keyscan_self.c BROWSE DEBUG OBJECTEXTEND SRC(.\Keyscan_self.SRC)
+
+$NOMOD51
+
+NAME	KEYSCAN_SELF
+
+P0	DATA	080H
+P1	DATA	090H
+P2	DATA	0A0H
+P3	DATA	0B0H
+T0	BIT	0B0H.4
+AC	BIT	0D0H.6
+T1	BIT	0B0H.5
+EA	BIT	0A8H.7
+IE	DATA	0A8H
+RD	BIT	0B0H.7
+ES	BIT	0A8H.4
+IP	DATA	0B8H
+RI	BIT	098H.0
+INT0	BIT	0B0H.2
+CY	BIT	0D0H.7
+TI	BIT	098H.1
+INT1	BIT	0B0H.3
+PS	BIT	0B8H.4
+SP	DATA	081H
+OV	BIT	0D0H.2
+WR	BIT	0B0H.6
+SBUF	DATA	099H
+PCON	DATA	087H
+SCON	DATA	098H
+TMOD	DATA	089H
+TCON	DATA	088H
+IE0	BIT	088H.1
+IE1	BIT	088H.3
+B	DATA	0F0H
+ACC	DATA	0E0H
+ET0	BIT	0A8H.1
+ET1	BIT	0A8H.3
+TF0	BIT	088H.5
+TF1	BIT	088H.7
+RB8	BIT	098H.2
+TH0	DATA	08CH
+EX0	BIT	0A8H.0
+IT0	BIT	088H.0
+TH1	DATA	08DH
+TB8	BIT	098H.3
+EX1	BIT	0A8H.2
+IT1	BIT	088H.2
+P	BIT	0D0H.0
+SM0	BIT	098H.7
+TL0	DATA	08AH
+SM1	BIT	098H.6
+TL1	DATA	08BH
+SM2	BIT	098H.5
+PT0	BIT	0B8H.1
+PT1	BIT	0B8H.3
+RS0	BIT	0D0H.3
+TR0	BIT	088H.4
+RS1	BIT	0D0H.4
+TR1	BIT	088H.6
+PX0	BIT	0B8H.0
+PX1	BIT	0B8H.2
+DPH	DATA	083H
+DPL	DATA	082H
+REN	BIT	098H.4
+RXD	BIT	0B0H.0
+TXD	BIT	0B0H.1
+F0	BIT	0D0H.5
+PSW	DATA	0D0H
+?PR?delays?KEYSCAN_SELF                  SEGMENT CODE 
+?PR?delays_asm?KEYSCAN_SELF              SEGMENT CODE 
+?PR?main?KEYSCAN_SELF                    SEGMENT CODE 
+?DT?main?KEYSCAN_SELF                    SEGMENT DATA OVERLAYABLE 
+?CO?KEYSCAN_SELF     SEGMENT CODE 
+	EXTRN	CODE (?C_STARTUP)
+	PUBLIC	Sout_TABLE
+	PUBLIC	T_TABLE
+	PUBLIC	KEY_TABLE
+	PUBLIC	main
+	PUBLIC	delays_asm
+	PUBLIC	delays
+
+	RSEG  ?DT?main?KEYSCAN_SELF
+?main?BYTE:
+        DIR?247:   DS   2
+	ORG  2
+          m?248:   DS   2
+	ORG  4
+      Speed?249:   DS   2
+	ORG  6
+          t?250:   DS   1
+
+	RSEG  ?CO?KEYSCAN_SELF
+KEY_TABLE:
+	DB	022H
+	DB	012H
+	DB	021H
+	DB	011H
+
+T_TABLE:
+	DB	0C8H
+	DB	0A0H
+	DB	078H
+	DB	050H
+	DB	028H
+
+Sout_TABLE:
+	DB	00FH
+	DB	017H
+	DB	01BH
+	DB	01DH
+	DB	01EH
+
+; //矩阵键盘扫描自我完成实验：根据点击不同按键完成彩色旋转灯要求
+; #include "reg51.h"
+; #include "intrins.h"
+; #define uint unsigned int
+; #define uchar unsigned char
+; 
+; uchar code KEY_TABLE[]={0x22,0x12,0x21,0x11};//按键键值表,后四位哪位为1表示按键按下在哪一行
+; 											//前四位哪位为1表示按键按下在哪一列
+; uchar code T_TABLE[]={200,160,120,80,40};//调用延时子程序次数
+; //uchar code Out_TABLE[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};//旋转控制发光二极管亮灭
+; uchar code Sout_TABLE[]={0x0F,0x17,0x1B,0x1D,0x1E};//档位输出表
+; 
+; //延时子程序
+; void delays()
+
+	RSEG  ?PR?delays?KEYSCAN_SELF
+delays:
+	USING	0
+			; SOURCE LINE # 14
+;---- Variable 't?040' assigned to Register 'R7' ----
+;---- Variable 'ms?041' assigned to Register 'R6' ----
+; {
+			; SOURCE LINE # 15
+; 	uchar t,ms;
+; 	ms=5;	//延时5ms
+			; SOURCE LINE # 17
+	MOV  	R6,#05H
+?C0001:
+; 	while(ms--)
+			; SOURCE LINE # 18
+	MOV  	R5,AR6
+	DEC  	R6
+	MOV  	A,R5
+	JZ   	?C0006
+; 	for(t=0;t<120;t++);
+			; SOURCE LINE # 19
+	CLR  	A
+	MOV  	R7,A
+?C0003:
+	MOV  	A,R7
+	CLR  	C
+	SUBB 	A,#078H
+	JNC  	?C0001
+	INC  	R7
+	SJMP 	?C0003
+; }
+			; SOURCE LINE # 20
+?C0006:
+	RET  	
+; END OF delays
+
+; //或者可以采用内嵌汇编
+; void delays_asm()
+
+	RSEG  ?PR?delays_asm?KEYSCAN_SELF
+delays_asm:
+	USING	0
+			; SOURCE LINE # 22
+; {
+			; SOURCE LINE # 23
+; 	#pragma asm
+; 	MOV R2,#50	//5ms延时子程序
+	  MOV R2,#50	 
+; DL1:MOV R1,#48
+	  DL1:MOV R1,#48
+; DL2:DJNZ R1,DL2	  //内循环100us
+	  DL2:DJNZ R1,DL2	   
+; 	NOP 
+	  NOP 
+; 	DJNZ R2,DL1	  //中循环10ms
+	  DJNZ R2,DL1	   
+; 	#pragma endasm
+; }
+			; SOURCE LINE # 31
+	RET  	
+; END OF delays_asm
+
+; 
+; void main()
+
+	RSEG  ?PR?main?KEYSCAN_SELF
+main:
+	USING	0
+			; SOURCE LINE # 33
+;---- Variable 'i?245' assigned to Register 'R4' ----
+;---- Variable 'j?246' assigned to Register 'R3' ----
+;---- Variable 'keycode?244' assigned to Register 'R1' ----
+; {
+			; SOURCE LINE # 34
+; 	uchar temp,key;
+; 	uchar keycode,i,j;
+; 	uint DIR=1;		//方向控制变量
+			; SOURCE LINE # 37
+	MOV  	DIR?247,#00H
+	MOV  	DIR?247+01H,#01H
+; 	uint m=0;		//旋转控制变量
+			; SOURCE LINE # 38
+	CLR  	A
+	MOV  	m?248,A
+	MOV  	m?248+01H,A
+; 	uint Speed=0;	  	//速度档位变量
+			; SOURCE LINE # 39
+	MOV  	Speed?249,A
+	MOV  	Speed?249+01H,A
+; 	uchar t=T_TABLE[m];		//延时次数控制变量
+			; SOURCE LINE # 40
+	MOV  	A,m?248+01H
+	MOV  	DPTR,#T_TABLE
+	MOVC 	A,@A+DPTR
+	MOV  	t?250,A
+; 	uchar out=0xfe;		 //旋转输出变量，控制发光二极管亮灭情况
+			; SOURCE LINE # 41
+;---- Variable 'out?251' assigned to Register 'R2' ----
+	MOV  	R2,#0FEH
+; 	P1=0xff;			 //初始化P1口全置1,发光二极管全熄灭
+			; SOURCE LINE # 42
+	MOV  	P1,#0FFH
+; 	P0=Sout_TABLE[Speed];	  //初始化档位设置为1挡
+			; SOURCE LINE # 43
+	MOV  	A,Speed?249+01H
+	MOV  	DPTR,#Sout_TABLE
+	MOVC 	A,@A+DPTR
+	MOV  	P0,A
+?C0008:
+; 	while(1)
+			; SOURCE LINE # 44
+; 	{
+			; SOURCE LINE # 45
+; 		P3=0x30;		 //行置为0，列置为1，读按键按下的所在列值
+			; SOURCE LINE # 46
+	MOV  	P3,#030H
+; 		temp=P3;		 //将读取的值保存到temp中
+			; SOURCE LINE # 47
+;---- Variable 'temp?242' assigned to Register 'R7' ----
+	MOV  	R7,P3
+; 		temp=temp&0x30;	  //保留有效位
+			; SOURCE LINE # 48
+	ANL  	AR7,#030H
+; 		if(temp!=0x30)	  //如果temp!=0x30,则说明有按键按下
+			; SOURCE LINE # 49
+	MOV  	A,R7
+	XRL  	A,#030H
+	JZ   	?C0010
+; 		{
+			; SOURCE LINE # 50
+; 			delays();
+			; SOURCE LINE # 51
+	LCALL	delays
+; 			delays();	//调用延时子程序，共延时10ms去抖动
+			; SOURCE LINE # 52
+	LCALL	delays
+; 			P3=0x30;	//重新判断是否有按键按下
+			; SOURCE LINE # 53
+	MOV  	P3,#030H
+; 			temp=P3;
+			; SOURCE LINE # 54
+	MOV  	R7,P3
+; 			temp=temp&0x30;
+			; SOURCE LINE # 55
+	ANL  	AR7,#030H
+; 			if(temp!=0x30)		//若有按键按下
+			; SOURCE LINE # 56
+	MOV  	A,R7
+	XRL  	A,#030H
+	JZ   	?C0010
+; 			{
+			; SOURCE LINE # 57
+; 				key=temp;		//记下按键所在列
+			; SOURCE LINE # 58
+;---- Variable 'key?243' assigned to Register 'R6' ----
+	MOV  	R6,AR7
+; 				temp=temp|0x03;		//线反转法，列输出行输入
+			; SOURCE LINE # 59
+	ORL  	AR7,#03H
+; 				P3=temp;
+			; SOURCE LINE # 60
+	MOV  	P3,R7
+; 				temp=P3&0x03;		//记录按键所在行
+			; SOURCE LINE # 61
+	MOV  	A,P3
+	ANL  	A,#03H
+; 				key=temp|key;		//合并得到按下的按键的键码
+			; SOURCE LINE # 62
+	ORL  	AR6,A
+; 				for(i=0;i<4;i++)	 //判断按键键号
+			; SOURCE LINE # 63
+	CLR  	A
+	MOV  	R4,A
+?C0012:
+; 				{
+			; SOURCE LINE # 64
+; 					if(key==KEY_TABLE[i])keycode=i;
+			; SOURCE LINE # 65
+	MOV  	A,R4
+	MOV  	DPTR,#KEY_TABLE
+	MOVC 	A,@A+DPTR
+	CJNE 	A,AR6,?C0014
+	MOV  	R1,AR4
+; 				}	
+			; SOURCE LINE # 66
+?C0014:
+	INC  	R4
+	CJNE 	R4,#04H,?C0012
+?C0013:
+; 				if(keycode==0)DIR=1;	//键号为0说明按键按下的是正转键
+			; SOURCE LINE # 67
+	MOV  	A,R1
+	JNZ  	?C0016
+	MOV  	DIR?247,A
+	MOV  	DIR?247+01H,#01H
+	SJMP 	?C0010
+?C0016:
+; 				else if(keycode==1)DIR=0;  //键号为1说明按键按下的是反转键
+			; SOURCE LINE # 68
+	CJNE 	R1,#01H,?C0018
+	CLR  	A
+	MOV  	DIR?247,A
+	MOV  	DIR?247+01H,A
+	SJMP 	?C0010
+?C0018:
+; 				else if(keycode==2)	   //键号为2说明按键按下的是加速键
+			; SOURCE LINE # 69
+	CJNE 	R1,#02H,?C0020
+; 				{
+			; SOURCE LINE # 70
+; 					Speed++;
+			; SOURCE LINE # 71
+	INC  	Speed?249+01H
+	MOV  	A,Speed?249+01H
+	JNZ  	?C0040
+	INC  	Speed?249
+?C0040:
+; 					if(Speed==5)Speed=4;  //加速最快只能到五档
+			; SOURCE LINE # 72
+	XRL  	A,#05H
+	ORL  	A,Speed?249
+	JNZ  	?C0010
+	MOV  	Speed?249,A
+	MOV  	Speed?249+01H,#04H
+; 				}
+			; SOURCE LINE # 73
+	SJMP 	?C0010
+?C0020:
+; 				else if(keycode==3)		//键号为3说明按键按下的是减速键
+			; SOURCE LINE # 74
+	CJNE 	R1,#03H,?C0010
+; 				{
+			; SOURCE LINE # 75
+; 					if(Speed==0)Speed++;   //减速最小只能到一档
+			; SOURCE LINE # 76
+	MOV  	A,Speed?249+01H
+	ORL  	A,Speed?249
+	JNZ  	?C0024
+	INC  	Speed?249+01H
+	MOV  	A,Speed?249+01H
+	JNZ  	?C0041
+	INC  	Speed?249
+?C0041:
+?C0024:
+; 					Speed--;
+			; SOURCE LINE # 77
+	MOV  	A,Speed?249+01H
+	DEC  	Speed?249+01H
+	JNZ  	?C0042
+	DEC  	Speed?249
+?C0042:
+; 				}
+			; SOURCE LINE # 78
+; 			}	
+			; SOURCE LINE # 79
+; 		}
+			; SOURCE LINE # 80
+?C0010:
+; 		m=Speed;
+			; SOURCE LINE # 81
+	MOV  	m?248,Speed?249
+	MOV  	m?248+01H,Speed?249+01H
+; 		t=T_TABLE[m]/8;		 //取得延时次数
+			; SOURCE LINE # 82
+	MOV  	A,m?248+01H
+	MOV  	DPTR,#T_TABLE
+	MOVC 	A,@A+DPTR
+	MOV  	R7,A
+	RRC  	A
+	RRC  	A
+	RRC  	A
+	ANL  	A,#01FH
+	MOV  	t?250,A
+; 		if(DIR==1)			 //当正转时
+			; SOURCE LINE # 83
+	MOV  	A,DIR?247+01H
+	XRL  	A,#01H
+	ORL  	A,DIR?247
+	JNZ  	?C0025
+; 		{
+			; SOURCE LINE # 84
+; 			for(j=8;j>0;j--)
+			; SOURCE LINE # 85
+	MOV  	R3,#08H
+?C0026:
+; 			{
+			; SOURCE LINE # 86
+; 				P1=out;
+			; SOURCE LINE # 87
+	MOV  	P1,R2
+; 				for(i=0;i<t;i++)delays();  //每一个发光二极管亮的时间
+			; SOURCE LINE # 88
+	CLR  	A
+	MOV  	R4,A
+?C0029:
+	MOV  	A,R4
+	CLR  	C
+	SUBB 	A,t?250
+	JNC  	?C0030
+	LCALL	delays
+	INC  	R4
+	SJMP 	?C0029
+?C0030:
+; 				out=_crol_(out,1);	  //循环左移，之后下一个发光二极管亮
+			; SOURCE LINE # 89
+	MOV  	R0,#01H
+	MOV  	R7,AR2
+	MOV  	A,R7
+	INC  	R0
+	SJMP 	?C0044
+?C0043:
+	RL   	A
+?C0044:
+	DJNZ 	R0,?C0043
+	MOV  	R2,A
+; 			}
+			; SOURCE LINE # 90
+	DJNZ 	R3,?C0026
+	SJMP 	?C0032
+; 		}
+			; SOURCE LINE # 91
+?C0025:
+; 		else
+; 		{					   //当反转时
+			; SOURCE LINE # 93
+; 			for(j=8;j>0;j--)
+			; SOURCE LINE # 94
+	MOV  	R3,#08H
+?C0033:
+; 			{
+			; SOURCE LINE # 95
+; 				P1=out;
+			; SOURCE LINE # 96
+	MOV  	P1,R2
+; 				for(i=0;i<t;i++)delays(); //每一个发光二极管亮的时间
+			; SOURCE LINE # 97
+	CLR  	A
+	MOV  	R4,A
+?C0036:
+	MOV  	A,R4
+	CLR  	C
+	SUBB 	A,t?250
+	JNC  	?C0037
+	LCALL	delays
+	INC  	R4
+	SJMP 	?C0036
+?C0037:
+; 				out=_cror_(out,1);	  //循环左移，之后下一个发光二极管亮
+			; SOURCE LINE # 98
+	MOV  	R0,#01H
+	MOV  	R7,AR2
+	MOV  	A,R7
+	INC  	R0
+	SJMP 	?C0046
+?C0045:
+	RR   	A
+?C0046:
+	DJNZ 	R0,?C0045
+	MOV  	R2,A
+; 			}
+			; SOURCE LINE # 99
+	DJNZ 	R3,?C0033
+; 		}
+			; SOURCE LINE # 100
+?C0032:
+; 		P0=Sout_TABLE[Speed];	 //设置档位相应的发光二极管亮
+			; SOURCE LINE # 101
+	MOV  	A,Speed?249+01H
+	MOV  	DPTR,#Sout_TABLE
+	MOVC 	A,@A+DPTR
+	MOV  	P0,A
+; 		P1=0xff;	   //在下一轮循环间隔之间设置发光二极管均熄灭等待下一轮旋转
+			; SOURCE LINE # 102
+	MOV  	P1,#0FFH
+; 	}
+			; SOURCE LINE # 103
+	LJMP 	?C0008
+; END OF main
+
+	END

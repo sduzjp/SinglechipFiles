@@ -1,0 +1,441 @@
+C51 COMPILER V9.01   LCD1602_SELF                                                          05/16/2020 16:13:52 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE LCD1602_SELF
+OBJECT MODULE PLACED IN LCD1602_self.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE LCD1602_self.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          //LCD1602自我完成实验：利用LCD1602和16个按键实现简单的十进制数加减乘除四则混合运算
+   2          //KEY0-KEY9分别代表数字0-9，KEY10-KEY13分别代表运算符“+，-，*，/”，KEY15代表“=”
+   3          //KEY14代表清除命令，不管何时按下清除按键计算过程停止，两个输入变量都清零，屏幕清屏
+   4          //LCD1602第一行显示输入的两个计算数和运算符，第二行显示计算结果，结果允许为负数
+   5          //输入数范围为0-32767，除数保证不为0，除数时可以同时显示商与余数
+   6          
+   7          #include "reg51.h"
+   8          #include "intrins.h"
+   9          #define uchar unsigned char
+  10          #define uint unsigned int
+  11          //定义控制引脚
+  12          sbit LCD_RS=P1^7;       //定义数据/命令选择位为P1.7引脚  
+  13          sbit LCD_RW=P1^6;       //定义读/写选择位为P1.6引脚  
+  14          sbit LCD_EN=P1^5;       //定义使能信号位为P1.5引脚 
+  15          
+  16          uchar code TABLE[]={0,1,2,3,4,5,6,7,8,9,0,0,0,0,0,0}; //按键对应的数字值
+  17          uchar code TABLE1[]={0,1,2,3,4,5,6,7,8,9,0x2b-0x30,0x2d-0x30,
+  18          0x2a-0x30,0x2f-0x30,0x01-0x30,0x3d-0x30};//按键对应的字符
+  19          char i,j,temp,keynum,keynumtemp;//temp作为判断按键键码时的中间变量，keynum作为键号变量,keynumtemp暂存keynu
+             -m中值 
+  20          long num1,num2,ans;  //num1代表输入的第一个数，num2代表输入的第二个数，ans代表运算结果数
+  21          uchar flag,symbol;//flag作为输入的数分界标志变量，symbol作为运算符号变量
+  22          
+  23          //延时子程序
+  24          void delay_ms(uint xms)
+  25          {
+  26   1              uint i,j;
+  27   1              for(i=xms;i>0;i--)
+  28   1              {
+  29   2                      for(j=110;j>0;j--);
+  30   2              }
+  31   1      }
+  32          
+  33          //LCD忙检查子程序
+  34          bit lcd_busy()
+  35          {
+  36   1              bit result;        //定义位变量result
+  37   1              LCD_RS=0;          //选择指令寄存器
+  38   1              LCD_RW=1;          //读/写选择位置高电平，读忙信号
+  39   1              LCD_EN=1;          //使能信号端置高电平
+  40   1              _nop_();
+  41   1              _nop_();
+  42   1              _nop_();
+  43   1              _nop_();          //相当于四条nop空指令
+  44   1              result=(bit)(P2&0x80);   //返回数据最高位代表是否忙，result为1代表忙，为0代表空闲
+  45   1              LCD_EN=0;         //使能信号端置低电平
+  46   1              return result;   
+  47   1      }
+  48          
+  49          //写命令子程序
+  50          void lcd_wcmd(uchar cmd)
+  51          {
+  52   1              while(lcd_busy());      //读忙信号，不忙则向下执行
+  53   1              LCD_RS=0;        //选择指令寄存器
+  54   1              LCD_RW=0;        //读写选择位置低电平，写入指令
+C51 COMPILER V9.01   LCD1602_SELF                                                          05/16/2020 16:13:52 PAGE 2   
+
+  55   1              LCD_EN=0;        //初始化使能端置低电平
+  56   1              _nop_();
+  57   1              _nop_();         //两条空指令
+  58   1              P2=cmd;          //向P2口写入指令
+  59   1              _nop_();
+  60   1              _nop_();
+  61   1              _nop_();
+  62   1              _nop_();         //四条空指令
+  63   1              LCD_EN=1;        //使能端置高电平
+  64   1              _nop_();
+  65   1              _nop_();
+  66   1              _nop_();
+  67   1              _nop_();         //四条空指令
+  68   1              LCD_EN=0;        //使能端置低电平，产生下降沿，则液晶模块执行命令
+  69   1      }
+  70          
+  71          //写数据子程序
+  72          void lcd_wdat(uchar dat)
+  73          {
+  74   1              P2=0;
+  75   1              while(lcd_busy());       //读忙信号，不忙则向下执行
+  76   1              LCD_RS=1;         //选择数据寄存器
+  77   1              LCD_RW=0;         //读写选择位置低电平进行写操作
+  78   1              LCD_EN=0;         //初始化使能端置低电平
+  79   1              _nop_();
+  80   1              _nop_();          //两条空指令
+  81   1              P2=dat;           //向P2口写入数据
+  82   1              _nop_();
+  83   1              _nop_();
+  84   1              _nop_();
+  85   1              _nop_();          //四条空指令
+  86   1              LCD_EN=1;         //使能端置高电平
+  87   1              _nop_();
+  88   1              _nop_();
+  89   1              _nop_();
+  90   1              _nop_();         //四条空指令
+  91   1              LCD_EN=0;        //使能端置低电平，产生下降沿，液晶模块执行命令
+  92   1      }
+  93          
+  94          //初始化子程序
+  95          void lcd_init()
+  96          {
+  97   1              keynum=0;          //num存放KEY0-KEY15按键键号，初始化置-1
+  98   1              delay_ms(15);//延时15ms，等待LCD电源稳定
+  99   1              lcd_wcmd(0x38);//功能设定指令中DL=1,N=1,F=0，8位数据宽度，16*2显示2行，5*7点阵字符
+ 100   1              delay_ms(5);   //延时5ms
+ 101   1              lcd_wcmd(0x0c);//显示开关控制指令中D=1,C=0,B=0，显示开，关光标，不闪烁
+ 102   1              delay_ms(5);   //延时5ms
+ 103   1              lcd_wcmd(0x06);//进入模式设置指令中I/D=1,S=0,写入新数据后地址自动增加且显示屏不移动
+ 104   1              delay_ms(5);   //延时5ms
+ 105   1              lcd_wcmd(0x01);//清除LCD显示内容，清屏指令D7-D0部分为01H
+ 106   1              delay_ms(5);   //延时5ms
+ 107   1              i=0; 
+ 108   1              j=0;            //j=0表示在第一次运算显示中，j=1表示进行下一次运算的显示
+ 109   1              num1=0;                 //输入的第一个数置0
+ 110   1              num2=0;                 //输入的第二个数置0
+ 111   1              ans=0;          //ans存放运算结果
+ 112   1              flag=0;         //flag表示输入的数分界标志变量，flag为0表示正在输入第一个数，为1表示正在输入第二个数
+ 113   1              symbol=0;       //symbol表示运算符，1表示“+”，2表示“-”，3表示“*”，4表示“/”
+ 114   1      }
+ 115          
+ 116          void keyscan() 
+C51 COMPILER V9.01   LCD1602_SELF                                                          05/16/2020 16:13:52 PAGE 3   
+
+ 117          {
+ 118   1              P3=0xfe;                 //第0行置0，其余行置1，列全置1
+ 119   1              if(P3!=0xfe)    //扫描第0行
+ 120   1              {
+ 121   2                      delay_ms(20);  //延时20ms去抖动
+ 122   2                      if(P3!=0xfe) 
+ 123   2                      {
+ 124   3                              temp=P3&0xf0; //保留有效位
+ 125   3                              switch(temp) 
+ 126   3                              {
+ 127   4                                      case 0xe0:keynum=0; break;       //说明按下的按键在第0行第0列，键号为0
+ 128   4                                      case 0xd0:keynum=1; break;  //说明按下的按键在第0行第1列，键号为1               
+ 129   4                                      case 0xb0:keynum=2; break;       //说明按下的按键在第0行第2列，键号为2                  
+ 130   4                                      case 0x70:keynum=3; break;  //说明按下的按键在第0行第3列，键号为3
+ 131   4                              }
+ 132   3                      }
+ 133   2                      while(P3!=0xfe);   //等待按键释放
+ 134   2                      if(keynum==0||keynum==1||keynum==2||keynum==3) 
+ 135   2                      {
+ 136   3                              if(j!=0)         //j标志位：第二次计算时，把前面的显示清除 
+ 137   3                              {
+ 138   4                                      keynumtemp=keynum; //keynumtemp暂存keynum值
+ 139   4                                      lcd_wcmd(0x01);   //清屏
+ 140   4                                      lcd_init();
+ 141   4                                      keynum=keynumtemp;//恢复keynum值
+ 142   4                                      j=0;     
+ 143   4                              }
+ 144   3                              if(flag==0) num1=num1*10+TABLE[keynum]; //计算出第一个数 
+ 145   3                              else num2=num2*10+TABLE[keynum];   //计算出第二个数
+ 146   3                      }
+ 147   2                      i=TABLE1[keynum];  
+ 148   2                      lcd_wdat(0x30+i); //在液晶上显示按键对应的字符
+ 149   2              }
+ 150   1              P3=0xfd;          //第1行置0，其余行置1，列全置1,
+ 151   1              if(P3!=0xfd)  //扫描第1行
+ 152   1              {
+ 153   2                      delay_ms(20);  //延时20ms去抖动
+ 154   2                      if(P3!=0xfd) 
+ 155   2                      {
+ 156   3                              temp=P3&0xf0; 
+ 157   3                              switch(temp) 
+ 158   3                              {
+ 159   4                                      case 0xe0:keynum=4; break;       //按下的按键在第1行第0列，键号为4
+ 160   4                                      case 0xd0:keynum=5; break;       //按下的按键在第1行第1列，键号为5
+ 161   4                                      case 0xb0:keynum=6; break;       //按下的按键在第1行第2列，键号为6                      
+ 162   4                                      case 0x70:keynum=7; break;  //按下的按键在第1行第3列，键号为7
+ 163   4                              } 
+ 164   3                      }
+ 165   2                      while(P3!=0xfd);  //等待按键释放
+ 166   2                      if(keynum==4||keynum==5||keynum==6||keynum==7) 
+ 167   2                      {
+ 168   3                              if(j!=0)          //第二次计算时将前面的计算显示清除
+ 169   3                              {
+ 170   4                                      keynumtemp=keynum; //keynumtemp暂存keynum值
+ 171   4                                      lcd_wcmd(0x01);   //清屏
+ 172   4                                      lcd_init();
+ 173   4                                      keynum=keynumtemp;//恢复keynum值
+ 174   4                                      j=0; 
+ 175   4                              }
+ 176   3                              if(flag==0) num1=num1*10+TABLE[keynum];   //计算出第一个数
+ 177   3                              else num2=num2*10+TABLE[keynum];                  //计算出第二个数
+ 178   3                      }
+C51 COMPILER V9.01   LCD1602_SELF                                                          05/16/2020 16:13:52 PAGE 4   
+
+ 179   2              i=TABLE1[keynum]; 
+ 180   2              lcd_wdat(0x30+i);       //在液晶上显示字符
+ 181   2              }
+ 182   1              P3=0xfb;          //第2行置0，其余行置1，列全置1
+ 183   1              if(P3!=0xfb)    //扫描第2行
+ 184   1              {
+ 185   2                      delay_ms(20);   //延时20ms去抖动 
+ 186   2                      if(P3!=0xfb) 
+ 187   2                      {
+ 188   3                              temp=P3&0xf0; 
+ 189   3                              switch(temp) 
+ 190   3                              {
+ 191   4                                      case 0xe0:keynum=8; break;       //按下的按键在第2行第0列，键号为8
+ 192   4                                      case 0xd0:keynum=9; break;       //按下的按键在第2行第1列，键号为9
+ 193   4                                      case 0xb0:keynum=10; break;   //按下的按键在第2行第2列，键号为10                                
+ 194   4                                      case 0x70:keynum=11; break;   //按下的按键在第2行第3列，键号为11
+ 195   4                              }
+ 196   3                      }
+ 197   2                      while(P3!=0xfb);   //等待按键释放
+ 198   2                      if(keynum==8||keynum==9)         //键号为8或者9表示数字字符
+ 199   2                      {
+ 200   3                              if(j!=0)                 //下一次计算时将上一次计算显示清除
+ 201   3                              {
+ 202   4                                      keynumtemp=keynum; //keynumtemp暂存keynum值
+ 203   4                                      lcd_wcmd(0x01);   //清屏
+ 204   4                                      lcd_init();
+ 205   4                                      keynum=keynumtemp;//恢复keynum值
+ 206   4                                      j=0;     
+ 207   4                              }
+ 208   3                              if(flag==0) num1=num1*10+TABLE[keynum]; 
+ 209   3                              else num2=num2*10+TABLE[keynum];
+ 210   3                      }
+ 211   2                      if(keynum==10)          //键号为10表示运算符“+” 
+ 212   2                      {
+ 213   3                              flag=1;            //flag置1则之后输入的数是第二个数
+ 214   3                              symbol=1;          //symbol置1表示“+”
+ 215   3                      }
+ 216   2                      if(keynum==11)          //键号为11表示运算符“-” 
+ 217   2                      {
+ 218   3                              flag=1;           //flag置1则之后输入的数是第二个数
+ 219   3                              symbol=2;         //symbol置2表示“-”
+ 220   3                      } 
+ 221   2                      i=TABLE1[keynum]; 
+ 222   2                      lcd_wdat(0x30+i);  //在液晶上显示字符
+ 223   2              }
+ 224   1              P3=0xf7;          //第3行置0，其余行置1，列全置1
+ 225   1              if(P3!=0xf7)   //扫描第三行
+ 226   1              {
+ 227   2                      delay_ms(20);   //延时20ms去抖动 
+ 228   2                      if(P3!=0xf7) 
+ 229   2                      {       
+ 230   3                              temp=P3&0xf0; 
+ 231   3                              switch(temp) 
+ 232   3                              {
+ 233   4                                      case 0xe0:keynum=12; break;     //按下的按键在第3行第0列，键号为12                              
+ 234   4                                      case 0xd0:keynum=13; break;     //按下的按键在第3行第1列，键号为13                      
+ 235   4                                      case 0xb0:keynum=14; break;     //按下的按键在第3行第2列，键号为14                      
+ 236   4                                      case 0x70:keynum=15; break; //按下的按键在第3行第3列，键号为15
+ 237   4                              } 
+ 238   3                      }  
+ 239   2                      while(P3!=0xf7);  //等待按键释放
+ 240   2                      switch(keynum) 
+C51 COMPILER V9.01   LCD1602_SELF                                                          05/16/2020 16:13:52 PAGE 5   
+
+ 241   2                      {
+ 242   3                              case 12:         //键号为12表示运算符“*”
+ 243   3                                      {
+ 244   4                                              lcd_wdat(0x30+TABLE1[keynum]); 
+ 245   4                                              flag=1; 
+ 246   4                                              symbol=3;  //symbol为3表示“*”
+ 247   4                                      } 
+ 248   3                                      break;
+ 249   3                              case 13:        //键号为13表示运算符“/” 
+ 250   3                                      { 
+ 251   4                                              lcd_wdat(0x30+TABLE1[keynum]); 
+ 252   4                                              flag=1; 
+ 253   4                                              symbol=4;  //symbol为4表示“*”
+ 254   4                                      } 
+ 255   3                                      break;
+ 256   3                              case 15:        //键号为15表示运算符“=”，运算出计算结果 
+ 257   3                                      {
+ 258   4                                              j=1;
+ 259   4                                              if(num2==0)
+ 260   4                                              {
+ 261   5                                                      lcd_wcmd(0x80+0x4f); //从最后一个数的地址开始显示
+ 262   5                                                      lcd_wcmd(0x04); //写入新数据后地址寄存器内容加1
+ 263   5                                                      while(num1!=0)
+ 264   5                                                      {
+ 265   6                                                              lcd_wdat(0x30+num1%10); //除10取余法获得每一位数字
+ 266   6                                                              num1=num1/10; 
+ 267   6                                                      }
+ 268   5                                                      lcd_wdat(0x3d);
+ 269   5                                              }
+ 270   4                                              if(symbol==1)   //symbol为1表示加法运算
+ 271   4                                              {
+ 272   5                                                      lcd_wcmd(0x80+0x4f); //从最后一个数的地址开始显示
+ 273   5                                                      lcd_wcmd(0x04); //写入新数据后地址寄存器内容加1
+ 274   5                                                      ans=num1+num2;                                          
+ 275   5                                                      while(ans!=0) 
+ 276   5                                                      {
+ 277   6                                                              lcd_wdat(0x30+ans%10); //除10取余法获得每一位数字
+ 278   6                                                              ans=ans/10; 
+ 279   6                                                      }
+ 280   5                                                      lcd_wdat(0x3d); //输出显示“=” 
+ 281   5                                                      j=1;
+ 282   5                                                      num1=0;    //输入数和分界标志变量以及运算符均清零
+ 283   5                                                      num2=0;
+ 284   5                                                      flag=0;
+ 285   5                                                      symbol=0; 
+ 286   5                                              }
+ 287   4                                              else if(symbol==2)      //symbol为2表示减法运算
+ 288   4                                              {
+ 289   5                                                      lcd_wcmd(0x80+0x4f);  //从最后一个数的地址开始显示
+ 290   5                                                      lcd_wcmd(0x04); 
+ 291   5                                                      if(num1-num2>0) ans=num1-num2; //减法运算
+ 292   5                                                      else ans=num2-num1;                                             
+ 293   5                                                      while(ans!=0) 
+ 294   5                                                      {
+ 295   6                                                              lcd_wdat(0x30+ans%10); //除10取余法得到每一位
+ 296   6                                                              ans=ans/10; 
+ 297   6                                                      }
+ 298   5                                                      if(num1-num2<0)lcd_wdat(0x2d);//结果为负数时符号为负 “-” 
+ 299   5                                                      lcd_wdat(0x3d); //输出显示“=”
+ 300   5                                                      j=1;
+ 301   5                                                      num1=0;    //输入数和分界标志变量以及运算符均清零
+ 302   5                                                      num2=0;
+C51 COMPILER V9.01   LCD1602_SELF                                                          05/16/2020 16:13:52 PAGE 6   
+
+ 303   5                                                      flag=0;
+ 304   5                                                      symbol=0; 
+ 305   5                                              }
+ 306   4                                              else if(symbol==3)      //symbol为3表示进行乘法运算
+ 307   4                                              {
+ 308   5                                                      lcd_wcmd(0x80+0x4f);  //从最后一个数的地址开始显示
+ 309   5                                                      lcd_wcmd(0x04); 
+ 310   5                                                      ans=num1*num2;   //乘法运算                                             
+ 311   5                                                      while(ans!=0)
+ 312   5                                                      {
+ 313   6                                                              lcd_wdat(0x30+ans%10);   //除10取余法得到每一位
+ 314   6                                                              ans=ans/10; 
+ 315   6                                                      }
+ 316   5                                                      lcd_wdat(0x3d); //输出等于符号
+ 317   5                                                      j=1;                             
+ 318   5                                                      num1=0;    //输入数和分界标志变量以及运算符均清零
+ 319   5                                                      num2=0;
+ 320   5                                                      flag=0;
+ 321   5                                                      symbol=0; 
+ 322   5                                              }
+ 323   4                                              else if(symbol==4)
+ 324   4                                              {
+ 325   5                                                      lcd_wcmd(0x80+0x4f); //从最后一个数的地址开始显示
+ 326   5                                                      lcd_wcmd(0x04); 
+ 327   5                                                      i=0; 
+ 328   5                                                      if(num2==0)//如果除数是0，则显示error 
+ 329   5                                                      { 
+ 330   6                                                              lcd_wdat('R'); 
+ 331   6                                                              lcd_wdat('O'); 
+ 332   6                                                              lcd_wdat('R'); 
+ 333   6                                                              lcd_wdat('R'); 
+ 334   6                                                              lcd_wdat('E'); 
+ 335   6                                                      } 
+ 336   5                                                      else
+ 337   5                                                      { 
+ 338   6                                                              ans=num1/num2;   //得到商
+ 339   6                                                              ans=num1-num2*ans;       //判断余数
+ 340   6                                                              while(ans!=0)    //存在余数
+ 341   6                                                              {
+ 342   7                                                                      lcd_wdat(0x30+ans%10);//输出余数 
+ 343   7                                                                      ans=ans/10; 
+ 344   7                                                                      i++;                                                    
+ 345   7                                                              }
+ 346   6                                                              if(i!=0)   //存在余数时输出三个小数点
+ 347   6                                                              {
+ 348   7                                                                      for(i=3;i>0;i--)
+ 349   7                                                                      {
+ 350   8                                                                              lcd_wdat(0x2e);//输出显示小数点 
+ 351   8                                                                      }
+ 352   7                                                                      ans=num1/num2;
+ 353   7                                                                      if(ans==0) lcd_wdat(0x30);//0
+ 354   7                                                                      while(ans!=0)
+ 355   7                                                                      {
+ 356   8                                                                              lcd_wdat(0x30+ans%10);//输出商
+ 357   8                                                                              ans=ans/10;
+ 358   8                                                                      }       
+ 359   7                                                              }
+ 360   6                                                              else     //整除情况
+ 361   6                                                              {
+ 362   7                                                                      ans=num1/num2;
+ 363   7                                                                      if(ans==0)      //num1=0的情况输出0
+ 364   7                                                                      {
+C51 COMPILER V9.01   LCD1602_SELF                                                          05/16/2020 16:13:52 PAGE 7   
+
+ 365   8                                                                              lcd_wdat(0x30);
+ 366   8                                                                      }
+ 367   7                                                                      while(ans!=0)
+ 368   7                                                                      {
+ 369   8                                                                              lcd_wdat(0x30+ans%10);//输出商
+ 370   8                                                                              ans=ans/10;
+ 371   8                                                                      }       
+ 372   7                                                              }
+ 373   6                                                              lcd_wdat(0x3d);
+ 374   6                                                      }
+ 375   5                                                      j=1;
+ 376   5                                                      num1=0;   //输入数和分界标志变量以及运算符均清零
+ 377   5                                                      num2=0;
+ 378   5                                                      flag=0;
+ 379   5                                                      symbol=0; 
+ 380   5                                              } 
+ 381   4                                      } 
+ 382   3                                      break;
+ 383   3                              case 14: //键号为14表示清除显示 
+ 384   3                                      {
+ 385   4                                              lcd_wcmd(0x01);
+ 386   4                                              j=1;            //进行下一次计算显示
+ 387   4                                              num1=0;          //输入数和分界标志变量以及运算符均清零
+ 388   4                                              num2=0;
+ 389   4                                              flag=0;
+ 390   4                                              symbol=0;
+ 391   4                                      } 
+ 392   3                                      break; 
+ 393   3                      } 
+ 394   2              } 
+ 395   1      }
+ 396          
+ 397          void main() 
+ 398          { 
+ 399   1              lcd_init();   //LCD1602初始化
+ 400   1              while(1)
+ 401   1              {
+ 402   2                      keyscan();       //调用键盘扫描子程序并显示结果
+ 403   2              } 
+ 404   1      }
+ 405                   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2023    ----
+   CONSTANT SIZE    =     32    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     19    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

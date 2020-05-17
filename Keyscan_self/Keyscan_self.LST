@@ -1,0 +1,129 @@
+C51 COMPILER V9.01   KEYSCAN_SELF                                                          05/15/2020 15:27:33 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE KEYSCAN_SELF
+NO OBJECT MODULE REQUESTED
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE Keyscan_self.c BROWSE DEBUG OBJECTEXTEND SRC(.\Keyscan_self.SRC)
+
+line level    source
+
+   1          //矩阵键盘扫描自我完成实验：根据点击不同按键完成彩色旋转灯要求
+   2          #include "reg51.h"
+   3          #include "intrins.h"
+   4          #define uint unsigned int
+   5          #define uchar unsigned char
+   6          
+   7          uchar code KEY_TABLE[]={0x22,0x12,0x21,0x11};//按键键值表,后四位哪位为1表示按键按下在哪一行
+   8                                                                                                  //前四位哪位为1表示按键按下在哪一列
+   9          uchar code T_TABLE[]={200,160,120,80,40};//调用延时子程序次数
+  10          //uchar code Out_TABLE[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};//旋转控制发光二极管亮灭
+  11          uchar code Sout_TABLE[]={0x0F,0x17,0x1B,0x1D,0x1E};//档位输出表
+  12          
+  13          //延时子程序
+  14          void delays()
+  15          {
+  16   1              uchar t,ms;
+  17   1              ms=5;   //延时5ms
+  18   1              while(ms--)
+  19   1              for(t=0;t<120;t++);
+  20   1      }
+  21          //或者可以采用内嵌汇编
+  22          void delays_asm()
+  23          {
+  24   1              #pragma asm
+  25   1              MOV R2,#50      //5ms延时子程序
+  26   1      DL1:MOV R1,#48
+  27   1      DL2:DJNZ R1,DL2   //内循环100us
+  28   1              NOP 
+  29   1              DJNZ R2,DL1       //中循环10ms
+  30   1              #pragma endasm
+  31   1      }
+  32          
+  33          void main()
+  34          {
+  35   1              uchar temp,key;
+  36   1              uchar keycode,i,j;
+  37   1              uint DIR=1;             //方向控制变量
+  38   1              uint m=0;               //旋转控制变量
+  39   1              uint Speed=0;           //速度档位变量
+  40   1              uchar t=T_TABLE[m];             //延时次数控制变量
+  41   1              uchar out=0xfe;          //旋转输出变量，控制发光二极管亮灭情况
+  42   1              P1=0xff;                         //初始化P1口全置1,发光二极管全熄灭
+  43   1              P0=Sout_TABLE[Speed];     //初始化档位设置为1挡
+  44   1              while(1)
+  45   1              {
+  46   2                      P3=0x30;                 //行置为0，列置为1，读按键按下的所在列值
+  47   2                      temp=P3;                 //将读取的值保存到temp中
+  48   2                      temp=temp&0x30;   //保留有效位
+  49   2                      if(temp!=0x30)    //如果temp!=0x30,则说明有按键按下
+  50   2                      {
+  51   3                              delays();
+  52   3                              delays();       //调用延时子程序，共延时10ms去抖动
+  53   3                              P3=0x30;        //重新判断是否有按键按下
+  54   3                              temp=P3;
+  55   3                              temp=temp&0x30;
+C51 COMPILER V9.01   KEYSCAN_SELF                                                          05/15/2020 15:27:33 PAGE 2   
+
+  56   3                              if(temp!=0x30)          //若有按键按下
+  57   3                              {
+  58   4                                      key=temp;               //记下按键所在列
+  59   4                                      temp=temp|0x03;         //线反转法，列输出行输入
+  60   4                                      P3=temp;
+  61   4                                      temp=P3&0x03;           //记录按键所在行
+  62   4                                      key=temp|key;           //合并得到按下的按键的键码
+  63   4                                      for(i=0;i<4;i++)         //判断按键键号
+  64   4                                      {
+  65   5                                              if(key==KEY_TABLE[i])keycode=i;
+  66   5                                      }       
+  67   4                                      if(keycode==0)DIR=1;    //键号为0说明按键按下的是正转键
+  68   4                                      else if(keycode==1)DIR=0;  //键号为1说明按键按下的是反转键
+  69   4                                      else if(keycode==2)        //键号为2说明按键按下的是加速键
+  70   4                                      {
+  71   5                                              Speed++;
+  72   5                                              if(Speed==5)Speed=4;  //加速最快只能到五档
+  73   5                                      }
+  74   4                                      else if(keycode==3)             //键号为3说明按键按下的是减速键
+  75   4                                      {
+  76   5                                              if(Speed==0)Speed++;   //减速最小只能到一档
+  77   5                                              Speed--;
+  78   5                                      }
+  79   4                              }       
+  80   3                      }
+  81   2                      m=Speed;
+  82   2                      t=T_TABLE[m]/8;          //取得延时次数
+  83   2                      if(DIR==1)                       //当正转时
+  84   2                      {
+  85   3                              for(j=8;j>0;j--)
+  86   3                              {
+  87   4                                      P1=out;
+  88   4                                      for(i=0;i<t;i++)delays();  //每一个发光二极管亮的时间
+  89   4                                      out=_crol_(out,1);        //循环左移，之后下一个发光二极管亮
+  90   4                              }
+  91   3                      }
+  92   2                      else
+  93   2                      {                                          //当反转时
+  94   3                              for(j=8;j>0;j--)
+  95   3                              {
+  96   4                                      P1=out;
+  97   4                                      for(i=0;i<t;i++)delays(); //每一个发光二极管亮的时间
+  98   4                                      out=_cror_(out,1);        //循环左移，之后下一个发光二极管亮
+  99   4                              }
+ 100   3                      }
+ 101   2                      P0=Sout_TABLE[Speed];    //设置档位相应的发光二极管亮
+ 102   2                      P1=0xff;           //在下一轮循环间隔之间设置发光二极管均熄灭等待下一轮旋转
+ 103   2              }
+ 104   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    310    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

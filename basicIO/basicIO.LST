@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  BASICIO                                                              05/03/2020 14:41:32 PAGE     1
+A51 MACRO ASSEMBLER  BASICIO                                                              05/13/2020 11:25:41 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02
@@ -7,20 +7,23 @@ ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE basicIO.asm SET(SMALL) DEBUG EP
 
 LOC  OBJ            LINE     SOURCE
 
-0000                   1     ORG 0000H
-0000 0130              2     AJMP MAIN
-0030                   3     ORG 0030H
-                       4     
-0030                   5     MAIN:                    
-0030 758160            6             MOV SP,#60H     
-                       7             
-0033                   8     LOOP:
-0033 7590FF            9             MOV P1,#0FFH
-0036 E590             10             mov A,P1
-0038 F5A0             11             MOV P2,A
-003A 80F7             12             SJMP LOOP
-                      13     END
-A51 MACRO ASSEMBLER  BASICIO                                                              05/03/2020 14:41:32 PAGE     2
+                       1     
+                       2     
+                       3     
+0000                   4     ORG 0000H
+0000 0130              5     AJMP MAIN         
+0030                   6     ORG 0030H
+                       7     
+0030                   8     MAIN:                    
+0030 758160            9             MOV SP,#60H       
+                      10             
+0033                  11     LOOP:
+0033 7590FF           12             MOV P1,#0FFH   
+0036 E590             13             MOV A,P1           
+0038 F5A0             14             MOV P2,A           
+003A 80F7             15             SJMP LOOP
+                      16     END
+A51 MACRO ASSEMBLER  BASICIO                                                              05/13/2020 11:25:41 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------

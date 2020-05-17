@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        05/04/2020  13:01:22  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/14/2020  22:20:47  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -59,7 +59,7 @@ SYMBOL TABLE OF MODULE:  keyscan (KEYSCAN)
   C:0067H         PUBLIC        delayl
   D:0090H         PUBLIC        P1
   D:00B0H         PUBLIC        P3
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/04/2020  13:01:22  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/14/2020  22:20:47  PAGE 2
 
 
   C:0076H         PUBLIC        delays
@@ -70,21 +70,21 @@ SYMBOL TABLE OF MODULE:  keyscan (KEYSCAN)
   -------         DO            
   D:0006H         SYMBOL        n
   -------         ENDDO         
-  C:0067H         LINE#         15
   C:0067H         LINE#         16
   C:0067H         LINE#         17
-  C:006BH         LINE#         18
-  C:0075H         LINE#         19
+  C:0067H         LINE#         18
+  C:006BH         LINE#         19
+  C:0075H         LINE#         20
   -------         ENDPROC       DELAYL
   -------         PROC          DELAYS
   -------         DO            
   D:0006H         SYMBOL        n
   -------         ENDDO         
-  C:0076H         LINE#         21
-  C:0076H         LINE#         22
   C:0076H         LINE#         23
-  C:007AH         LINE#         24
-  C:0084H         LINE#         25
+  C:0076H         LINE#         24
+  C:0076H         LINE#         25
+  C:007AH         LINE#         26
+  C:0084H         LINE#         27
   -------         ENDPROC       DELAYS
   -------         PROC          MAIN
   -------         DO            
@@ -93,38 +93,38 @@ SYMBOL TABLE OF MODULE:  keyscan (KEYSCAN)
   D:0005H         SYMBOL        num
   D:0006H         SYMBOL        i
   -------         ENDDO         
-  C:0003H         LINE#         28
-  C:0003H         LINE#         29
+  C:0003H         LINE#         30
   C:0003H         LINE#         31
-  C:0006H         LINE#         32
-  C:0006H         LINE#         33
+  C:0003H         LINE#         33
   C:0006H         LINE#         34
-  C:0009H         LINE#         35
-  C:000FH         LINE#         36
-  C:000FH         LINE#         37
-  C:0012H         LINE#         38
-  C:0015H         LINE#         39
-  C:001BH         LINE#         40
-  C:001BH         LINE#         41
-  C:001DH         LINE#         42
-  C:0020H         LINE#         43
-  C:0024H         LINE#         44
-  C:0029H         LINE#         45
-  C:002BH         LINE#         46
-  C:002BH         LINE#         47
-  C:0033H         LINE#         48
-  C:0033H         LINE#         49
-  C:0035H         LINE#         50
-  C:0037H         LINE#         51
-  C:0037H         LINE#         52
-  C:003BH         LINE#         53
-  C:0042H         LINE#         54
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/04/2020  13:01:22  PAGE 3
+  C:0006H         LINE#         35
+  C:0006H         LINE#         36
+  C:0009H         LINE#         37
+  C:000FH         LINE#         38
+  C:000FH         LINE#         39
+  C:0012H         LINE#         40
+  C:0015H         LINE#         41
+  C:001BH         LINE#         42
+  C:001BH         LINE#         43
+  C:001DH         LINE#         44
+  C:0020H         LINE#         45
+  C:0024H         LINE#         46
+  C:0029H         LINE#         47
+  C:002BH         LINE#         48
+  C:002BH         LINE#         49
+  C:0033H         LINE#         50
+  C:0033H         LINE#         51
+  C:0035H         LINE#         52
+  C:0037H         LINE#         53
+  C:0037H         LINE#         54
+  C:003BH         LINE#         55
+  C:0042H         LINE#         56
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/14/2020  22:20:47  PAGE 3
 
 
-  C:0045H         LINE#         55
-  C:0045H         LINE#         56
   C:0045H         LINE#         57
+  C:0045H         LINE#         58
+  C:0045H         LINE#         59
   -------         ENDPROC       MAIN
   -------         ENDMOD        KEYSCAN
 

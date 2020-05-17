@@ -1,0 +1,670 @@
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN Keyscan_self.OBJ
+ASSEMBLER INVOKED BY: D:\keil_v4\C51\BIN\A51.EXE Keyscan_self.src PR(.\Keyscan_self.ls1) EP DEBUG
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; .\Keyscan_self.SRC generated from: Keyscan_self.c
+                       2     ; COMPILER INVOKED BY:
+                       3     ;        D:\keil_v4\C51\BIN\C51.EXE Keyscan_self.c BROWSE DEBUG OBJECTEXTEND SRC(.\Keyscan_
+                             self.SRC)
+                       4     
+                       5     $nomod51 
+                       6     
+                       7     NAME    KEYSCAN_SELF
+                       8     
+  0080                 9     P0      DATA    080H
+  0090                10     P1      DATA    090H
+  00A0                11     P2      DATA    0A0H
+  00B0                12     P3      DATA    0B0H
+  00B4                13     T0      BIT     0B0H.4
+  00D6                14     AC      BIT     0D0H.6
+  00B5                15     T1      BIT     0B0H.5
+  00AF                16     EA      BIT     0A8H.7
+  00A8                17     IE      DATA    0A8H
+  00B7                18     RD      BIT     0B0H.7
+  00AC                19     ES      BIT     0A8H.4
+  00B8                20     IP      DATA    0B8H
+  0098                21     RI      BIT     098H.0
+  00B2                22     INT0    BIT     0B0H.2
+  00D7                23     CY      BIT     0D0H.7
+  0099                24     TI      BIT     098H.1
+  00B3                25     INT1    BIT     0B0H.3
+  00BC                26     PS      BIT     0B8H.4
+  0081                27     SP      DATA    081H
+  00D2                28     OV      BIT     0D0H.2
+  00B6                29     WR      BIT     0B0H.6
+  0099                30     SBUF    DATA    099H
+  0087                31     PCON    DATA    087H
+  0098                32     SCON    DATA    098H
+  0089                33     TMOD    DATA    089H
+  0088                34     TCON    DATA    088H
+  0089                35     IE0     BIT     088H.1
+  008B                36     IE1     BIT     088H.3
+  00F0                37     B       DATA    0F0H
+  00E0                38     ACC     DATA    0E0H
+  00A9                39     ET0     BIT     0A8H.1
+  00AB                40     ET1     BIT     0A8H.3
+  008D                41     TF0     BIT     088H.5
+  008F                42     TF1     BIT     088H.7
+  009A                43     RB8     BIT     098H.2
+  008C                44     TH0     DATA    08CH
+  00A8                45     EX0     BIT     0A8H.0
+  0088                46     IT0     BIT     088H.0
+  008D                47     TH1     DATA    08DH
+  009B                48     TB8     BIT     098H.3
+  00AA                49     EX1     BIT     0A8H.2
+  008A                50     IT1     BIT     088H.2
+  00D0                51     P       BIT     0D0H.0
+  009F                52     SM0     BIT     098H.7
+  008A                53     TL0     DATA    08AH
+  009E                54     SM1     BIT     098H.6
+  008B                55     TL1     DATA    08BH
+  009D                56     SM2     BIT     098H.5
+  00B9                57     PT0     BIT     0B8H.1
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     2
+
+  00BB                58     PT1     BIT     0B8H.3
+  00D3                59     RS0     BIT     0D0H.3
+  008C                60     TR0     BIT     088H.4
+  00D4                61     RS1     BIT     0D0H.4
+  008E                62     TR1     BIT     088H.6
+  00B8                63     PX0     BIT     0B8H.0
+  00BA                64     PX1     BIT     0B8H.2
+  0083                65     DPH     DATA    083H
+  0082                66     DPL     DATA    082H
+  009C                67     REN     BIT     098H.4
+  00B0                68     RXD     BIT     0B0H.0
+  00B1                69     TXD     BIT     0B0H.1
+  00D5                70     F0      BIT     0D0H.5
+  00D0                71     PSW     DATA    0D0H
+                      72     ?PR?delays?KEYSCAN_SELF                  SEGMENT CODE 
+                      73     ?PR?delays_asm?KEYSCAN_SELF              SEGMENT CODE 
+                      74     ?PR?main?KEYSCAN_SELF                    SEGMENT CODE 
+                      75     ?DT?main?KEYSCAN_SELF                    SEGMENT DATA OVERLAYABLE 
+                      76     ?CO?KEYSCAN_SELF     SEGMENT CODE 
+                      77             EXTRN   CODE (?C_STARTUP)
+                      78             PUBLIC  Sout_TABLE
+                      79             PUBLIC  T_TABLE
+                      80             PUBLIC  KEY_TABLE
+                      81             PUBLIC  main
+                      82             PUBLIC  delays_asm
+                      83             PUBLIC  delays
+                      84     
+----                  85             RSEG  ?DT?main?KEYSCAN_SELF
+0000                  86     ?main?BYTE:
+0000                  87             DIR?247:   DS   2
+0002                  88             ORG  2
+0002                  89               m?248:   DS   2
+0004                  90             ORG  4
+0004                  91           Speed?249:   DS   2
+0006                  92             ORG  6
+0006                  93               t?250:   DS   1
+                      94     
+----                  95             RSEG  ?CO?KEYSCAN_SELF
+0000                  96     KEY_TABLE:
+0000 22               97             DB      022H
+0001 12               98             DB      012H
+0002 21               99             DB      021H
+0003 11              100             DB      011H
+                     101     
+0004                 102     T_TABLE:
+0004 C8              103             DB      0C8H
+0005 A0              104             DB      0A0H
+0006 78              105             DB      078H
+0007 50              106             DB      050H
+0008 28              107             DB      028H
+                     108     
+0009                 109     Sout_TABLE:
+0009 0F              110             DB      00FH
+000A 17              111             DB      017H
+000B 1B              112             DB      01BH
+000C 1D              113             DB      01DH
+000D 1E              114             DB      01EH
+                     115     
+                     116     ; //¾ØÕó¼üÅÌÉ¨Ãè×ÔÎÒÍê³ÉÊµÑé£º¸ù¾Ýµã»÷²»Í¬°´¼üÍê³É²ÊÉ«Ð×ªµÆÒªÇó
+                     117     ; #include "reg51.h"
+                     118     ; #include "intrins.h"
+                     119     ; #define uint unsigned int
+                     120     ; #define uchar unsigned char
+                     121     ; 
+                     122     ; uchar code KEY_TABLE[]={0x22,0x12,0x21,0x11};//°´¼ü¼üÖµ±í,ºóËÄÎ»ÄÄÎ»Îª1±íÊ¾°´¼ü°´ÏÂÔÚÄÄÒ»
+                             ÐÐ
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     3
+
+                     123     ;                                                                                       //Ç
+                             °ËÄÎ»ÄÄÎ»Îª1±íÊ¾°´¼ü°´ÏÂÔÚÄÄÒ»ÁÐ
+                     124     ; uchar code T_TABLE[]={200,160,120,80,40};//µ÷ÓÃÑÓÊ±×Ó³ÌÐò´ÎÊ
+                     125     ; //uchar code Out_TABLE[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};//Ð×ª¿ØÖÆ·¢¹â¶þ¼«¹ÜÁÁÃ
+                             ð
+                     126     ; uchar code Sout_TABLE[]={0x0F,0x17,0x1B,0x1D,0x1E};//µµÎ»Êä³ö±í
+                     127     ; 
+                     128     ; //ÑÓÊ±×Ó³ÌÐò
+                     129     ; void delays()
+                     130     
+----                 131             RSEG  ?PR?delays?KEYSCAN_SELF
+0000                 132     delays:
+                     133             USING   0
+                     134                             ; SOURCE LINE # 14
+                     135     ;---- Variable 't?040' assigned to Register 'R7' ----
+                     136     ;---- Variable 'ms?041' assigned to Register 'R6' ----
+                     137     ; {
+                     138                             ; SOURCE LINE # 15
+                     139     ;       uchar t,ms;
+                     140     ;       ms=5;   //ÑÓÊ±5ms
+                     141                             ; SOURCE LINE # 17
+0000 7E05            142             MOV     R6,#05H
+0002                 143     ?C0001:
+                     144     ;       while(ms--)
+                     145                             ; SOURCE LINE # 18
+0002 AD06            146             MOV     R5,AR6
+0004 1E              147             DEC     R6
+0005 ED              148             MOV     A,R5
+0006 600B            149             JZ      ?C0006
+                     150     ;       for(t=0;t<120;t++);
+                     151                             ; SOURCE LINE # 19
+0008 E4              152             CLR     A
+0009 FF              153             MOV     R7,A
+000A                 154     ?C0003:
+000A EF              155             MOV     A,R7
+000B C3              156             CLR     C
+000C 9478            157             SUBB    A,#078H
+000E 50F2            158             JNC     ?C0001
+0010 0F              159             INC     R7
+0011 80F7            160             SJMP    ?C0003
+                     161     ; }
+                     162                             ; SOURCE LINE # 20
+0013                 163     ?C0006:
+0013 22              164             RET     
+                     165     ; END OF delays
+                     166     
+                     167     ; //»òÕß¿ÉÒÔ²ÉÓÃÄÚÇ¶»ã±à
+                     168     ; void delays_asm()
+                     169     
+----                 170             RSEG  ?PR?delays_asm?KEYSCAN_SELF
+0000                 171     delays_asm:
+                     172             USING   0
+                     173                             ; SOURCE LINE # 22
+                     174     ; {
+                     175                             ; SOURCE LINE # 23
+                     176     ;       #pragma asm
+                     177     ;       MOV R2,#50      //5msÑÓÊ±×Ó³ÌÐò
+0000 7A32            178               MOV R2,#50     
+                     179     ; DL1:MOV R1,#48
+0002 7930            180               DL1:MOV R1,#48
+                     181     ; DL2:DJNZ R1,DL2         //ÄÚÑ­»·100us
+0004 D9FE            182               DL2:DJNZ R1,DL2          
+                     183     ;       NOP 
+0006 00              184               NOP 
+                     185     ;       DJNZ R2,DL1       //ÖÐÑ­»·10ms
+0007 DAF9            186               DJNZ R2,DL1      
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     4
+
+                     187     ;       #pragma endasm
+                     188     ; }
+                     189                             ; SOURCE LINE # 31
+0009 22              190             RET     
+                     191     ; END OF delays_asm
+                     192     
+                     193     ; 
+                     194     ; void main()
+                     195     
+----                 196             RSEG  ?PR?main?KEYSCAN_SELF
+0000                 197     main:
+                     198             USING   0
+                     199                             ; SOURCE LINE # 33
+                     200     ;---- Variable 'i?245' assigned to Register 'R4' ----
+                     201     ;---- Variable 'j?246' assigned to Register 'R3' ----
+                     202     ;---- Variable 'keycode?244' assigned to Register 'R1' ----
+                     203     ; {
+                     204                             ; SOURCE LINE # 34
+                     205     ;       uchar temp,key;
+                     206     ;       uchar keycode,i,j;
+                     207     ;       uint DIR=1;             //·½Ïò¿ØÖÆ±äÁ¿
+                     208                             ; SOURCE LINE # 37
+0000 750000   F      209             MOV     DIR?247,#00H
+0003 750001   F      210             MOV     DIR?247+01H,#01H
+                     211     ;       uint m=0;               //Ð×ª¿ØÖÆ±äÁ¿
+                     212                             ; SOURCE LINE # 38
+0006 E4              213             CLR     A
+0007 F500     F      214             MOV     m?248,A
+0009 F500     F      215             MOV     m?248+01H,A
+                     216     ;       uint Speed=0;           //ËÙ¶ÈµµÎ»±äÁ¿
+                     217                             ; SOURCE LINE # 39
+000B F500     F      218             MOV     Speed?249,A
+000D F500     F      219             MOV     Speed?249+01H,A
+                     220     ;       uchar t=T_TABLE[m];             //ÑÓÊ±´ÎÊ¿ØÖÆ±äÁ¿
+                     221                             ; SOURCE LINE # 40
+000F E500     F      222             MOV     A,m?248+01H
+0011 900000   F      223             MOV     DPTR,#T_TABLE
+0014 93              224             MOVC    A,@A+DPTR
+0015 F500     F      225             MOV     t?250,A
+                     226     ;       uchar out=0xfe;          //Ð×ªÊä³ö±äÁ¿£¬¿ØÖÆ·¢¹â¶þ¼«¹ÜÁÁÃðÇé¿ö
+                     227                             ; SOURCE LINE # 41
+                     228     ;---- Variable 'out?251' assigned to Register 'R2' ----
+0017 7AFE            229             MOV     R2,#0FEH
+                     230     ;       P1=0xff;                         //³õÊ¼»¯P1¿ÚÈ«ÖÃ1,·¢¹â¶þ¼«¹ÜÈ«Ï¨Ãð
+                     231                             ; SOURCE LINE # 42
+0019 7590FF          232             MOV     P1,#0FFH
+                     233     ;       P0=Sout_TABLE[Speed];     //³õÊ¼»¯µµÎ»ÉèÖÃÎª1µ²
+                     234                             ; SOURCE LINE # 43
+001C E500     F      235             MOV     A,Speed?249+01H
+001E 900000   F      236             MOV     DPTR,#Sout_TABLE
+0021 93              237             MOVC    A,@A+DPTR
+0022 F580            238             MOV     P0,A
+0024                 239     ?C0008:
+                     240     ;       while(1)
+                     241                             ; SOURCE LINE # 44
+                     242     ;       {
+                     243                             ; SOURCE LINE # 45
+                     244     ;               P3=0x30;                 //ÐÐÖÃÎª0£¬ÁÐÖÃÎª1£¬¶Á°´¼ü°´ÏÂµÄËùÔÚÁÐÖµ
+                     245                             ; SOURCE LINE # 46
+0024 75B030          246             MOV     P3,#030H
+                     247     ;               temp=P3;                 //½«¶ÁÈ¡µÄÖµ±£´æµ½tempÖÐ
+                     248                             ; SOURCE LINE # 47
+                     249     ;---- Variable 'temp?242' assigned to Register 'R7' ----
+0027 AFB0            250             MOV     R7,P3
+                     251     ;               temp=temp&0x30;   //±£ÁôÓÐÐ§Î»
+                     252                             ; SOURCE LINE # 48
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     5
+
+0029 530730          253             ANL     AR7,#030H
+                     254     ;               if(temp!=0x30)    //Èç¹ûtemp!=0x30,ÔòËµÃ÷ÓÐ°´¼ü°´ÏÂ
+                     255                             ; SOURCE LINE # 49
+002C EF              256             MOV     A,R7
+002D 6430            257             XRL     A,#030H
+002F 6075            258             JZ      ?C0010
+                     259     ;               {
+                     260                             ; SOURCE LINE # 50
+                     261     ;                       delays();
+                     262                             ; SOURCE LINE # 51
+0031 120000   F      263             LCALL   delays
+                     264     ;                       delays();       //µ÷ÓÃÑÓÊ±×Ó³ÌÐò£¬¹²ÑÓÊ±10msÈ¥¶¶¶¯
+                     265                             ; SOURCE LINE # 52
+0034 120000   F      266             LCALL   delays
+                     267     ;                       P3=0x30;        //ÖØÐÂÅÐ¶ÏÊÇ·ñÓÐ°´¼ü°´ÏÂ
+                     268                             ; SOURCE LINE # 53
+0037 75B030          269             MOV     P3,#030H
+                     270     ;                       temp=P3;
+                     271                             ; SOURCE LINE # 54
+003A AFB0            272             MOV     R7,P3
+                     273     ;                       temp=temp&0x30;
+                     274                             ; SOURCE LINE # 55
+003C 530730          275             ANL     AR7,#030H
+                     276     ;                       if(temp!=0x30)          //ÈôÓÐ°´¼ü°´ÏÂ
+                     277                             ; SOURCE LINE # 56
+003F EF              278             MOV     A,R7
+0040 6430            279             XRL     A,#030H
+0042 6062            280             JZ      ?C0010
+                     281     ;                       {
+                     282                             ; SOURCE LINE # 57
+                     283     ;                               key=temp;               //¼ÇÏÂ°´¼üËùÔÚÁÐ
+                     284                             ; SOURCE LINE # 58
+                     285     ;---- Variable 'key?243' assigned to Register 'R6' ----
+0044 AE07            286             MOV     R6,AR7
+                     287     ;                               temp=temp|0x03;         //Ïß·´×ª·¨£¬ÁÐÊä³öÐÐÊäÈë
+                     288                             ; SOURCE LINE # 59
+0046 430703          289             ORL     AR7,#03H
+                     290     ;                               P3=temp;
+                     291                             ; SOURCE LINE # 60
+0049 8FB0            292             MOV     P3,R7
+                     293     ;                               temp=P3&0x03;           //¼ÇÂ¼°´¼üËùÔÚÐÐ
+                     294                             ; SOURCE LINE # 61
+004B E5B0            295             MOV     A,P3
+004D 5403            296             ANL     A,#03H
+                     297     ;                               key=temp|key;           //ºÏ²¢µÃµ½°´ÏÂµÄ°´¼üµÄ¼üÂë
+                     298                             ; SOURCE LINE # 62
+004F 4206            299             ORL     AR6,A
+                     300     ;                               for(i=0;i<4;i++)         //ÅÐ¶Ï°´¼ü¼üºÅ
+                     301                             ; SOURCE LINE # 63
+0051 E4              302             CLR     A
+0052 FC              303             MOV     R4,A
+0053                 304     ?C0012:
+                     305     ;                               {
+                     306                             ; SOURCE LINE # 64
+                     307     ;                                       if(key==KEY_TABLE[i])keycode=i;
+                     308                             ; SOURCE LINE # 65
+0053 EC              309             MOV     A,R4
+0054 900000   F      310             MOV     DPTR,#KEY_TABLE
+0057 93              311             MOVC    A,@A+DPTR
+0058 B50602          312             CJNE    A,AR6,?C0014
+005B A904            313             MOV     R1,AR4
+                     314     ;                               }       
+                     315                             ; SOURCE LINE # 66
+005D                 316     ?C0014:
+005D 0C              317             INC     R4
+005E BC04F2          318             CJNE    R4,#04H,?C0012
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     6
+
+0061                 319     ?C0013:
+                     320     ;                               if(keycode==0)DIR=1;    //¼üºÅÎª0ËµÃ÷°´¼ü°´ÏÂµÄÊÇÕ×ª¼ü
+                     321                             ; SOURCE LINE # 67
+0061 E9              322             MOV     A,R1
+0062 7007            323             JNZ     ?C0016
+0064 F500     F      324             MOV     DIR?247,A
+0066 750001   F      325             MOV     DIR?247+01H,#01H
+0069 803B            326             SJMP    ?C0010
+006B                 327     ?C0016:
+                     328     ;                               else if(keycode==1)DIR=0;  //¼üºÅÎª1ËµÃ÷°´¼ü°´ÏÂµÄÊÇ·´×ª¼ü
+                     329                             ; SOURCE LINE # 68
+006B B90107          330             CJNE    R1,#01H,?C0018
+006E E4              331             CLR     A
+006F F500     F      332             MOV     DIR?247,A
+0071 F500     F      333             MOV     DIR?247+01H,A
+0073 8031            334             SJMP    ?C0010
+0075                 335     ?C0018:
+                     336     ;                               else if(keycode==2)        //¼üºÅÎª2ËµÃ÷°´¼ü°´ÏÂµÄÊÇ¼ÓËÙ¼ü
+                     337                             ; SOURCE LINE # 69
+0075 B90215          338             CJNE    R1,#02H,?C0020
+                     339     ;                               {
+                     340                             ; SOURCE LINE # 70
+                     341     ;                                       Speed++;
+                     342                             ; SOURCE LINE # 71
+0078 0500     F      343             INC     Speed?249+01H
+007A E500     F      344             MOV     A,Speed?249+01H
+007C 7002            345             JNZ     ?C0040
+007E 0500     F      346             INC     Speed?249
+0080                 347     ?C0040:
+                     348     ;                                       if(Speed==5)Speed=4;  //¼ÓËÙ×î¿ìÖ»ÄÜµ½Îåµµ
+                     349                             ; SOURCE LINE # 72
+0080 6405            350             XRL     A,#05H
+0082 4500     F      351             ORL     A,Speed?249
+0084 7020            352             JNZ     ?C0010
+0086 F500     F      353             MOV     Speed?249,A
+0088 750004   F      354             MOV     Speed?249+01H,#04H
+                     355     ;                               }
+                     356                             ; SOURCE LINE # 73
+008B 8019            357             SJMP    ?C0010
+008D                 358     ?C0020:
+                     359     ;                               else if(keycode==3)             //¼üºÅÎª3ËµÃ÷°´¼ü°´ÏÂµÄÊÇ¼õ
+                             ËÙ¼ü
+                     360                             ; SOURCE LINE # 74
+008D B90316          361             CJNE    R1,#03H,?C0010
+                     362     ;                               {
+                     363                             ; SOURCE LINE # 75
+                     364     ;                                       if(Speed==0)Speed++;   //¼õËÙ×îÐ¡Ö»ÄÜµ½Ò»µµ
+                     365                             ; SOURCE LINE # 76
+0090 E500     F      366             MOV     A,Speed?249+01H
+0092 4500     F      367             ORL     A,Speed?249
+0094 7008            368             JNZ     ?C0024
+0096 0500     F      369             INC     Speed?249+01H
+0098 E500     F      370             MOV     A,Speed?249+01H
+009A 7002            371             JNZ     ?C0041
+009C 0500     F      372             INC     Speed?249
+009E                 373     ?C0041:
+009E                 374     ?C0024:
+                     375     ;                                       Speed--;
+                     376                             ; SOURCE LINE # 77
+009E E500     F      377             MOV     A,Speed?249+01H
+00A0 1500     F      378             DEC     Speed?249+01H
+00A2 7002            379             JNZ     ?C0042
+00A4 1500     F      380             DEC     Speed?249
+00A6                 381     ?C0042:
+                     382     ;                               }
+                     383                             ; SOURCE LINE # 78
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     7
+
+                     384     ;                       }       
+                     385                             ; SOURCE LINE # 79
+                     386     ;               }
+                     387                             ; SOURCE LINE # 80
+00A6                 388     ?C0010:
+                     389     ;               m=Speed;
+                     390                             ; SOURCE LINE # 81
+00A6 850000   F      391             MOV     m?248,Speed?249
+00A9 850000   F      392             MOV     m?248+01H,Speed?249+01H
+                     393     ;               t=T_TABLE[m]/8;          //È¡µÃÑÓÊ±´ÎÊ
+                     394                             ; SOURCE LINE # 82
+00AC E500     F      395             MOV     A,m?248+01H
+00AE 900000   F      396             MOV     DPTR,#T_TABLE
+00B1 93              397             MOVC    A,@A+DPTR
+00B2 FF              398             MOV     R7,A
+00B3 13              399             RRC     A
+00B4 13              400             RRC     A
+00B5 13              401             RRC     A
+00B6 541F            402             ANL     A,#01FH
+00B8 F500     F      403             MOV     t?250,A
+                     404     ;               if(DIR==1)                       //µ±Õ×ªÊ±
+                     405                             ; SOURCE LINE # 83
+00BA E500     F      406             MOV     A,DIR?247+01H
+00BC 6401            407             XRL     A,#01H
+00BE 4500     F      408             ORL     A,DIR?247
+00C0 7022            409             JNZ     ?C0025
+                     410     ;               {
+                     411                             ; SOURCE LINE # 84
+                     412     ;                       for(j=8;j>0;j--)
+                     413                             ; SOURCE LINE # 85
+00C2 7B08            414             MOV     R3,#08H
+00C4                 415     ?C0026:
+                     416     ;                       {
+                     417                             ; SOURCE LINE # 86
+                     418     ;                               P1=out;
+                     419                             ; SOURCE LINE # 87
+00C4 8A90            420             MOV     P1,R2
+                     421     ;                               for(i=0;i<t;i++)delays();  //Ã¿Ò»¸ö·¢¹â¶þ¼«¹ÜÁÁµÄÊ±¼ä
+                     422                             ; SOURCE LINE # 88
+00C6 E4              423             CLR     A
+00C7 FC              424             MOV     R4,A
+00C8                 425     ?C0029:
+00C8 EC              426             MOV     A,R4
+00C9 C3              427             CLR     C
+00CA 9500     F      428             SUBB    A,t?250
+00CC 5006            429             JNC     ?C0030
+00CE 120000   F      430             LCALL   delays
+00D1 0C              431             INC     R4
+00D2 80F4            432             SJMP    ?C0029
+00D4                 433     ?C0030:
+                     434     ;                               out=_crol_(out,1);        //Ñ­»·×óÒÆ£¬Ö®ºóÏÂÒ»¸ö·¢¹â¶þ¼«¹ÜÁ
+                             Á
+                     435                             ; SOURCE LINE # 89
+00D4 7801            436             MOV     R0,#01H
+00D6 AF02            437             MOV     R7,AR2
+00D8 EF              438             MOV     A,R7
+00D9 08              439             INC     R0
+00DA 8001            440             SJMP    ?C0044
+00DC                 441     ?C0043:
+00DC 23              442             RL      A
+00DD                 443     ?C0044:
+00DD D8FD            444             DJNZ    R0,?C0043
+00DF FA              445             MOV     R2,A
+                     446     ;                       }
+                     447                             ; SOURCE LINE # 90
+00E0 DBE2            448             DJNZ    R3,?C0026
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     8
+
+00E2 8020            449             SJMP    ?C0032
+                     450     ;               }
+                     451                             ; SOURCE LINE # 91
+00E4                 452     ?C0025:
+                     453     ;               else
+                     454     ;               {                                          //µ±·´×ªÊ±
+                     455                             ; SOURCE LINE # 93
+                     456     ;                       for(j=8;j>0;j--)
+                     457                             ; SOURCE LINE # 94
+00E4 7B08            458             MOV     R3,#08H
+00E6                 459     ?C0033:
+                     460     ;                       {
+                     461                             ; SOURCE LINE # 95
+                     462     ;                               P1=out;
+                     463                             ; SOURCE LINE # 96
+00E6 8A90            464             MOV     P1,R2
+                     465     ;                               for(i=0;i<t;i++)delays(); //Ã¿Ò»¸ö·¢¹â¶þ¼«¹ÜÁÁµÄÊ±¼ä
+                     466                             ; SOURCE LINE # 97
+00E8 E4              467             CLR     A
+00E9 FC              468             MOV     R4,A
+00EA                 469     ?C0036:
+00EA EC              470             MOV     A,R4
+00EB C3              471             CLR     C
+00EC 9500     F      472             SUBB    A,t?250
+00EE 5006            473             JNC     ?C0037
+00F0 120000   F      474             LCALL   delays
+00F3 0C              475             INC     R4
+00F4 80F4            476             SJMP    ?C0036
+00F6                 477     ?C0037:
+                     478     ;                               out=_cror_(out,1);        //Ñ­»·×óÒÆ£¬Ö®ºóÏÂÒ»¸ö·¢¹â¶þ¼«¹ÜÁ
+                             Á
+                     479                             ; SOURCE LINE # 98
+00F6 7801            480             MOV     R0,#01H
+00F8 AF02            481             MOV     R7,AR2
+00FA EF              482             MOV     A,R7
+00FB 08              483             INC     R0
+00FC 8001            484             SJMP    ?C0046
+00FE                 485     ?C0045:
+00FE 03              486             RR      A
+00FF                 487     ?C0046:
+00FF D8FD            488             DJNZ    R0,?C0045
+0101 FA              489             MOV     R2,A
+                     490     ;                       }
+                     491                             ; SOURCE LINE # 99
+0102 DBE2            492             DJNZ    R3,?C0033
+                     493     ;               }
+                     494                             ; SOURCE LINE # 100
+0104                 495     ?C0032:
+                     496     ;               P0=Sout_TABLE[Speed];    //ÉèÖÃµµÎ»ÏàÓ¦µÄ·¢¹â¶þ¼«¹ÜÁÁ
+                     497                             ; SOURCE LINE # 101
+0104 E500     F      498             MOV     A,Speed?249+01H
+0106 900000   F      499             MOV     DPTR,#Sout_TABLE
+0109 93              500             MOVC    A,@A+DPTR
+010A F580            501             MOV     P0,A
+                     502     ;               P1=0xff;           //ÔÚÏÂÒ»ÂÖÑ­»·¼ä¸ôÖ®¼äÉèÖÃ·¢¹â¶þ¼«¹Ü¾ùÏ¨ÃðµÈ´ÏÂÒ»ÂÖÐ×ª
+                     503                             ; SOURCE LINE # 102
+010C 7590FF          504             MOV     P1,#0FFH
+                     505     ;       }
+                     506                             ; SOURCE LINE # 103
+010F 020000   F      507             LJMP    ?C0008
+                     508     ; END OF main
+                     509     
+                     510             END
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE     9
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                      T Y P E  V A L U E   ATTRIBUTES
+
+?C0001. . . . . . . . . . .  C ADDR   0002H   R   SEG=?PR?DELAYS?KEYSCAN_SELF
+?C0003. . . . . . . . . . .  C ADDR   000AH   R   SEG=?PR?DELAYS?KEYSCAN_SELF
+?C0006. . . . . . . . . . .  C ADDR   0013H   R   SEG=?PR?DELAYS?KEYSCAN_SELF
+?C0008. . . . . . . . . . .  C ADDR   0024H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0010. . . . . . . . . . .  C ADDR   00A6H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0012. . . . . . . . . . .  C ADDR   0053H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0013. . . . . . . . . . .  C ADDR   0061H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0014. . . . . . . . . . .  C ADDR   005DH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0016. . . . . . . . . . .  C ADDR   006BH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0018. . . . . . . . . . .  C ADDR   0075H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0020. . . . . . . . . . .  C ADDR   008DH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0024. . . . . . . . . . .  C ADDR   009EH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0025. . . . . . . . . . .  C ADDR   00E4H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0026. . . . . . . . . . .  C ADDR   00C4H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0029. . . . . . . . . . .  C ADDR   00C8H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0030. . . . . . . . . . .  C ADDR   00D4H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0032. . . . . . . . . . .  C ADDR   0104H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0033. . . . . . . . . . .  C ADDR   00E6H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0036. . . . . . . . . . .  C ADDR   00EAH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0037. . . . . . . . . . .  C ADDR   00F6H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0040. . . . . . . . . . .  C ADDR   0080H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0041. . . . . . . . . . .  C ADDR   009EH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0042. . . . . . . . . . .  C ADDR   00A6H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0043. . . . . . . . . . .  C ADDR   00DCH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0044. . . . . . . . . . .  C ADDR   00DDH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0045. . . . . . . . . . .  C ADDR   00FEH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?C0046. . . . . . . . . . .  C ADDR   00FFH   R   SEG=?PR?MAIN?KEYSCAN_SELF
+?CO?KEYSCAN_SELF. . . . . .  C SEG    000EH       REL=UNIT
+?C_STARTUP. . . . . . . . .  C ADDR   -----       EXT
+?DT?MAIN?KEYSCAN_SELF . . .  D SEG    0007H       REL=UNIT
+?MAIN?BYTE. . . . . . . . .  D ADDR   0000H   R   SEG=?DT?MAIN?KEYSCAN_SELF
+?PR?DELAYS?KEYSCAN_SELF . .  C SEG    0014H       REL=UNIT
+?PR?DELAYS_ASM?KEYSCAN_SELF  C SEG    000AH       REL=UNIT
+?PR?MAIN?KEYSCAN_SELF . . .  C SEG    0112H       REL=UNIT
+AC. . . . . . . . . . . . .  B ADDR   00D0H.6 A   
+ACC . . . . . . . . . . . .  D ADDR   00E0H   A   
+AR2 . . . . . . . . . . . .  D ADDR   0002H   A   
+AR4 . . . . . . . . . . . .  D ADDR   0004H   A   
+AR6 . . . . . . . . . . . .  D ADDR   0006H   A   
+AR7 . . . . . . . . . . . .  D ADDR   0007H   A   
+B . . . . . . . . . . . . .  D ADDR   00F0H   A   
+CY. . . . . . . . . . . . .  B ADDR   00D0H.7 A   
+DELAYS. . . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?DELAYS?KEYSCAN_SELF
+DELAYS_ASM. . . . . . . . .  C ADDR   0000H   R   SEG=?PR?DELAYS_ASM?KEYSCAN_SELF
+DIR?247 . . . . . . . . . .  D ADDR   0000H   R   SEG=?DT?MAIN?KEYSCAN_SELF
+DL1 . . . . . . . . . . . .  C ADDR   0002H   R   SEG=?PR?DELAYS_ASM?KEYSCAN_SELF
+DL2 . . . . . . . . . . . .  C ADDR   0004H   R   SEG=?PR?DELAYS_ASM?KEYSCAN_SELF
+DPH . . . . . . . . . . . .  D ADDR   0083H   A   
+DPL . . . . . . . . . . . .  D ADDR   0082H   A   
+EA. . . . . . . . . . . . .  B ADDR   00A8H.7 A   
+ES. . . . . . . . . . . . .  B ADDR   00A8H.4 A   
+ET0 . . . . . . . . . . . .  B ADDR   00A8H.1 A   
+ET1 . . . . . . . . . . . .  B ADDR   00A8H.3 A   
+EX0 . . . . . . . . . . . .  B ADDR   00A8H.0 A   
+EX1 . . . . . . . . . . . .  B ADDR   00A8H.2 A   
+F0. . . . . . . . . . . . .  B ADDR   00D0H.5 A   
+IE. . . . . . . . . . . . .  D ADDR   00A8H   A   
+IE0 . . . . . . . . . . . .  B ADDR   0088H.1 A   
+IE1 . . . . . . . . . . . .  B ADDR   0088H.3 A   
+INT0. . . . . . . . . . . .  B ADDR   00B0H.2 A   
+A51 MACRO ASSEMBLER  KEYSCAN_SELF                                                         05/15/2020 15:27:33 PAGE    10
+
+INT1. . . . . . . . . . . .  B ADDR   00B0H.3 A   
+IP. . . . . . . . . . . . .  D ADDR   00B8H   A   
+IT0 . . . . . . . . . . . .  B ADDR   0088H.0 A   
+IT1 . . . . . . . . . . . .  B ADDR   0088H.2 A   
+KEYSCAN_SELF. . . . . . . .  N NUMB   -----       
+KEY_TABLE . . . . . . . . .  C ADDR   0000H   R   SEG=?CO?KEYSCAN_SELF
+M?248 . . . . . . . . . . .  D ADDR   0002H   R   SEG=?DT?MAIN?KEYSCAN_SELF
+MAIN. . . . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?MAIN?KEYSCAN_SELF
+OV. . . . . . . . . . . . .  B ADDR   00D0H.2 A   
+P . . . . . . . . . . . . .  B ADDR   00D0H.0 A   
+P0. . . . . . . . . . . . .  D ADDR   0080H   A   
+P1. . . . . . . . . . . . .  D ADDR   0090H   A   
+P2. . . . . . . . . . . . .  D ADDR   00A0H   A   
+P3. . . . . . . . . . . . .  D ADDR   00B0H   A   
+PCON. . . . . . . . . . . .  D ADDR   0087H   A   
+PS. . . . . . . . . . . . .  B ADDR   00B8H.4 A   
+PSW . . . . . . . . . . . .  D ADDR   00D0H   A   
+PT0 . . . . . . . . . . . .  B ADDR   00B8H.1 A   
+PT1 . . . . . . . . . . . .  B ADDR   00B8H.3 A   
+PX0 . . . . . . . . . . . .  B ADDR   00B8H.0 A   
+PX1 . . . . . . . . . . . .  B ADDR   00B8H.2 A   
+RB8 . . . . . . . . . . . .  B ADDR   0098H.2 A   
+RD. . . . . . . . . . . . .  B ADDR   00B0H.7 A   
+REN . . . . . . . . . . . .  B ADDR   0098H.4 A   
+RI. . . . . . . . . . . . .  B ADDR   0098H.0 A   
+RS0 . . . . . . . . . . . .  B ADDR   00D0H.3 A   
+RS1 . . . . . . . . . . . .  B ADDR   00D0H.4 A   
+RXD . . . . . . . . . . . .  B ADDR   00B0H.0 A   
+SBUF. . . . . . . . . . . .  D ADDR   0099H   A   
+SCON. . . . . . . . . . . .  D ADDR   0098H   A   
+SM0 . . . . . . . . . . . .  B ADDR   0098H.7 A   
+SM1 . . . . . . . . . . . .  B ADDR   0098H.6 A   
+SM2 . . . . . . . . . . . .  B ADDR   0098H.5 A   
+SOUT_TABLE. . . . . . . . .  C ADDR   0009H   R   SEG=?CO?KEYSCAN_SELF
+SP. . . . . . . . . . . . .  D ADDR   0081H   A   
+SPEED?249 . . . . . . . . .  D ADDR   0004H   R   SEG=?DT?MAIN?KEYSCAN_SELF
+T0. . . . . . . . . . . . .  B ADDR   00B0H.4 A   
+T1. . . . . . . . . . . . .  B ADDR   00B0H.5 A   
+T?250 . . . . . . . . . . .  D ADDR   0006H   R   SEG=?DT?MAIN?KEYSCAN_SELF
+TB8 . . . . . . . . . . . .  B ADDR   0098H.3 A   
+TCON. . . . . . . . . . . .  D ADDR   0088H   A   
+TF0 . . . . . . . . . . . .  B ADDR   0088H.5 A   
+TF1 . . . . . . . . . . . .  B ADDR   0088H.7 A   
+TH0 . . . . . . . . . . . .  D ADDR   008CH   A   
+TH1 . . . . . . . . . . . .  D ADDR   008DH   A   
+TI. . . . . . . . . . . . .  B ADDR   0098H.1 A   
+TL0 . . . . . . . . . . . .  D ADDR   008AH   A   
+TL1 . . . . . . . . . . . .  D ADDR   008BH   A   
+TMOD. . . . . . . . . . . .  D ADDR   0089H   A   
+TR0 . . . . . . . . . . . .  B ADDR   0088H.4 A   
+TR1 . . . . . . . . . . . .  B ADDR   0088H.6 A   
+TXD . . . . . . . . . . . .  B ADDR   00B0H.1 A   
+T_TABLE . . . . . . . . . .  C ADDR   0004H   R   SEG=?CO?KEYSCAN_SELF
+WR. . . . . . . . . . . . .  B ADDR   00B0H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
