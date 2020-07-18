@@ -1,0 +1,351 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        06/09/2020  09:27:01  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE SDka.obj TO SDka
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  SDka.obj (SDKA)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C?CSTPTR)
+
+
+LINK MAP OF MODULE:  SDka (SDKA)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000FH     UNIT         _DATA_GROUP_
+            IDATA   0017H     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     0200H     UNIT         ?XD?SDKA
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0097H     UNIT         ?PR?_SDWRITEBLOCK?SDKA
+            CODE    009AH     0075H     UNIT         ?PR?_SDREADBLOCK?SDKA
+            CODE    010FH     0067H     UNIT         ?PR?SDINIT?SDKA
+            CODE    0176H     0042H     UNIT         ?PR?MAIN?SDKA
+            CODE    01B8H     002BH     UNIT         ?C?LIB_CODE
+            CODE    01E3H     0020H     UNIT         ?PR?_SDCOMMAND?SDKA
+            CODE    0203H     001FH     UNIT         ?PR?_SEN_STRING?SDKA
+            CODE    0222H     001AH     UNIT         ?PR?_SDWRITE?SDKA
+            CODE    023CH     0016H     UNIT         ?PR?SDRESPONSE?SDKA
+            CODE    0252H     0013H     UNIT         ?PR?SDREAD?SDKA
+            CODE    0265H     0010H     UNIT         ?CO?SDKA
+            CODE    0275H     000EH     UNIT         ?PR?UART?SDKA
+            CODE    0283H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   SDka (SDKA)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?SDKA
+
+?PR?MAIN?SDKA                  -----    -----
+  +--> ?PR?UART?SDKA
+  +--> ?PR?SDINIT?SDKA
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/09/2020  09:27:01  PAGE 2
+
+
+  +--> ?CO?SDKA
+  +--> ?PR?_SDWRITEBLOCK?SDKA
+  +--> ?PR?_SDREADBLOCK?SDKA
+  +--> ?PR?_SEN_STRING?SDKA
+
+?PR?SDINIT?SDKA                0008H    0004H
+  +--> ?PR?_SDWRITE?SDKA
+  +--> ?PR?_SDCOMMAND?SDKA
+  +--> ?PR?SDRESPONSE?SDKA
+
+?PR?_SDCOMMAND?SDKA            0011H    0006H
+  +--> ?PR?_SDWRITE?SDKA
+
+?PR?SDRESPONSE?SDKA            -----    -----
+  +--> ?PR?SDREAD?SDKA
+
+?PR?_SDWRITEBLOCK?SDKA         0008H    0009H
+  +--> ?PR?_SDCOMMAND?SDKA
+  +--> ?PR?SDRESPONSE?SDKA
+  +--> ?PR?_SDWRITE?SDKA
+  +--> ?PR?SDREAD?SDKA
+
+?PR?_SDREADBLOCK?SDKA          0008H    0009H
+  +--> ?PR?_SDCOMMAND?SDKA
+  +--> ?PR?SDRESPONSE?SDKA
+  +--> ?PR?SDREAD?SDKA
+
+
+
+SYMBOL TABLE OF MODULE:  SDka (SDKA)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SDKA
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0203H         PUBLIC        _Sen_String
+  B:0090H.6       PUBLIC        SD_DI
+  B:0090H.5       PUBLIC        SD_DO
+  C:023CH         PUBLIC        SdResponse
+  B:0090H.7       PUBLIC        SD_CS
+  X:0000H         PUBLIC        DATA
+  B:0098H.1       PUBLIC        TI
+  C:009AH         PUBLIC        _SdReadBlock
+  C:0176H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  C:0003H         PUBLIC        _SdWriteBlock
+  D:0089H         PUBLIC        TMOD
+  C:0252H         PUBLIC        SdRead
+  C:0275H         PUBLIC        UART
+  C:0229H         PUBLIC        _SdWrite
+  D:008DH         PUBLIC        TH1
+  C:010FH         PUBLIC        SdInit
+  B:0090H.4       PUBLIC        SD_CLK
+  B:0088H.6       PUBLIC        TR1
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/09/2020  09:27:01  PAGE 3
+
+
+  C:01E3H         PUBLIC        _SdCommand
+  -------         PROC          L?0064
+  -------         ENDPROC       L?0064
+  -------         PROC          _SDWRITE
+  D:0007H         SYMBOL        n
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0229H         LINE#         28
+  C:0229H         LINE#         29
+  C:0229H         LINE#         31
+  C:022BH         LINE#         32
+  C:022BH         LINE#         33
+  C:022DH         LINE#         34
+  C:0231H         LINE#         35
+  C:0235H         LINE#         36
+  C:0237H         LINE#         37
+  C:0239H         LINE#         38
+  C:023BH         LINE#         39
+  -------         ENDPROC       _SDWRITE
+  -------         PROC          SDREAD
+  -------         DO            
+  D:0007H         SYMBOL        n
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0252H         LINE#         42
+  C:0252H         LINE#         43
+  C:0252H         LINE#         45
+  C:0254H         LINE#         46
+  C:0254H         LINE#         47
+  C:0256H         LINE#         48
+  C:0258H         LINE#         49
+  C:025CH         LINE#         50
+  C:0262H         LINE#         51
+  C:0264H         LINE#         52
+  C:0264H         LINE#         53
+  -------         ENDPROC       SDREAD
+  -------         PROC          SDRESPONSE
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0005H         SYMBOL        response
+  -------         ENDDO         
+  C:023CH         LINE#         56
+  C:023CH         LINE#         57
+  C:023CH         LINE#         58
+  C:023EH         LINE#         60
+  C:023EH         LINE#         61
+  C:023EH         LINE#         62
+  C:0243H         LINE#         63
+  C:0246H         LINE#         64
+  C:024BH         LINE#         65
+  C:024CH         LINE#         66
+  C:024FH         LINE#         67
+  C:0251H         LINE#         68
+  -------         ENDPROC       SDRESPONSE
+  -------         PROC          _SDCOMMAND
+  D:0007H         SYMBOL        command
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/09/2020  09:27:01  PAGE 4
+
+
+  D:0012H         SYMBOL        argument
+  D:0016H         SYMBOL        CRC
+  C:01E3H         LINE#         71
+  C:01E3H         LINE#         72
+  C:01E3H         LINE#         74
+  C:01EAH         LINE#         75
+  C:01EFH         LINE#         76
+  C:01F4H         LINE#         77
+  C:01F9H         LINE#         78
+  C:01FEH         LINE#         79
+  -------         ENDPROC       _SDCOMMAND
+  -------         PROC          SDINIT
+  -------         DO            
+  D:0008H         SYMBOL        delay
+  D:000AH         SYMBOL        trials
+  D:0004H         SYMBOL        i
+  D:0005H         SYMBOL        response
+  -------         ENDDO         
+  C:010FH         LINE#         83
+  C:010FH         LINE#         84
+  C:010FH         LINE#         85
+  C:0118H         LINE#         87
+  C:011AH         LINE#         89
+  C:011CH         LINE#         90
+  C:011DH         LINE#         91
+  C:0126H         LINE#         92
+  C:0128H         LINE#         95
+  C:0138H         LINE#         97
+  C:013DH         LINE#         98
+  C:0142H         LINE#         99
+  C:0142H         LINE#         100
+  C:0145H         LINE#         101
+  C:0145H         LINE#         103
+  C:0148H         LINE#         104
+  C:0148H         LINE#         105
+  C:014AH         LINE#         106
+  C:014FH         LINE#         107
+  C:0151H         LINE#         108
+  C:0165H         LINE#         109
+  C:016AH         LINE#         110
+  C:016CH         LINE#         112
+  C:016EH         LINE#         113
+  C:0173H         LINE#         114
+  C:0175H         LINE#         115
+  -------         ENDPROC       SDINIT
+  -------         PROC          _SDWRITEBLOCK
+  D:0008H         SYMBOL        Block
+  D:000BH         SYMBOL        address
+  D:000FH         SYMBOL        len
+  -------         DO            
+  D:0004H         SYMBOL        count
+  D:0005H         SYMBOL        dataResp
+  -------         ENDDO         
+  C:0003H         LINE#         118
+  C:0011H         LINE#         119
+  C:0011H         LINE#         125
+  C:0013H         LINE#         127
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/09/2020  09:27:01  PAGE 5
+
+
+  C:0023H         LINE#         129
+  C:0029H         LINE#         130
+  C:0029H         LINE#         131
+  C:0029H         LINE#         132
+  C:002CH         LINE#         133
+  C:0031H         LINE#         136
+  C:0036H         LINE#         138
+  C:005EH         LINE#         140
+  C:0070H         LINE#         142
+  C:0070H         LINE#         143
+  C:0073H         LINE#         145
+  C:0078H         LINE#         150
+  C:007EH         LINE#         152
+  C:0081H         LINE#         153
+  C:0083H         LINE#         154
+  C:0088H         LINE#         155
+  C:008BH         LINE#         156
+  C:008BH         LINE#         158
+  C:008EH         LINE#         159
+  C:008EH         LINE#         160
+  C:0091H         LINE#         161
+  C:0094H         LINE#         164
+  C:0097H         LINE#         165
+  C:0097H         LINE#         167
+  C:0099H         LINE#         168
+  -------         ENDPROC       _SDWRITEBLOCK
+  -------         PROC          _SDREADBLOCK
+  D:0008H         SYMBOL        Block
+  D:000BH         SYMBOL        address
+  D:000FH         SYMBOL        len
+  -------         DO            
+  D:0004H         SYMBOL        count
+  -------         ENDDO         
+  C:009AH         LINE#         171
+  C:00A8H         LINE#         172
+  C:00A8H         LINE#         179
+  C:00AAH         LINE#         181
+  C:00BAH         LINE#         183
+  C:00C0H         LINE#         184
+  C:00C0H         LINE#         187
+  C:00C6H         LINE#         189
+  C:00EEH         LINE#         191
+  C:00FEH         LINE#         194
+  C:0101H         LINE#         195
+  C:0104H         LINE#         197
+  C:0106H         LINE#         198
+  C:0109H         LINE#         199
+  C:010CH         LINE#         200
+  C:010CH         LINE#         202
+  C:010EH         LINE#         203
+  -------         ENDPROC       _SDREADBLOCK
+  -------         PROC          UART
+  C:0275H         LINE#         208
+  C:0275H         LINE#         209
+  C:0275H         LINE#         210
+  C:0278H         LINE#         211
+  C:027BH         LINE#         212
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/09/2020  09:27:01  PAGE 6
+
+
+  C:027EH         LINE#         213
+  C:0280H         LINE#         214
+  C:0282H         LINE#         215
+  -------         ENDPROC       UART
+  -------         PROC          _SEN_STRING
+  D:0001H         SYMBOL        string
+  C:0203H         LINE#         218
+  C:0203H         LINE#         219
+  C:0203H         LINE#         220
+  C:0209H         LINE#         221
+  C:0209H         LINE#         222
+  C:020CH         LINE#         223
+  C:020CH         LINE#         224
+  C:020FH         LINE#         225
+  C:0211H         LINE#         227
+  C:0211H         LINE#         228
+  C:0213H         LINE#         229
+  C:0213H         LINE#         230
+  C:0216H         LINE#         231
+  C:0218H         LINE#         232
+  C:021FH         LINE#         233
+  C:0221H         LINE#         234
+  -------         ENDPROC       _SEN_STRING
+  -------         PROC          MAIN
+  C:0176H         LINE#         236
+  C:0176H         LINE#         237
+  C:0176H         LINE#         238
+  C:0179H         LINE#         239
+  C:017FH         LINE#         240
+  C:0196H         LINE#         241
+  C:01ADH         LINE#         242
+  C:01B6H         LINE#         243
+  C:01B6H         LINE#         244
+  C:01B6H         LINE#         245
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SDKA
+
+  -------         MODULE        ?C?CLDPTR
+  C:01B8H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:01D1H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+Program Size: data=24.0 xdata=512 code=655
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

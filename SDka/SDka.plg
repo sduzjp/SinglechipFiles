@@ -1,0 +1,42 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+E:\Singlechip_files\SDka\SDka.uvproj
+Project File Date:  06/08/2020
+
+<h2>Output:</h2>
+Build target '目标 1'
+compiling SDka.c...
+SDKA.C(70): error C141: syntax error near 'argument', expected ')'
+SDKA.C(74): error C202: 'argument': undefined identifier
+SDKA.C(75): error C202: 'argument': undefined identifier
+SDKA.C(76): error C202: 'argument': undefined identifier
+SDKA.C(77): error C202: 'argument': undefined identifier
+SDKA.C(78): error C202: 'CRC': undefined identifier
+SDKA.C(94): error C208: '_SdCommand': too many actual parameters
+SDKA.C(107): error C208: '_SdCommand': too many actual parameters
+SDKA.C(117): error C141: syntax error near 'address', expected ')'
+SDKA.C(126): error C202: 'address': undefined identifier
+SDKA.C(137): error C202: 'len': undefined identifier
+SDKA.C(170): error C141: syntax error near 'address', expected ')'
+SDKA.C(180): error C202: 'address': undefined identifier
+SDKA.C(188): error C202: 'len': undefined identifier
+SDKA.C(239): error C208: '_SdWriteBlock': too many actual parameters
+SDKA.C(240): error C208: '_SdReadBlock': too many actual parameters
+目标未创建
+Build target '目标 1'
+compiling SDka.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_MS?SDKA
+Program Size: data=24.0 xdata=512 code=687
+creating hex file from "SDka"...
+"SDka" - 0 Error(s), 1 Warning(s).
+Build target '目标 1'
+compiling SDka.c...
+linking...
+Program Size: data=24.0 xdata=512 code=655
+creating hex file from "SDka"...
+"SDka" - 0 Error(s), 0 Warning(s).

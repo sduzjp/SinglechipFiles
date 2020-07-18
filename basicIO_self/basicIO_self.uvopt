@@ -186,10 +186,10 @@
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>26</ColumnNumber>
+      <ColumnNumber>28</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>36</TopLine>
-      <CurrentLine>45</CurrentLine>
+      <TopLine>14</TopLine>
+      <CurrentLine>14</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\basicIO_self.asm</PathWithFileName>
       <FilenameWithoutPath>basicIO_self.asm</FilenameWithoutPath>
@@ -1541,9 +1541,9 @@
       <Documents>
         <Doc>
           <Name>.\basicIO_self.asm</Name>
-          <ColumnNumber>26</ColumnNumber>
-          <TopLine>36</TopLine>
-          <CurrentLine>45</CurrentLine>
+          <ColumnNumber>28</ColumnNumber>
+          <TopLine>14</TopLine>
+          <CurrentLine>14</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

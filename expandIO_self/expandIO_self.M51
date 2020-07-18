@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        05/13/2020  14:36:31  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/22/2020  09:43:21  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -41,10 +41,10 @@ SYMBOL TABLE OF MODULE:  expandIO_self (EXPANDIO_SELF)
   C:0090H         SYMBOL        DL3
   C:0030H         SYMBOL        MAIN
   D:0081H         SYMBOL        SP
-  C:003DH         SYMBOL        STAT1
-  C:004CH         SYMBOL        STAT2
-  C:005BH         SYMBOL        STAT3
-  C:006AH         SYMBOL        STAT4
+  C:003DH         SYMBOL        STATUS1
+  C:004CH         SYMBOL        STATUS2
+  C:005BH         SYMBOL        STATUS3
+  C:006AH         SYMBOL        STATUS4
   C:0000H         LINE#         9
   C:0030H         LINE#         13
   C:0033H         LINE#         14
@@ -59,7 +59,7 @@ SYMBOL TABLE OF MODULE:  expandIO_self (EXPANDIO_SELF)
   C:0045H         LINE#         24
   C:0048H         LINE#         25
   C:0049H         LINE#         26
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/13/2020  14:36:31  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/22/2020  09:43:21  PAGE 2
 
 
   C:004CH         LINE#         28

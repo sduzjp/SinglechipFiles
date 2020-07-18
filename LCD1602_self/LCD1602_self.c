@@ -399,7 +399,7 @@ void main()
 	lcd_init();   //LCD1602初始化
 	while(1)
 	{
-		keyscan(); 	 //调用键盘扫描子程序并显示结果
+		keyscan(); 	 //调用键盘扫描和显示子程序显示结果
 	} 
 }
 	 

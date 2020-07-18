@@ -174,8 +174,8 @@
       <Focus>0</Focus>
       <ColumnNumber>96</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>67</TopLine>
+      <CurrentLine>67</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\keyscan.asm</PathWithFileName>
       <FilenameWithoutPath>keyscan.asm</FilenameWithoutPath>
@@ -1528,8 +1528,8 @@
         <Doc>
           <Name>.\keyscan.asm</Name>
           <ColumnNumber>96</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>1</CurrentLine>
+          <TopLine>67</TopLine>
+          <CurrentLine>67</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

@@ -172,10 +172,10 @@
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>15</ColumnNumber>
+      <ColumnNumber>64</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>75</TopLine>
-      <CurrentLine>78</CurrentLine>
+      <TopLine>81</TopLine>
+      <CurrentLine>81</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\staticLED_self.asm</PathWithFileName>
       <FilenameWithoutPath>staticLED_self.asm</FilenameWithoutPath>
@@ -1527,9 +1527,9 @@
       <Documents>
         <Doc>
           <Name>.\staticLED_self.asm</Name>
-          <ColumnNumber>15</ColumnNumber>
-          <TopLine>75</TopLine>
-          <CurrentLine>78</CurrentLine>
+          <ColumnNumber>64</ColumnNumber>
+          <TopLine>81</TopLine>
+          <CurrentLine>81</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

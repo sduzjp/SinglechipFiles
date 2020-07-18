@@ -1,0 +1,126 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        06/10/2020  19:59:05  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE 8255A.obj TO 8255A
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  8255A.obj (8255A)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  8255A (8255A)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?8255A
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     009DH     UNIT         ?PR?MONITAR_KEY?8255A
+            CODE    00A0H     0015H     UNIT         ?PR?MAIN?8255A
+            CODE    00B5H     0012H     UNIT         ?CO?8255A
+            CODE    00C7H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   8255A (8255A)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?8255A
+
+?PR?MAIN?8255A
+  +--> ?PR?MONITAR_KEY?8255A
+
+?PR?MONITAR_KEY?8255A
+  +--> ?CO?8255A
+
+
+
+SYMBOL TABLE OF MODULE:  8255A (8255A)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        8255A
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:00A0H         PUBLIC        main
+  C:0003H         PUBLIC        monitar_key
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/10/2020  19:59:05  PAGE 2
+
+
+  C:00B5H         PUBLIC        led
+  D:0008H         PUBLIC        temp
+  C:00BEH         PUBLIC        num
+  -------         PROC          MONITAR_KEY
+  C:0003H         LINE#         15
+  C:0003H         LINE#         16
+  C:0003H         LINE#         17
+  C:0009H         LINE#         18
+  C:002BH         LINE#         19
+  C:002BH         LINE#         20
+  C:002BH         LINE#         21
+  C:0034H         LINE#         22
+  C:0037H         LINE#         23
+  C:0039H         LINE#         24
+  C:0039H         LINE#         25
+  C:0042H         LINE#         26
+  C:0045H         LINE#         27
+  C:0047H         LINE#         28
+  C:0047H         LINE#         29
+  C:0050H         LINE#         30
+  C:0053H         LINE#         31
+  C:0055H         LINE#         32
+  C:0055H         LINE#         33
+  C:005EH         LINE#         34
+  C:0061H         LINE#         35
+  C:0063H         LINE#         36
+  C:0063H         LINE#         37
+  C:006CH         LINE#         38
+  C:006FH         LINE#         39
+  C:0071H         LINE#         40
+  C:0071H         LINE#         41
+  C:007AH         LINE#         42
+  C:007DH         LINE#         43
+  C:007FH         LINE#         44
+  C:007FH         LINE#         45
+  C:0088H         LINE#         46
+  C:008BH         LINE#         47
+  C:008DH         LINE#         48
+  C:008DH         LINE#         49
+  C:0096H         LINE#         50
+  C:009FH         LINE#         51
+  C:009FH         LINE#         52
+  C:009FH         LINE#         53
+  -------         ENDPROC       MONITAR_KEY
+  -------         PROC          MAIN
+  C:00A0H         LINE#         55
+  C:00A0H         LINE#         56
+  C:00A0H         LINE#         57
+  C:00A6H         LINE#         58
+  C:00ACH         LINE#         59
+  C:00B0H         LINE#         60
+  C:00B0H         LINE#         61
+  C:00B0H         LINE#         62
+  C:00B3H         LINE#         63
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        8255A
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/10/2020  19:59:05  PAGE 3
+
+
+Program Size: data=10.0 xdata=0 code=211
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,168 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/03/2020  20:20:30  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE test1.obj TO test1
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  test1.obj (TEST1)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  test1 (TEST1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001FH     UNIT         ?CO?TEST1
+            CODE    0022H     001BH     UNIT         ?PR?LCD_INIT?TEST1
+            CODE    003DH     0017H     UNIT         ?PR?_DELAY_N40US?TEST1
+            CODE    0054H     0017H     UNIT         ?PR?MAIN?TEST1
+            CODE    006BH     0013H     UNIT         ?PR?CHARDISPLAY?TEST1
+            CODE    007EH     0011H     UNIT         ?PR?_LCD_WCMD?TEST1
+            CODE    008FH     0011H     UNIT         ?PR?_LCD_WDAT?TEST1
+            CODE    00A0H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   test1 (TEST1)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?TEST1
+
+?PR?MAIN?TEST1
+  +--> ?PR?LCD_INIT?TEST1
+  +--> ?PR?CHARDISPLAY?TEST1
+  +--> ?PR?_LCD_WCMD?TEST1
+  +--> ?PR?_LCD_WDAT?TEST1
+
+?PR?LCD_INIT?TEST1
+  +--> ?PR?_LCD_WCMD?TEST1
+  +--> ?PR?_DELAY_N40US?TEST1
+
+?PR?_LCD_WCMD?TEST1
+  +--> ?PR?_DELAY_N40US?TEST1
+
+?PR?CHARDISPLAY?TEST1
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  20:20:30  PAGE 2
+
+
+  +--> ?PR?LCD_INIT?TEST1
+  +--> ?CO?TEST1
+  +--> ?PR?_LCD_WDAT?TEST1
+
+?PR?_LCD_WDAT?TEST1
+  +--> ?PR?_DELAY_N40US?TEST1
+
+
+
+SYMBOL TABLE OF MODULE:  test1 (TEST1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        TEST1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:0054H         PUBLIC        main
+  C:003DH         PUBLIC        _delay_n40us
+  C:007EH         PUBLIC        _lcd_wcmd
+  C:008FH         PUBLIC        _lcd_wdat
+  B:00A0H.7       PUBLIC        LCD_EN
+  C:0022H         PUBLIC        lcd_init
+  C:0003H         PUBLIC        line1_data
+  B:00A0H.6       PUBLIC        LCD_RS
+  C:0012H         PUBLIC        line2_data
+  B:00A0H.5       PUBLIC        LCD_RW
+  C:006BH         PUBLIC        charDisplay
+  -------         PROC          _DELAY_N40US
+  D:0006H         SYMBOL        n
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0005H         SYMBOL        j
+  -------         ENDDO         
+  C:003DH         LINE#         14
+  C:003DH         LINE#         15
+  C:003DH         LINE#         18
+  C:0046H         LINE#         19
+  C:0046H         LINE#         20
+  C:004CH         LINE#         21
+  C:0053H         LINE#         22
+  -------         ENDPROC       _DELAY_N40US
+  -------         PROC          _LCD_WCMD
+  D:0007H         SYMBOL        cmd
+  C:007EH         LINE#         25
+  C:007EH         LINE#         26
+  C:007EH         LINE#         27
+  C:0080H         LINE#         28
+  C:0082H         LINE#         29
+  C:0084H         LINE#         30
+  C:0086H         LINE#         31
+  C:0088H         LINE#         32
+  -------         ENDPROC       _LCD_WCMD
+  -------         PROC          _LCD_WDAT
+  D:0007H         SYMBOL        dat
+  C:008FH         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  20:20:30  PAGE 3
+
+
+  C:008FH         LINE#         37
+  C:008FH         LINE#         38
+  C:0091H         LINE#         39
+  C:0093H         LINE#         40
+  C:0095H         LINE#         41
+  C:0097H         LINE#         42
+  C:0099H         LINE#         43
+  -------         ENDPROC       _LCD_WDAT
+  -------         PROC          LCD_INIT
+  C:0022H         LINE#         47
+  C:0022H         LINE#         48
+  C:0022H         LINE#         49
+  C:0027H         LINE#         50
+  C:002CH         LINE#         51
+  C:0031H         LINE#         52
+  C:0036H         LINE#         53
+  -------         ENDPROC       LCD_INIT
+  -------         PROC          CHARDISPLAY
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:006BH         LINE#         56
+  C:006BH         LINE#         57
+  C:006BH         LINE#         59
+  C:006EH         LINE#         60
+  C:0070H         LINE#         61
+  C:0070H         LINE#         62
+  C:0079H         LINE#         63
+  C:007DH         LINE#         64
+  -------         ENDPROC       CHARDISPLAY
+  -------         PROC          MAIN
+  C:0054H         LINE#         66
+  C:0054H         LINE#         67
+  C:0054H         LINE#         68
+  C:0057H         LINE#         69
+  C:005AH         LINE#         70
+  C:005FH         LINE#         71
+  C:0064H         LINE#         72
+  C:0069H         LINE#         73
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        TEST1
+
+Program Size: data=9.0 xdata=0 code=172
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

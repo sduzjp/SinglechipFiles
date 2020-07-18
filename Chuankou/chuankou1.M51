@@ -1,0 +1,236 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/03/2020  20:34:54  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE testchuankou.obj TO chuankou1
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  testchuankou.obj (TESTCHUANKOU)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  chuankou1 (TESTCHUANKOU)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0020H     UNIT         ?DT?TESTCHUANKOU
+            IDATA   0028H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001BH     UNIT         ?PR?LCD_INIT?TESTCHUANKOU
+                    001EH     0005H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     008CH     UNIT         ?C_C51STARTUP
+            CODE    00B2H     007DH     UNIT         ?PR?RECEIVE?TESTCHUANKOU
+            CODE    012FH     0017H     UNIT         ?PR?_DELAY_N40US?TESTCHUANKOU
+            CODE    0146H     0016H     UNIT         ?PR?USARTINIT?TESTCHUANKOU
+            CODE    015CH     0015H     UNIT         ?PR?CHARDISPLAY?TESTCHUANKOU
+            CODE    0171H     0011H     UNIT         ?PR?_LCD_WCMD?TESTCHUANKOU
+            CODE    0182H     0011H     UNIT         ?PR?_LCD_WDAT?TESTCHUANKOU
+            CODE    0193H     000AH     UNIT         ?C_INITSEG
+            CODE    019DH     0008H     UNIT         ?PR?MAIN?TESTCHUANKOU
+
+
+
+OVERLAY MAP OF MODULE:   chuankou1 (TESTCHUANKOU)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?PR?RECEIVE?TESTCHUANKOU
+  +--> ?PR?CHARDISPLAY?TESTCHUANKOU
+  +--> ?PR?_LCD_WCMD?TESTCHUANKOU
+  +--> ?PR?_LCD_WDAT?TESTCHUANKOU
+
+?PR?CHARDISPLAY?TESTCHUANKOU
+  +--> ?PR?LCD_INIT?TESTCHUANKOU
+  +--> ?PR?_LCD_WDAT?TESTCHUANKOU
+
+?PR?LCD_INIT?TESTCHUANKOU
+  +--> ?PR?_LCD_WCMD?TESTCHUANKOU
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  20:34:54  PAGE 2
+
+
+  +--> ?PR?_DELAY_N40US?TESTCHUANKOU
+
+?PR?_LCD_WCMD?TESTCHUANKOU
+  +--> ?PR?_DELAY_N40US?TESTCHUANKOU
+
+?PR?_LCD_WDAT?TESTCHUANKOU
+  +--> ?PR?_DELAY_N40US?TESTCHUANKOU
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP
+  +--> ?PR?MAIN?TESTCHUANKOU
+  +--> ?C_INITSEG
+
+?PR?MAIN?TESTCHUANKOU
+  +--> ?PR?USARTINIT?TESTCHUANKOU
+  +--> ?PR?LCD_INIT?TESTCHUANKOU
+
+
+
+SYMBOL TABLE OF MODULE:  chuankou1 (TESTCHUANKOU)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        TESTCHUANKOU
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:019DH         PUBLIC        main
+  C:0146H         PUBLIC        UsartInit
+  C:012FH         PUBLIC        _delay_n40us
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:0008H         PUBLIC        SetTime
+  C:0171H         PUBLIC        _lcd_wcmd
+  C:0182H         PUBLIC        _lcd_wdat
+  B:00A0H.7       PUBLIC        LCD_EN
+  C:0003H         PUBLIC        lcd_init
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  B:00A0H.6       PUBLIC        LCD_RS
+  B:00A0H.5       PUBLIC        LCD_RW
+  D:0016H         PUBLIC        Buffer
+  C:00B2H         PUBLIC        receive
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  20:34:54  PAGE 3
+
+
+  D:00C8H         PUBLIC        T2CON
+  D:0025H         PUBLIC        i
+  D:0026H         PUBLIC        j
+  D:0027H         PUBLIC        k
+  D:00D0H         PUBLIC        PSW
+  C:015CH         PUBLIC        charDisplay
+  -------         PROC          _DELAY_N40US
+  D:0006H         SYMBOL        n
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0005H         SYMBOL        j
+  -------         ENDDO         
+  C:012FH         LINE#         14
+  C:012FH         LINE#         15
+  C:012FH         LINE#         18
+  C:0138H         LINE#         19
+  C:0138H         LINE#         20
+  C:013EH         LINE#         21
+  C:0145H         LINE#         22
+  -------         ENDPROC       _DELAY_N40US
+  -------         PROC          _LCD_WCMD
+  D:0007H         SYMBOL        cmd
+  C:0171H         LINE#         25
+  C:0171H         LINE#         26
+  C:0171H         LINE#         27
+  C:0173H         LINE#         28
+  C:0175H         LINE#         29
+  C:0177H         LINE#         30
+  C:0179H         LINE#         31
+  C:017BH         LINE#         32
+  -------         ENDPROC       _LCD_WCMD
+  -------         PROC          _LCD_WDAT
+  D:0007H         SYMBOL        dat
+  C:0182H         LINE#         36
+  C:0182H         LINE#         37
+  C:0182H         LINE#         38
+  C:0184H         LINE#         39
+  C:0186H         LINE#         40
+  C:0188H         LINE#         41
+  C:018AH         LINE#         42
+  C:018CH         LINE#         43
+  -------         ENDPROC       _LCD_WDAT
+  -------         PROC          LCD_INIT
+  C:0003H         LINE#         47
+  C:0003H         LINE#         48
+  C:0003H         LINE#         49
+  C:0008H         LINE#         50
+  C:000DH         LINE#         51
+  C:0012H         LINE#         52
+  C:0017H         LINE#         53
+  -------         ENDPROC       LCD_INIT
+  -------         PROC          CHARDISPLAY
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:015CH         LINE#         56
+  C:015CH         LINE#         57
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  20:34:54  PAGE 4
+
+
+  C:015CH         LINE#         59
+  C:015FH         LINE#         60
+  C:0161H         LINE#         61
+  C:0161H         LINE#         62
+  C:016CH         LINE#         63
+  C:0170H         LINE#         64
+  -------         ENDPROC       CHARDISPLAY
+  -------         PROC          USARTINIT
+  C:0146H         LINE#         72
+  C:0146H         LINE#         73
+  C:0146H         LINE#         74
+  C:0149H         LINE#         75
+  C:014CH         LINE#         76
+  C:014FH         LINE#         77
+  C:0152H         LINE#         78
+  C:0155H         LINE#         79
+  C:0157H         LINE#         80
+  C:0159H         LINE#         81
+  C:015BH         LINE#         82
+  -------         ENDPROC       USARTINIT
+  -------         PROC          MAIN
+  C:019DH         LINE#         90
+  C:019DH         LINE#         91
+  C:019DH         LINE#         92
+  C:01A0H         LINE#         93
+  C:01A3H         LINE#         94
+  -------         ENDPROC       MAIN
+  -------         PROC          RECEIVE
+  C:00B2H         LINE#         97
+  C:00C3H         LINE#         99
+  C:00C6H         LINE#         100
+  C:00C6H         LINE#         101
+  C:00CDH         LINE#         102
+  C:00CFH         LINE#         103
+  C:00D7H         LINE#         104
+  C:00DAH         LINE#         105
+  C:00DCH         LINE#         106
+  C:00DEH         LINE#         107
+  C:00E5H         LINE#         108
+  C:00E5H         LINE#         109
+  C:00E8H         LINE#         110
+  C:00EBH         LINE#         111
+  C:0103H         LINE#         112
+  C:0108H         LINE#         113
+  C:0120H         LINE#         114
+  C:0120H         LINE#         115
+  C:0120H         LINE#         116
+  -------         ENDPROC       RECEIVE
+  -------         ENDMOD        TESTCHUANKOU
+
+Program Size: data=41.0 xdata=0 code=416
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

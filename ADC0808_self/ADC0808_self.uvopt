@@ -198,10 +198,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>9</ColumnNumber>
+      <ColumnNumber>22</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>174</TopLine>
-      <CurrentLine>174</CurrentLine>
+      <TopLine>33</TopLine>
+      <CurrentLine>33</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\ADC0809_self.c</PathWithFileName>
       <FilenameWithoutPath>ADC0809_self.c</FilenameWithoutPath>
@@ -1553,9 +1553,9 @@
       <Documents>
         <Doc>
           <Name>.\ADC0809_self.c</Name>
-          <ColumnNumber>9</ColumnNumber>
-          <TopLine>174</TopLine>
-          <CurrentLine>174</CurrentLine>
+          <ColumnNumber>22</ColumnNumber>
+          <TopLine>33</TopLine>
+          <CurrentLine>33</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

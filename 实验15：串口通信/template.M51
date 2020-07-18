@@ -1,0 +1,127 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/03/2020  15:24:15  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE main.obj TO template RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  template (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000EH     UNIT         ?DT?MAIN
+            IDATA   0016H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0016H     UNIT         ?PR?USARTINIT?MAIN
+            CODE    0019H     0005H     UNIT         ?PR?MAIN?MAIN
+                    001EH     0005H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     0037H     UNIT         ?PR?USART?MAIN
+            CODE    005DH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   template (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?USARTINIT?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  template (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  15:24:15  PAGE 2
+
+
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0026H         PUBLIC        Usart
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0019H         PUBLIC        main
+  C:0003H         PUBLIC        UsartInit
+  D:0008H         PUBLIC        ShiJian
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          USARTINIT
+  C:0003H         LINE#         30
+  C:0003H         LINE#         31
+  C:0003H         LINE#         32
+  C:0006H         LINE#         33
+  C:0009H         LINE#         34
+  C:000CH         LINE#         35
+  C:000FH         LINE#         36
+  C:0012H         LINE#         37
+  C:0014H         LINE#         38
+  C:0016H         LINE#         39
+  C:0018H         LINE#         40
+  -------         ENDPROC       USARTINIT
+  -------         PROC          MAIN
+  C:0019H         LINE#         48
+  C:0019H         LINE#         49
+  C:0019H         LINE#         50
+  C:001CH         LINE#         51
+  -------         ENDPROC       MAIN
+  -------         PROC          USART
+  -------         DO            
+  D:0006H         SYMBOL        receiveData
+  D:0007H         SYMBOL        n
+  -------         ENDDO         
+  C:0026H         LINE#         60
+  C:0031H         LINE#         63
+  C:0033H         LINE#         64
+  C:0035H         LINE#         65
+  C:0037H         LINE#         66
+  C:0043H         LINE#         67
+  C:0049H         LINE#         68
+  C:004DH         LINE#         69
+  C:004FH         LINE#         80
+  C:0052H         LINE#         81
+  C:0054H         LINE#         82
+  -------         ENDPROC       USART
+  -------         ENDMOD        MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  15:24:15  PAGE 3
+
+
+
+Program Size: data=23.0 xdata=0 code=100
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -16,7 +16,7 @@ MAIN:		//主程序
 	MOVX @DPTR,A	//U4输出口全置1，U4来设置红灯和黄灯的亮灭	
 	MOV DPTR,#0FD00H
 	MOVX @DPTR,A   //U5输出口全置1，U5的低四位来设置绿灯的亮灭	
-STAT1:		//状态1,南北绿灯亮，东西红灯亮10s
+STATUS1:		//状态1,南北绿灯亮，东西红灯亮10s
 	MOV A,#0F3H
 	MOV DPTR,#0FE00H
 	MOVX @DPTR,A  //U4设置南北绿灯亮
@@ -24,7 +24,7 @@ STAT1:		//状态1,南北绿灯亮，东西红灯亮10s
 	MOV DPTR,#0FD00H
 	MOVX @DPTR,A  //U5设置东西红灯亮
 	LCALL DELAY10S
-STAT2:			//状态2：南北黄灯亮，东西红灯亮2s
+STATUS2:			//状态2：南北黄灯亮，东西红灯亮2s
 	MOV A,#0C3H
 	MOV DPTR,#0FE00H
 	MOVX @DPTR,A	//设置南北黄灯亮，东西红灯亮
@@ -32,7 +32,7 @@ STAT2:			//状态2：南北黄灯亮，东西红灯亮2s
 	MOV DPTR,#0FD00H
 	MOVX @DPTR,A	//设置绿灯全灭
 	LCALL DELAY2S
-STAT3:	   			//状态3：南北红灯亮，东西绿灯亮10s
+STATUS3:	   			//状态3：南北红灯亮，东西绿灯亮10s
 	MOV A,#0FCH
 	MOV DPTR,#0FE00H
 	MOVX @DPTR,A	 //设置南北红灯亮
@@ -40,7 +40,7 @@ STAT3:	   			//状态3：南北红灯亮，东西绿灯亮10s
 	MOV DPTR,#0FD00H
 	MOVX @DPTR,A	//设置东西绿灯亮
 	LCALL DELAY10S
-STAT4:				//状态4：南北红灯亮，东西黄灯亮2s
+STATUS4:				//状态4：南北红灯亮，东西黄灯亮2s
 	MOV A,#3CH
 	MOV DPTR,#0FE00H
 	MOVX @DPTR,A	//设置南北红灯亮，东西黄灯亮
@@ -48,7 +48,7 @@ STAT4:				//状态4：南北红灯亮，东西黄灯亮2s
 	MOV DPTR,#0FD00H
 	MOVX @DPTR,A   //设置绿灯全灭
 	LCALL DELAY2S
-	LJMP STAT1		//重复上述状态循环
+	LJMP STATUS1		//重复上述状态循环
 
 DELAY2S:				//2s延时子程序,((248*2+1+1+2)*200+1+2)*20+1~=2s
 	DL1_0:MOV R7,#20

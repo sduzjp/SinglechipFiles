@@ -1,0 +1,366 @@
+C51 COMPILER V9.01   WANNIANLI                                                             06/03/2020 23:38:20 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE WANNIANLI
+OBJECT MODULE PLACED IN wannianli.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE wannianli.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "reg51.h"
+   2          #include "intrins.h" 
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          #define LCD_data P0
+   6          
+   7          #define AM(X) X
+   8          #define PM(X) (X+12)   // 转成24小时制
+   9          #define DS1302_SECOND 0x80         //用于计算ds1302RAM地址
+  10          #define DS1302_MINUTE 0x82
+  11          #define DS1302_HOUR  0x84 
+  12          #define DS1302_WEEK  0x8A
+  13          #define DS1302_DAY  0x86
+  14          #define DS1302_MONTH 0x88
+  15          #define DS1302_YEAR  0x8C
+  16          #define DS1302_RAM(X) (0xC0+(X)*2)    
+  17          
+  18          uchar code GongLi[]={
+  19          0x00,0x00,0xF0,0x00,0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0x00,0xF0,0x00,0x00,0x00 ,0x00,0x00,0x3F,0x20,0x20,
+             -0x20,0x20,0x3F,0x20,0x20,0x20,0x20,0x7F,0x00,0x00,0x00 ,/*"山",0*/0x20,0x20,0x20,0x20,0x20,0x20,0x20,0xFF,0x20,0x20,0x20
+             -,0x20,0x20,0x20,0x20,0x00 ,0x80,0x80,0x40,0x20,0x10,0x0C,0x03,0x00,0x03,0x0C,0x10,0x20,0x40,0x80,0x80,0x00 ,/*"大",1*/
+  20          /*--  文字:  公  --*/
+  21          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  22          0x00,0x80,0x40,0x20,0x18,0x06,0x80,0x00,0x07,0x18,0x20,0x40,0x80,0x00,0x00,0x00,
+  23          0x01,0x00,0x20,0x70,0x28,0x26,0x21,0x20,0x20,0x24,0x38,0x60,0x00,0x01,0x01,0x00,
+  24          
+  25          /*--  文字:  历  --*/
+  26          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  27          0x00,0x00,0xFE,0x02,0x42,0x42,0x42,0x42,0xFA,0x42,0x42,0x42,0x42,0xC2,0x02,0x00,
+  28          0x80,0x60,0x1F,0x80,0x40,0x20,0x18,0x06,0x01,0x00,0x40,0x80,0x40,0x3F,0x00,0x00,
+  29          
+  30          /*--  文字:  星  --*/
+  31          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  32          0x00,0x00,0x00,0xBE,0x2A,0x2A,0x2A,0xEA,0x2A,0x2A,0x2A,0x3E,0x00,0x00,0x00,0x00,
+  33          0x00,0x44,0x42,0x49,0x49,0x49,0x49,0x7F,0x49,0x49,0x49,0x49,0x41,0x40,0x00,0x00,
+  34          
+  35          /*--  文字:  期  --*/
+  36          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  37          0x00,0x04,0xFF,0x24,0x24,0x24,0xFF,0x04,0x00,0xFE,0x22,0x22,0x22,0xFE,0x00,0x00,
+  38          0x88,0x48,0x2F,0x09,0x09,0x19,0xAF,0x48,0x30,0x0F,0x02,0x42,0x82,0x7F,0x00,0x00,
+  39          
+  40          /*--  文字:  一  --*/
+  41          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  42          0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x00,
+  43          0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  44          
+  45          /*--  文字:  二  --*/
+  46          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  47          0x00,0x00,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x00,0x00,0x00,
+  48          0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x00,
+  49          
+  50          /*--  文字:  三  --*/
+  51          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  52          0x00,0x04,0x84,0x84,0x84,0x84,0x84,0x84,0x84,0x84,0x84,0x84,0x84,0x04,0x00,0x00,
+  53          0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x00,
+C51 COMPILER V9.01   WANNIANLI                                                             06/03/2020 23:38:20 PAGE 2   
+
+  54          
+  55          /*--  文字:  四  --*/
+  56          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  57          0x00,0xFC,0x04,0x04,0x04,0xFC,0x04,0x04,0x04,0xFC,0x04,0x04,0x04,0xFC,0x00,0x00,
+  58          0x00,0x7F,0x28,0x24,0x23,0x20,0x20,0x20,0x20,0x21,0x22,0x22,0x22,0x7F,0x00,0x00,
+  59          
+  60          /*--  文字:  五  --*/
+  61          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  62          0x00,0x02,0x42,0x42,0x42,0xC2,0x7E,0x42,0x42,0x42,0x42,0xC2,0x02,0x02,0x00,0x00,
+  63          0x40,0x40,0x40,0x40,0x78,0x47,0x40,0x40,0x40,0x40,0x40,0x7F,0x40,0x40,0x40,0x00,
+  64          
+  65          /*--  文字:  六  --*/
+  66          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  67          0x20,0x20,0x20,0x20,0x20,0x20,0x21,0x22,0x2C,0x20,0x20,0x20,0x20,0x20,0x20,0x00,
+  68          0x00,0x40,0x20,0x10,0x0C,0x03,0x00,0x00,0x00,0x01,0x02,0x04,0x18,0x60,0x00,0x00,
+  69          
+  70          /*--  文字:  日  --*/
+  71          /*--  宋体12;  此字体下对应的点阵为：宽x高=16x16   --*/
+  72          0x00,0x00,0x00,0xFE,0x82,0x82,0x82,0x82,0x82,0x82,0x82,0xFE,0x00,0x00,0x00,0x00,
+  73          0x00,0x00,0x00,0xFF,0x40,0x40,0x40,0x40,0x40,0x40,0x40,0xFF,0x00,0x00,0x00,0x00,
+  74          
+  75          /*--  数字:  0  --*/
+  76          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+  77          0x00,0xE0,0x10,0x08,0x08,0x10,0xE0,0x00,0x00,0x0F,0x10,0x20,0x20,0x10,0x0F,0x00,
+  78          
+  79          /*--  数字:  1  --*/
+  80          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+  81          0x00,0x00,0x10,0x10,0xF8,0x00,0x00,0x00,0x00,0x00,0x20,0x20,0x3F,0x20,0x20,0x00,
+  82          
+  83          /*--  数字:  2  --*/
+  84          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+  85          0x00,0x70,0x08,0x08,0x08,0x08,0xF0,0x00,0x00,0x30,0x28,0x24,0x22,0x21,0x30,0x00,
+  86          
+  87          /*--  数字:  3  --*/
+  88          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+  89          0x00,0x30,0x08,0x08,0x08,0x88,0x70,0x00,0x00,0x18,0x20,0x21,0x21,0x22,0x1C,0x00,
+  90          
+  91          /*--  数字:  4  --*/
+  92          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+  93          0x00,0x00,0x80,0x40,0x30,0xF8,0x00,0x00,0x00,0x06,0x05,0x24,0x24,0x3F,0x24,0x24,
+  94          
+  95          /*--  数字:  5  --*/
+  96          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+  97          0x00,0xF8,0x88,0x88,0x88,0x08,0x08,0x00,0x00,0x19,0x20,0x20,0x20,0x11,0x0E,0x00,
+  98          
+  99          /*--  数字:  6  --*/
+ 100          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+ 101          0x00,0xE0,0x10,0x88,0x88,0x90,0x00,0x00,0x00,0x0F,0x11,0x20,0x20,0x20,0x1F,0x00,
+ 102          
+ 103          /*--  数字:  7  --*/
+ 104          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+ 105          0x00,0x18,0x08,0x08,0x88,0x68,0x18,0x00,0x00,0x00,0x00,0x3E,0x01,0x00,0x00,0x00,
+ 106          
+ 107          /*--  数字:  8  --*/
+ 108          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+ 109          0x00,0x70,0x88,0x08,0x08,0x88,0x70,0x00,0x00,0x1C,0x22,0x21,0x21,0x22,0x1C,0x00,
+ 110          
+ 111          /*--  数字:  9  --*/
+ 112          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+ 113          0x00,0xF0,0x08,0x08,0x08,0x10,0xE0,0x00,0x00,0x01,0x12,0x22,0x22,0x11,0x0F,0x00,
+ 114          };
+ 115          
+C51 COMPILER V9.01   WANNIANLI                                                             06/03/2020 23:38:20 PAGE 3   
+
+ 116          uchar code Symbol[]={
+ 117          /*--  冒号:  :  --*/
+ 118          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+ 119          0x00,0x00,0x00,0xC0,0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x30,0x00,0x00,0x00,
+ 120          
+ 121          /*--  杠号:  -  --*/
+ 122          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+ 123          0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x01,0x01,0x01,0x01,0x01,0x00,
+ 124          
+ 125          /*--  空格:     --*/
+ 126          /*--  宋体12;  此字体下对应的点阵为：宽x高=8x16   --*/
+ 127          0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 128          };
+ 129          
+ 130          sbit LCD_EN=P2^0;         //定义LCD12864引脚位
+ 131          sbit LCD_RW=P2^1;
+ 132          sbit LCD_RS=P2^2;
+ 133          sbit CS1=P2^3;
+ 134          sbit CS2=P2^4;
+ 135          
+ 136          sbit  DS1302_CLK = P1^1;            //实时时钟时钟线引脚
+ 137          sbit  DS1302_IO  = P1^2;            //实时时钟数据线引脚
+ 138          sbit  DS1302_RST = P1^0;            //实时时钟复位线引脚
+ 139          sbit  LED=P1^3;
+ 140          sbit  ACC0 = ACC^0;
+ 141          sbit  ACC7 = ACC^7;
+ 142          
+ 143          uchar code KEY_TABLE[]={0x11,0x21,0x41,0x81,0x12,0x22,0x42,0x82,0x14,
+ 144                                                          0x24,0x44,0x84,0x18,0x28,0x48,0x88};     //按键键值表
+ 145                                                          //按键值表中前四位与按键所在列有关，后四位与按键所在行有关
+ 146                                                          //四位二进制数中为1的那一位所在的位置就是按键所在的行或列的位置
+ 147                                                          //比如按键0x24即0010 0100表示在第二行第一列;
+ 148                                                          //而0x82即1000 0010表示在第一行第三列
+ 149          
+ 150          //延时子程序
+ 151          void delay_ms(uint xms)
+ 152          {
+ 153   1              uint i,j;
+ 154   1              for(i=xms;i>0;i--)
+ 155   1              {
+ 156   2                      for(j=110;j>0;j--);     
+ 157   2              }
+ 158   1      }
+ 159          
+ 160          //LCD忙检查子程序
+ 161          void lcd_busy()
+ 162          {
+ 163   1              uchar result;
+ 164   1              LCD_RS=0;
+ 165   1              LCD_RW=1;
+ 166   1              do 
+ 167   1              {
+ 168   2                      LCD_data=0x00;
+ 169   2                      LCD_EN=1;
+ 170   2                      _nop_();
+ 171   2                      result=LCD_data;
+ 172   2                      LCD_EN=0;
+ 173   2                      result=0x80&result; //检查忙信号
+ 174   2              }while(!(result==0x00)); //当忙信号为0时才可继续操作     
+ 175   1      }
+ 176          
+ 177          //LCD写命令子程序
+C51 COMPILER V9.01   WANNIANLI                                                             06/03/2020 23:38:20 PAGE 4   
+
+ 178          void lcd_wcmd(uchar cmd)
+ 179          {                          
+ 180   1              lcd_busy();
+ 181   1              LCD_RS=0; //写命令
+ 182   1              LCD_RW=0;
+ 183   1              LCD_data=cmd;
+ 184   1              LCD_EN=1; //利用EN 下降沿完成命令写操作
+ 185   1              _nop_();
+ 186   1              _nop_();
+ 187   1              LCD_EN=0;
+ 188   1      }
+ 189          
+ 190          void SetPage(uchar page)        //设置页码，页码为0~7
+ 191          {
+ 192   1              page=0xb8|page;
+ 193   1              lcd_wcmd(page);
+ 194   1      }
+ 195          
+ 196          void SetStartLine(uchar startline)      //设置起始行，行号为0~63
+ 197          {
+ 198   1              startline=0xc0|startline;
+ 199   1              lcd_wcmd(startline);    
+ 200   1      }
+ 201          
+ 202          void SetColumn(uchar column)   //设置列，列号为0~63
+ 203          {
+ 204   1              column=column&0x3f;
+ 205   1              column=0x40|column;
+ 206   1              lcd_wcmd(column);
+ 207   1      }
+ 208          
+ 209          void SetOnOff(uchar onoff)        //开关显示屏
+ 210          {
+ 211   1              onoff=0x3e|onoff;
+ 212   1              lcd_wcmd(onoff);
+ 213   1      }
+ 214          
+ 215          //LCD写数据子程序
+ 216          void lcd_wdat(uchar dat)
+ 217          {                          
+ 218   1              lcd_busy();
+ 219   1              LCD_RS=1;
+ 220   1              LCD_RW=0;
+ 221   1              LCD_data=dat;
+ 222   1              LCD_EN=1;
+ 223   1              _nop_();
+ 224   1              _nop_();
+ 225   1              LCD_EN=0;
+ 226   1      }
+ 227          
+ 228          void SelectScreen(uchar screen)    //选屏，screen=0,1,2
+ 229          {
+ 230   1              switch(screen)
+ 231   1              {
+ 232   2                      case 0: CS1=0;  //全屏显示
+ 233   2                                      _nop_();
+ 234   2                                      _nop_();
+ 235   2                                      _nop_();
+ 236   2                                      CS2=0;
+ 237   2                                      _nop_();
+ 238   2                                      _nop_();
+ 239   2                                      _nop_();
+C51 COMPILER V9.01   WANNIANLI                                                             06/03/2020 23:38:20 PAGE 5   
+
+ 240   2                                      break;
+ 241   2                      case 1: CS1=0;  //左屏显示
+ 242   2                                      _nop_();
+ 243   2                                      _nop_();
+ 244   2                                      _nop_();
+ 245   2                                      CS2=1;
+ 246   2                                      _nop_();
+ 247   2                                      _nop_();
+ 248   2                                      _nop_();
+ 249   2                                      break;
+ 250   2                      case 2: CS1=1;  //右屏显示
+ 251   2                                      _nop_();
+ 252   2                                      _nop_();
+ 253   2                                      _nop_();
+ 254   2                                      CS2=0;
+ 255   2                                      _nop_();
+ 256   2                                      _nop_();
+ 257   2                                      _nop_();
+ 258   2                                      break;
+ 259   2              }       
+ 260   1      }
+ 261          
+ 262          void ClearScreen(uchar screen)  //清屏，screen=0,1,2
+ 263          {
+ 264   1              uchar i,j;
+ 265   1              SelectScreen(screen);
+ 266   1              for(i=0;i<8;i++)
+ 267   1              {
+ 268   2                      SetPage(i);
+ 269   2                      SetColumn(0);
+ 270   2                      for(j=0;j<64;j++)
+ 271   2                      {
+ 272   3                              lcd_wdat(0x00);
+ 273   3                      }
+ 274   2              }
+ 275   1      }
+ 276          
+ 277          void lcd_init()
+ 278          {
+ 279   1              //P0=0x00;
+ 280   1              lcd_busy();      //读忙信号，不忙则向下执行
+ 281   1              SelectScreen(0);
+ 282   1              SetOnOff(0);   //关屏
+ 283   1              SelectScreen(0);
+ 284   1              SetOnOff(1);   //开屏
+ 285   1              SelectScreen(0);
+ 286   1              ClearScreen(0);    //清屏
+ 287   1              SetStartLine(0);        //开始行为0     
+ 288   1      }                          
+ 289          
+ 290          void Display(uchar ss,uchar page,uchar column,uchar number)
+ 291          {
+ 292   1      int i;
+ 293   1      SelectScreen(ss); //ss为屏号
+ 294   1      column=column&0x3f; //column为列号
+ 295   1      SetPage(page); //page为页号，显示第number个汉字的上半部分，
+ 296   1      //page可理解为要显示的汉字位于屏幕的第page行
+ 297   1      SetColumn(column);
+ 298   1      for(i=0;i<16;i++) //i为一个字里面的各个列
+ 299   1      {
+ 300   2      lcd_wdat(GongLi[i+32*number]); //number为字号，
+ 301   2      //取第number个汉字的第i列数据编码值
+C51 COMPILER V9.01   WANNIANLI                                                             06/03/2020 23:38:20 PAGE 6   
+
+ 302   2      }
+ 303   1      SetPage(page+1); //显示第number个汉字的下半部分
+ 304   1      SetColumn(column);
+ 305   1      for(i=0;i<16;i++)
+ 306   1      {
+ 307   2      lcd_wdat(GongLi[i+32*number+16]);//取第number个汉字的下半部分
+ 308   2      }}
+ 309          void main()
+ 310          {       
+ 311   1              uchar i;
+ 312   1      //      Initial_DS1302();       //ds1302初始化          
+ 313   1              lcd_init();        //lcd12864初始化
+ 314   1              ClearScreen(0);
+ 315   1      //      DS1302_GetTime(&CurrentTime);   //获得当前日期和时间
+ 316   1      //      DateToBit(&CurrentTime);   //获得当前年月日各个位上的数字
+ 317   1      //      TimeToBit(&CurrentTime);   //获得当前时分秒各个位上的数字
+ 318   1              while(1)
+ 319   1              {
+ 320   2                      for(i=0;i<128;i++)
+ 321   2                      {
+ 322   3                              SetStartLine(i);
+ 323   3                              //ChineseDisplay(1,0,0,0);
+ 324   3                              //ChineseDisplay(1,0,16,1);  //显示 公历 二字
+ 325   3                              Display(1,0,0,0);
+ 326   3                              Display(1,0,16,1);
+ 327   3                              SelectScreen(0);
+ 328   3                              delay_ms(50);   
+ 329   3                      }       
+ 330   2              }
+ 331   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    394    ----
+   CONSTANT SIZE    =    640    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

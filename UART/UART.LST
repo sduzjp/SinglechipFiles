@@ -1,0 +1,84 @@
+C51 COMPILER V9.01   UART                                                                  07/03/2020 09:41:18 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN UART.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE UART.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "reg51.h"
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          
+   5          uchar xdata D244 _at_ 0xfe00;
+   6          uchar rdata,i,j,temp;
+   7          uint x;
+   8          
+   9          void delay()
+  10          {
+  11   1              for(i=200;i>0;i--);
+  12   1      }
+  13          
+  14          void longdelay()
+  15          {
+  16   1              for(x=500;x>0;x--)
+  17   1              for(i=200;i>0;i--);
+  18   1      }
+  19          
+  20          main()
+  21          {
+  22   1              TMOD=0x20;
+  23   1              SM0=0;
+  24   1              SM1=1;
+  25   1              REN=1;
+  26   1              PCON=0;
+  27   1              TH1=0XFD;
+  28   1              TL1=0XFD;
+  29   1              TR1=1;
+  30   1              rdata=D244;
+  31   1              delay();
+  32   1              P1=rdata;
+  33   1              while(1)
+  34   1              {
+  35   2                      while(!RI);
+  36   2                      temp=SBUF;
+  37   2                      RI=0;
+  38   2                      rdata=D244;
+  39   2                      delay();
+  40   2                      switch(temp)
+  41   2                      {
+  42   3                              case 1:
+  43   3                                      for(j=10;j>0;j--)
+  44   3                                      {
+  45   4                                              P1=0x88;
+  46   4                                              longdelay();
+  47   4                                              P1=rdata;
+  48   4                                              longdelay();
+  49   4                                      }
+  50   3                                      break;
+  51   3                              case 2:
+  52   3                                      P1=rdata;
+  53   3                                      SBUF=rdata;
+  54   3                                      while(!TI);
+  55   3                                      TI=0;
+C51 COMPILER V9.01   UART                                                                  07/03/2020 09:41:18 PAGE 2   
+
+  56   3                                      break;
+  57   3                      }
+  58   2              }
+  59   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    125    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

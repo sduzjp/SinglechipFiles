@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   SIMLAB3                                                               04/16/2020 09:00:47 PAGE 1   
+C51 COMPILER V9.01   SIMLAB3                                                               05/21/2020 09:00:06 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE SIMLAB3
@@ -7,76 +7,79 @@ COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE simlab3.c BROWSE DEBUG OBJECTEXT
 
 line level    source
 
-   1          #include <reg51.h>
-   2          unsigned char code LED_CODES[]= //0-F的显示码
-   3          {0xc0,0xf9,0xa4,0xb0,0x99,      //0-4
-   4          0x92,0x82,0xf8,0x80,0x90,       //5-9
-   5          0x88,0x83,0xc6,0xa1,0x86,0x8e}; //A-F
-   6          
-   7          void main(){
-   8   1              unsigned char i=0;                              
-   9   1              unsigned char j=0;
-  10   1              P1=255;
-  11   1              P0=255;   
-  12   1              while(1){
-  13   2                      do{
-  14   3                              i=P1&1;
-  15   3                      }while(i==1);
-  16   2                      P0=LED_CODES[j];
-  17   2                      do{
-  18   3                              i=P1&1;
-  19   3                      }while(i==0);
-  20   2                      j++;
-  21   2                      if(j==16) j=0;
-  22   2              }
-  23   1      }
-C51 COMPILER V9.01   SIMLAB3                                                               04/16/2020 09:00:47 PAGE 2   
+   1          //程序功能：实现按键按下数码管显示，第一次按下显示0，往后按下依次增1显示，0-F循环显示
+   2          #include <reg51.h>
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          uchar code LED_CODES[]=                         //0-F的显示码
+   6          {0xc0,0xf9,0xa4,0xb0,0x99,      //0-4
+   7          0x92,0x82,0xf8,0x80,0x90,       //5-9
+   8          0x88,0x83,0xc6,0xa1,0x86,0x8e}; //A-F
+   9          
+  10          void main(){
+  11   1              uchar i=0;        //i存放P1口数据                       
+  12   1              uchar j=0;       //j存放显示的数字
+  13   1              P1=255;    //初始化，P1口全置1，为输入做准备
+  14   1              P0=255;    //初始化，P0口全置1，使输出7段数码管不亮
+  15   1              while(1){
+  16   2                      do{
+  17   3                              i=P1&1;   //按键，读P1口数据
+  18   3                      }while(i==1);      //等待按键按下
+  19   2                      P0=LED_CODES[j];   //查输出码，送入P0口进行数码管显示
+  20   2                      do{
+  21   3                              i=P1&1;
+  22   3                      }while(i==0);     //等待按键释放
+  23   2                      j++;                     //按下按键一次自增1
+  24   2                      if(j==16) j=0;    //将显示变量限制在0-15之间
+  25   2              }
+  26   1      }
+C51 COMPILER V9.01   SIMLAB3                                                               05/21/2020 09:00:06 PAGE 2   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
 
              ; FUNCTION main (BEGIN)
-                                           ; SOURCE LINE # 7
-                                           ; SOURCE LINE # 8
+                                           ; SOURCE LINE # 10
+                                           ; SOURCE LINE # 11
 ;---- Variable 'i' assigned to Register 'R7' ----
 0000 E4                CLR     A
-                                           ; SOURCE LINE # 9
+                                           ; SOURCE LINE # 12
 ;---- Variable 'j' assigned to Register 'R6' ----
 0001 FE                MOV     R6,A
-                                           ; SOURCE LINE # 10
-0002 7590FF            MOV     P1,#0FFH
-                                           ; SOURCE LINE # 11
-0005 7580FF            MOV     P0,#0FFH
-                                           ; SOURCE LINE # 12
-0008         ?C0005:
                                            ; SOURCE LINE # 13
+0002 7590FF            MOV     P1,#0FFH
                                            ; SOURCE LINE # 14
+0005 7580FF            MOV     P0,#0FFH
+                                           ; SOURCE LINE # 15
+0008         ?C0005:
+                                           ; SOURCE LINE # 16
+                                           ; SOURCE LINE # 17
 0008 E590              MOV     A,P1
 000A 5401              ANL     A,#01H
 000C FF                MOV     R7,A
-                                           ; SOURCE LINE # 15
+                                           ; SOURCE LINE # 18
 000D 6401              XRL     A,#01H
 000F 60F7              JZ      ?C0005
-                                           ; SOURCE LINE # 16
+                                           ; SOURCE LINE # 19
 0011 EE                MOV     A,R6
 0012 900000      R     MOV     DPTR,#LED_CODES
 0015 93                MOVC    A,@A+DPTR
 0016 F580              MOV     P0,A
 0018         ?C0008:
-                                           ; SOURCE LINE # 17
-                                           ; SOURCE LINE # 18
+                                           ; SOURCE LINE # 20
+                                           ; SOURCE LINE # 21
 0018 E590              MOV     A,P1
 001A 5401              ANL     A,#01H
 001C FF                MOV     R7,A
-                                           ; SOURCE LINE # 19
+                                           ; SOURCE LINE # 22
 001D 60F9              JZ      ?C0008
-                                           ; SOURCE LINE # 20
+                                           ; SOURCE LINE # 23
 001F 0E                INC     R6
-                                           ; SOURCE LINE # 21
+                                           ; SOURCE LINE # 24
 0020 BE10E5            CJNE    R6,#010H,?C0005
 0023 E4                CLR     A
 0024 FE                MOV     R6,A
-                                           ; SOURCE LINE # 22
+                                           ; SOURCE LINE # 25
 0025 80E1              SJMP    ?C0005
              ; FUNCTION main (END)
 

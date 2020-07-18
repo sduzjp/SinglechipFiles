@@ -1,0 +1,89 @@
+C51 COMPILER V9.01   8255A                                                                 06/10/2020 19:59:05 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE 8255A
+OBJECT MODULE PLACED IN 8255A.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE 8255A.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "reg51.h"
+   2          #include "absacc.h"     
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          #define PA    XBYTE[0x7cff]     /*PA口地址*/
+   6          #define PB    XBYTE[0x7dff]     /*PB口地址*/
+   7          #define PC    XBYTE[0x7eff]     /*PC口地址*/
+   8          #define CON   XBYTE[0x7fff]     /*控制字地址*/
+   9          
+  10          unsigned char code led[]={0x00,0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};
+  11          unsigned char code num[]={0x00,0xf3, 0x49, 0x61, 0x33,0x25, 0x05, 0xf1, 0x01};
+  12           
+  13          unsigned char temp;
+  14          
+  15          void monitar_key()
+  16          {
+  17   1              temp = PB;
+  18   1              switch(temp)
+  19   1              {
+  20   2                      case 0xfe:{
+  21   3                              PC = num[1];
+  22   3                              PA = led[1];    
+  23   3                      }break;
+  24   2                      case 0xfd:{
+  25   3                              PC = num[2];
+  26   3                              PA = led[2];    
+  27   3                      }break;
+  28   2                      case 0xfb:{
+  29   3                              PC = num[3];
+  30   3                              PA = led[3];    
+  31   3                      }break;
+  32   2                      case 0xf7:{
+  33   3                              PC = num[4];
+  34   3                              PA = led[4];    
+  35   3                      }break;
+  36   2                      case 0xef:{
+  37   3                              PC = num[5];
+  38   3                              PA = led[5];    
+  39   3                      }break;
+  40   2                      case 0xdf:{
+  41   3                              PC = num[6];
+  42   3                              PA = led[6];    
+  43   3                      }break;
+  44   2                      case 0xbf:{
+  45   3                              PC = num[7];
+  46   3                              PA = led[7];    
+  47   3                      }break;
+  48   2                      case 0x7f:{
+  49   3                              PC = num[8];
+  50   3                              PA = led[8];    
+  51   3                      }break;
+  52   2              }               
+  53   1      }
+  54          
+  55          void main()                                        
+C51 COMPILER V9.01   8255A                                                                 06/10/2020 19:59:05 PAGE 2   
+
+  56          {
+  57   1              CON = 0x82;
+  58   1              PA=0XFF;
+  59   1              PC=0XFF;
+  60   1              while(1)
+  61   1              {       
+  62   2                      monitar_key();  
+  63   2              }
+  64   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    178    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,99 @@
+C51 COMPILER V9.01   TEST1                                                                 07/03/2020 20:20:29 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE TEST1
+OBJECT MODULE PLACED IN test1.OBJ
+COMPILER INVOKED BY: D:\keil_v4\C51\BIN\C51.EXE test1.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          //LCD1602显示实验：点击按键KEY1在LCD1602第一行显示“Hello Everyone”,
+   2          //第二行显示“Welcome to SDU”,并闪烁3次。点击按键KEY2将LCD1602清屏
+   3          //变量定义
+   4          #include "reg51.h"
+   5          #define uint unsigned int               //重新命名数据类型定义
+   6          #define uchar unsigned char
+   7          uchar code line1_data[]="Hello Everyone";//要显示的第一行字符
+   8          uchar code line2_data[]="Welcome to SDU!";//要显示的第二行字符
+   9          //定义控制引脚
+  10          sbit LCD_RS=P2^6;       //定义数据/命令选择位为P1.7引脚  
+  11          sbit LCD_RW=P2^5;       //定义读/写选择位为P1.6引脚  
+  12          sbit LCD_EN=P2^7;       //定义使能信号位为P1.5引脚 
+  13          
+  14          void delay_n40us(uint n)
+  15          {
+  16   1              uint i;
+  17   1              uchar j;
+  18   1              for(i=n;i>0;i--)
+  19   1              {
+  20   2                      for(j=0;j<2;j++);
+  21   2              }
+  22   1      }
+  23          
+  24          //写命令子程序
+  25          void lcd_wcmd(uchar cmd)
+  26          {
+  27   1              LCD_RS=0;        //选择指令寄存器
+  28   1              LCD_RW=0;        //读写选择位置低电平，写入指令
+  29   1              P0=cmd;          //向P2口写入指令
+  30   1              LCD_EN=1;        //使能端置高电平
+  31   1              LCD_EN=0;        //使能端置低电平，产生下降沿，则液晶模块执行命令
+  32   1              delay_n40us(1);
+  33   1      }
+  34          
+  35          //写数据子程序
+  36          void lcd_wdat(uchar dat)
+  37          {
+  38   1              LCD_RS=1;         //选择数据寄存器
+  39   1              LCD_RW=0;         //读写选择位置低电平进行写操作
+  40   1              P0=dat;           //向P2口写入数据
+  41   1              LCD_EN=1;         //使能端置高电平
+  42   1              LCD_EN=0;        //使能端置低电平，产生下降沿，液晶模块执行命令
+  43   1              delay_n40us(1);
+  44   1      }
+  45          
+  46          //初始化子程序
+  47          void lcd_init()
+  48          {
+  49   1              lcd_wcmd(0x38);//功能设定指令中DL=1,N=1,F=0，8位数据宽度，16*2显示2行，5*7点阵字符
+  50   1              lcd_wcmd(0x0c);//显示开关控制指令中D=1,C=0,B=0，显示开，关光标，不闪烁
+  51   1              lcd_wcmd(0x06);//进入模式设置指令中I/D=1,S=0,写入新数据后地址自动增加且显示屏不移动
+  52   1              lcd_wcmd(0x01);//清除LCD显示内容，清屏指令D7-D0部分为01H
+  53   1              delay_n40us(100);
+  54   1      }
+  55          
+C51 COMPILER V9.01   TEST1                                                                 07/03/2020 20:20:29 PAGE 2   
+
+  56          void charDisplay()
+  57          {
+  58   1              uchar i;
+  59   1              lcd_init();
+  60   1              for(i=0;i<15;i++)
+  61   1              {
+  62   2                      lcd_wdat(line2_data[i]);        
+  63   2              }
+  64   1      }
+  65          //主程序
+  66          void main()
+  67          {
+  68   1              lcd_init();             //初始化
+  69   1              charDisplay();
+  70   1              lcd_wcmd(0xc0);
+  71   1              lcd_wdat('!');
+  72   1              lcd_wdat('z');
+  73   1              while(1);
+  74   1      }                               
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    126    ----
+   CONSTANT SIZE    =     31    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  SIMLAB2                                                              05/01/2020 21:43:58 PAGE     1
+A51 MACRO ASSEMBLER  SIMLAB2                                                              05/20/2020 21:13:36 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02
@@ -9,62 +9,61 @@ LOC  OBJ            LINE     SOURCE
 
                        1     
 0000                   2     ORG 0000H   
-0000 0160              3     AJMP MAIN   
-0060                   4     ORG 0060H   
+0000 0150              3     AJMP MAIN   
+0030                   4     ORG 0030H   
                        5     
-0060                   6     MAIN:                      
-0060 7F20              7             MOV R7,#20H        
-0062 7830              8             MOV R0,#30H        
-0064 7400              9             MOV A,#0           
-0066 90008F           10             MOV DPTR,#TABLE  
-0069                  11      LOOP:
-0069 93               12             MOVC A,@A+DPTR   
-006A F6               13             MOV @R0,A   
-006B 08               14             INC R0      
-006C E4               15             CLR A       
-006D A3               16             INC DPTR            
-006E DFF9             17             DJNZ R7,LOOP  
-                      18     
-                      19     
-0070 7830             20             MOV R0,#30H      
-0072 7F1F             21             MOV R7,#31       
-0074 791F             22             MOV R1,#31   
-                      23             
-0076                  24      LOOP1:
-0076 7830             25             MOV R0,#30H      
-0078 E9               26             MOV A,R1  
-0079 FE               27             MOV R6,A   
-                      28     
-007A                  29      LOOP2:             
-007A E6               30             MOV A,@R0   
-007B F5F0             31             MOV B,A     
-007D 08               32             INC R0      
-007E E6               33             MOV A,@R0   
-007F B5F000           34             CJNE A,B,L1       
-0082 5004             35      L1:JNC UNEX  
-0084 18               36             DEC R0  
-0085 C6               37             XCH A,@R0  
-0086 08               38             INC R0
-0087 F6               39             MOV @R0,A  
-0088                  40      UNEX:
-0088 DEF0             41             DJNZ R6,LOOP2  
-008A 19               42             DEC R1   
-008B DFE9             43             DJNZ R7,LOOP1  
-                      44     
-008D 80FE             45             SJMP $  
-                      46     
-                      47     
-008F                  48     TABLE:
-008F 01030902         49             db 1,3,9,2,17,4,11,6
-0093 11040B06                
-0097 05146440         50             db 5,20,100,64,21,14,79,35
-009B 150E4F23                
-009F 5C075B17         51             db 92,7,91,23,65,16,13,18
-00A3 41100D12                
-00A7 12494165         52             db 18,73,65,101,27,19,62,69
-00AB 1B133E45                
-                      53     END     
-A51 MACRO ASSEMBLER  SIMLAB2                                                              05/01/2020 21:43:58 PAGE     2
+                       6     
+0030                   7     TABLE:
+0030 01030902          8             db 1,3,9,2,17,4,11,6
+0034 11040B06                
+0038 05146440          9             db 5,20,100,64,21,14,79,35
+003C 150E4F23                
+0040 5C075B17         10             db 92,7,91,23,65,16,13,18
+0044 41100D12                
+0048 12494165         11             db 18,73,65,101,27,19,62,69
+004C 1B133E45                
+0050                  12     MAIN:                      
+0050 7F20             13             MOV R7,#20H        
+0052 7830             14             MOV R0,#30H        
+0054 7400             15             MOV A,#0           
+0056 900030           16             MOV DPTR,#TABLE  
+0059                  17      LOOP:
+0059 93               18             MOVC A,@A+DPTR   
+005A F6               19             MOV @R0,A   
+005B 08               20             INC R0      
+005C E4               21             CLR A       
+005D A3               22             INC DPTR            
+005E DFF9             23             DJNZ R7,LOOP  
+                      24     
+                      25     
+0060 7830             26             MOV R0,#30H      
+0062 7F1F             27             MOV R7,#31       
+0064 791F             28             MOV R1,#31   
+                      29             
+0066                  30      LOOP1:
+0066 7830             31             MOV R0,#30H      
+0068 E9               32             MOV A,R1  
+0069 FE               33             MOV R6,A   
+                      34     
+006A                  35      LOOP2:             
+006A E6               36             MOV A,@R0   
+006B F5F0             37             MOV B,A     
+006D 08               38             INC R0      
+006E E6               39             MOV A,@R0   
+006F B5F000           40             CJNE A,B,L1       
+0072 5004             41      L1:JNC UNEX  
+0074 18               42             DEC R0  
+0075 C6               43             XCH A,@R0  
+0076 08               44             INC R0
+0077 F6               45             MOV @R0,A  
+0078                  46      UNEX:
+0078 DEF0             47             DJNZ R6,LOOP2  
+007A 19               48             DEC R1   
+007B DFE9             49             DJNZ R7,LOOP1  
+                      50     
+007D 80FE             51             SJMP $  
+                      52     END     
+A51 MACRO ASSEMBLER  SIMLAB2                                                              05/20/2020 21:13:36 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -73,13 +72,13 @@ SYMBOL TABLE LISTING
 N A M E             T Y P E  V A L U E   ATTRIBUTES
 
 B. . . . . . . . .  D ADDR   00F0H   A   
-L1 . . . . . . . .  C ADDR   0082H   A   
-LOOP . . . . . . .  C ADDR   0069H   A   
-LOOP1. . . . . . .  C ADDR   0076H   A   
-LOOP2. . . . . . .  C ADDR   007AH   A   
-MAIN . . . . . . .  C ADDR   0060H   A   
-TABLE. . . . . . .  C ADDR   008FH   A   
-UNEX . . . . . . .  C ADDR   0088H   A   
+L1 . . . . . . . .  C ADDR   0072H   A   
+LOOP . . . . . . .  C ADDR   0059H   A   
+LOOP1. . . . . . .  C ADDR   0066H   A   
+LOOP2. . . . . . .  C ADDR   006AH   A   
+MAIN . . . . . . .  C ADDR   0050H   A   
+TABLE. . . . . . .  C ADDR   0030H   A   
+UNEX . . . . . . .  C ADDR   0078H   A   
 
 
 REGISTER BANK(S) USED: 0 

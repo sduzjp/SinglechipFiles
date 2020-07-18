@@ -1,0 +1,146 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/03/2020  09:41:19  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE UART.obj TO UART
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  UART.obj (UART)
+  D:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  UART (UART)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?UART
+            IDATA   000EH     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+                    0000H     FE00H                  *** GAP ***
+            XDATA   FE00H     0001H     ABSOLUTE     
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0055H     UNIT         ?PR?MAIN?UART
+            CODE    0058H     001BH     UNIT         ?PR?LONGDELAY?UART
+            CODE    0073H     000DH     UNIT         ?PR?DELAY?UART
+            CODE    0080H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   UART (UART)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?UART
+
+?PR?MAIN?UART
+  +--> ?PR?DELAY?UART
+  +--> ?PR?LONGDELAY?UART
+
+
+
+SYMBOL TABLE OF MODULE:  UART (UART)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        UART
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  09:41:19  PAGE 2
+
+
+  D:0090H         PUBLIC        P1
+  D:0008H         PUBLIC        rdata
+  C:0079H         PUBLIC        delay
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0003H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0089H         PUBLIC        TMOD
+  D:0009H         PUBLIC        temp
+  C:0058H         PUBLIC        longdelay
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  X:FE00H         PUBLIC        D244
+  B:0098H.4       PUBLIC        REN
+  D:000AH         PUBLIC        i
+  D:000BH         PUBLIC        j
+  D:000CH         PUBLIC        x
+  -------         PROC          L?0026
+  -------         ENDPROC       L?0026
+  -------         PROC          DELAY
+  C:0079H         LINE#         9
+  C:0079H         LINE#         10
+  C:0079H         LINE#         11
+  C:007FH         LINE#         12
+  -------         ENDPROC       DELAY
+  -------         PROC          LONGDELAY
+  C:0058H         LINE#         14
+  C:0058H         LINE#         15
+  C:0058H         LINE#         16
+  C:005EH         LINE#         17
+  C:0072H         LINE#         18
+  -------         ENDPROC       LONGDELAY
+  -------         PROC          MAIN
+  C:0003H         LINE#         20
+  C:0003H         LINE#         21
+  C:0003H         LINE#         22
+  C:0006H         LINE#         23
+  C:0008H         LINE#         24
+  C:000AH         LINE#         25
+  C:000CH         LINE#         26
+  C:000FH         LINE#         27
+  C:0012H         LINE#         28
+  C:0015H         LINE#         29
+  C:0017H         LINE#         30
+  C:0017H         LINE#         31
+  C:001AH         LINE#         32
+  C:001DH         LINE#         33
+  C:001DH         LINE#         34
+  C:001DH         LINE#         35
+  C:0020H         LINE#         36
+  C:0023H         LINE#         37
+  C:0025H         LINE#         38
+  C:0025H         LINE#         39
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/03/2020  09:41:19  PAGE 3
+
+
+  C:0028H         LINE#         40
+  C:0031H         LINE#         41
+  C:0031H         LINE#         42
+  C:0031H         LINE#         43
+  C:003BH         LINE#         44
+  C:003BH         LINE#         45
+  C:003EH         LINE#         46
+  C:0041H         LINE#         47
+  C:0044H         LINE#         48
+  C:0047H         LINE#         49
+  C:004BH         LINE#         50
+  C:004BH         LINE#         51
+  C:004BH         LINE#         52
+  C:004EH         LINE#         53
+  C:0051H         LINE#         54
+  C:0054H         LINE#         55
+  C:0056H         LINE#         56
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        UART
+
+Program Size: data=15.0 xdata=1 code=140
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

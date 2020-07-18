@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        05/13/2020  11:54:01  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        06/10/2020  20:07:54  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -19,7 +19,7 @@ LINK MAP OF MODULE:  expandIO (EXPANDIO)
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
-            CODE    0000H     003AH     ABSOLUTE     
+            CODE    0000H     0052H     ABSOLUTE     
 
 
 
@@ -29,8 +29,14 @@ SYMBOL TABLE OF MODULE:  expandIO (EXPANDIO)
   ----------------------------------
 
   -------         MODULE        EXPANDIO
+  C:0044H         SYMBOL        DELAY1S
+  C:0044H         SYMBOL        DL1_0
+  C:0046H         SYMBOL        DL1_1
+  C:0048H         SYMBOL        DL1_2
+  C:004AH         SYMBOL        DL1_3
   C:0036H         SYMBOL        LOOP
   C:0030H         SYMBOL        MAIN
+  D:00A0H         SYMBOL        P2
   D:0081H         SYMBOL        SP
   C:0000H         LINE#         3
   C:0030H         LINE#         7
@@ -38,7 +44,22 @@ SYMBOL TABLE OF MODULE:  expandIO (EXPANDIO)
   C:0036H         LINE#         10
   C:0037H         LINE#         11
   C:0038H         LINE#         12
+  C:003AH         LINE#         13
+  C:003DH         LINE#         14
+  C:003FH         LINE#         15
+  C:0042H         LINE#         16
+  C:0044H         LINE#         18
+  C:0046H         LINE#         19
+  C:0048H         LINE#         20
+  C:004AH         LINE#         21
+  C:004CH         LINE#         22
+  C:004DH         LINE#         23
+  C:004FH         LINE#         24
+  C:0051H         LINE#         25
   -------         ENDMOD        EXPANDIO
 
-Program Size: data=8.0 xdata=0 code=58
+Program Size: data=8.0 xdata=0 code=82
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/10/2020  20:07:54  PAGE 2
+
+
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

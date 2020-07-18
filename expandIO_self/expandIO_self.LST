@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  EXPANDIO_SELF                                                        05/13/2020 14:36:31 PAGE     1
+A51 MACRO ASSEMBLER  EXPANDIO_SELF                                                        05/22/2020 09:43:21 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02
@@ -25,7 +25,7 @@ LOC  OBJ            LINE     SOURCE
 0038 F0               16             MOVX @DPTR,A     
 0039 90FD00           17             MOV DPTR,#0FD00H
 003C F0               18             MOVX @DPTR,A    
-003D                  19     STAT1:           
+003D                  19     STATUS1:                 
 003D 74F3             20             MOV A,#0F3H
 003F 90FE00           21             MOV DPTR,#0FE00H
 0042 F0               22             MOVX @DPTR,A   
@@ -33,7 +33,7 @@ LOC  OBJ            LINE     SOURCE
 0045 90FD00           24             MOV DPTR,#0FD00H
 0048 F0               25             MOVX @DPTR,A   
 0049 12008A           26             LCALL DELAY10S
-004C                  27     STAT2:                   
+004C                  27     STATUS2:                         
 004C 74C3             28             MOV A,#0C3H
 004E 90FE00           29             MOV DPTR,#0FE00H
 0051 F0               30             MOVX @DPTR,A     
@@ -41,7 +41,7 @@ LOC  OBJ            LINE     SOURCE
 0054 90FD00           32             MOV DPTR,#0FD00H
 0057 F0               33             MOVX @DPTR,A     
 0058 12007C           34             LCALL DELAY2S
-005B                  35     STAT3:                           
+005B                  35     STATUS3:                                 
 005B 74FC             36             MOV A,#0FCH
 005D 90FE00           37             MOV DPTR,#0FE00H
 0060 F0               38             MOVX @DPTR,A      
@@ -49,7 +49,7 @@ LOC  OBJ            LINE     SOURCE
 0063 90FD00           40             MOV DPTR,#0FD00H
 0066 F0               41             MOVX @DPTR,A     
 0067 12008A           42             LCALL DELAY10S
-006A                  43     STAT4:                           
+006A                  43     STATUS4:                                 
 006A 743C             44             MOV A,#3CH
 006C 90FE00           45             MOV DPTR,#0FE00H
 006F F0               46             MOVX @DPTR,A     
@@ -57,7 +57,7 @@ LOC  OBJ            LINE     SOURCE
 0072 90FD00           48             MOV DPTR,#0FD00H
 0075 F0               49             MOVX @DPTR,A    
 0076 12007C           50             LCALL DELAY2S
-0079 02003D           51             LJMP STAT1               
+0079 02003D           51             LJMP STATUS1             
                       52     
 007C                  53     DELAY2S:                                 
 007C 7F14             54             DL1_0:MOV R7,#20
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
 0080 7DF8             56             DL1_2:MOV R5,#248
 0082 DDFE             57             DL1_3:DJNZ R5,DL1_3       
 0084 00               58                     NOP
-A51 MACRO ASSEMBLER  EXPANDIO_SELF                                                        05/13/2020 14:36:31 PAGE     2
+A51 MACRO ASSEMBLER  EXPANDIO_SELF                                                        05/22/2020 09:43:21 PAGE     2
 
 0085 DEF9             59                     DJNZ R6,DL1_2     
 0087 DFF5             60                     DJNZ R7,DL1_1     
@@ -85,7 +85,7 @@ LOC  OBJ            LINE     SOURCE
                              
                              
                                      
-A51 MACRO ASSEMBLER  EXPANDIO_SELF                                                        05/13/2020 14:36:31 PAGE     3
+A51 MACRO ASSEMBLER  EXPANDIO_SELF                                                        05/22/2020 09:43:21 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -105,10 +105,10 @@ DL2. . . . . . . .  C ADDR   008EH   A
 DL3. . . . . . . .  C ADDR   0090H   A   
 MAIN . . . . . . .  C ADDR   0030H   A   
 SP . . . . . . . .  D ADDR   0081H   A   
-STAT1. . . . . . .  C ADDR   003DH   A   
-STAT2. . . . . . .  C ADDR   004CH   A   
-STAT3. . . . . . .  C ADDR   005BH   A   
-STAT4. . . . . . .  C ADDR   006AH   A   
+STATUS1. . . . . .  C ADDR   003DH   A   
+STATUS2. . . . . .  C ADDR   004CH   A   
+STATUS3. . . . . .  C ADDR   005BH   A   
+STATUS4. . . . . .  C ADDR   006AH   A   
 
 
 REGISTER BANK(S) USED: 0 
